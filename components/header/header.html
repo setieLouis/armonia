@@ -1,0 +1,59 @@
+<div class="app-header">
+    <div class="greeting-row">
+        <h2>Ciao, Giulia</h2>
+        <svg class="icon-leaf" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 21V11M12 11C12 11 9 7 5 7C5 7 5 11 9 13C10.5 13.75 12 11 12 11ZM12 11C12 11 15 5 19 5C19 5 20 10 16 12C14.5 12.75 12 11 12 11Z" stroke="var(--primary-green)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+    </div>
+    <div class="date-row">
+        <div>
+            <h1>Lunedì</h1>
+            <p class="subtitle">12 Maggio</p>
+        </div>
+        <svg class="icon-calendar" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="3" y="4" width="18" height="18" rx="2" ry="2" stroke="var(--text-main)" stroke-width="2"/>
+            <path d="M16 2V6M8 2V6M3 10H21" stroke="var(--text-main)" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+    </div>
+</div>
+
+<style>
+    .app-header {
+        padding: 40px 24px 20px;
+    }
+
+    .greeting-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+    }
+
+    .greeting-row h2 {
+        font-size: 20px;
+        font-weight: 500;
+        margin: 0;
+    }
+
+    .icon-leaf { width: 24px; height: 24px; }
+
+    .date-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-end;
+    }
+
+    .date-row h1 {
+        font-size: 28px;
+        font-weight: 600;
+        margin: 0 0 4px 0;
+    }
+
+    .subtitle {
+        color: var(--text-muted);
+        margin: 0;
+        font-size: 16px;
+    }
+
+    .icon-calendar { width: 28px; height: 28px; margin-bottom: 5px; }
+</style>

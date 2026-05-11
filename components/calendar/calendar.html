@@ -1,0 +1,50 @@
+<div class="week-calendar">
+    <div class="day"><span>Dom</span><strong>11</strong></div>
+    <div class="day active"><span>Lun</span><strong>12</strong></div>
+    <div class="day"><span>Mar</span><strong>13</strong></div>
+    <div class="day"><span>Mer</span><strong>14</strong></div>
+    <div class="day"><span>Gio</span><strong>15</strong></div>
+    <div class="day"><span>Ven</span><strong>16</strong></div>
+    <div class="day"><span>Sab</span><strong>17</strong></div>
+</div>
+
+<style>
+    .week-calendar {
+        display: flex;
+        justify-content: space-between;
+        padding: 0 24px;
+        margin-bottom: 30px;
+    }
+
+    .day {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        width: 42px;
+        height: 60px;
+        border-radius: 20px;
+        background: var(--white);
+        box-shadow: var(--shadow-soft);
+    }
+
+    .day span {
+        font-size: 11px;
+        color: var(--text-muted);
+        margin-bottom: 4px;
+    }
+
+    .day strong {
+        font-size: 16px;
+        font-weight: 600;
+    }
+
+    .day.active {
+        background: var(--primary-green);
+        color: var(--white);
+    }
+
+    .day.active span {
+        color: rgba(255, 255, 255, 0.8);
+    }
+</style>

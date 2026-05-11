@@ -1,0 +1,56 @@
+<div class="progress-card">
+    <div class="progress-header">
+        <span>Giornata completata</span>
+        <span class="percentage">70%</span>
+    </div>
+    <div class="progress-bar-container">
+        <div class="progress-bar-fill" style="width: 70%;"></div>
+    </div>
+    <p class="progress-message">Ottimo lavoro! 🌱</p>
+</div>
+
+<style>
+    .progress-card {
+        background: var(--primary-green-light);
+        margin: 24px;
+        border-radius: 20px;
+        padding: 20px;
+    }
+
+    .progress-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 12px;
+    }
+
+    .progress-header span {
+        font-size: 14px;
+        font-weight: 500;
+    }
+
+    .progress-header .percentage {
+        font-size: 24px;
+        font-weight: 400;
+    }
+
+    .progress-bar-container {
+        height: 8px;
+        background: rgba(113, 155, 110, 0.2);
+        border-radius: 4px;
+        margin-bottom: 12px;
+        overflow: hidden;
+    }
+
+    .progress-bar-fill {
+        height: 100%;
+        background: var(--primary-green);
+        border-radius: 4px;
+    }
+
+    .progress-message {
+        margin: 0;
+        font-size: 13px;
+        font-weight: 500;
+    }
+</style>

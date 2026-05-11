@@ -1,0 +1,62 @@
+<div class="meals-section">
+    <h3>Pasti della giornata</h3>
+    <div id="meals-list-container"></div>
+</div>
+
+<style>
+    .meals-section {
+        padding: 0 24px;
+    }
+
+    .meals-section h3 {
+        font-size: 16px;
+        font-weight: 600;
+        margin: 0 0 16px 0;
+    }
+
+    .meal-card {
+        background: var(--white);
+        border-radius: 16px;
+        padding: 16px;
+        display: flex;
+        align-items: center;
+        margin-bottom: 12px;
+        box-shadow: var(--shadow-soft);
+    }
+
+    .meal-icon {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 20px;
+        margin-right: 16px;
+    }
+
+    /* Icon Backgrounds from vars */
+    .icon-sun { background: var(--icon-bg-sun); }
+    .icon-apple { background: var(--icon-bg-apple); }
+    .icon-bowl { background: var(--icon-bg-bowl); }
+    .icon-moon { background: var(--icon-bg-moon); }
+
+    .meal-info { flex: 1; }
+
+    .meal-info h4 {
+        margin: 0 0 4px 0;
+        font-size: 16px;
+        font-weight: 600;
+    }
+
+    .meal-info p {
+        margin: 0;
+        font-size: 13px;
+        color: var(--text-muted);
+    }
+
+    .status-icon {
+        width: 24px;
+        height: 24px;
+    }
+</style>
