@@ -1,0 +1,23 @@
+/* Step 1: Mobile Frame Styles for Today Page */
+.mobile-container {
+    width: 375px;
+    height: 812px;
+    background-color: var(--bg-color);
+    border-radius: 40px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+.scrollable-content {
+    flex: 1;
+    overflow-y: auto;
+    padding-bottom: 90px; /* Spazio per la bottom nav */
+}
+
+/* Hide scrollbar */
+.scrollable-content::-webkit-scrollbar {
+    display: none;
+}

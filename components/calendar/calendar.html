@@ -1,50 +1,73 @@
-<div class="week-calendar">
-    <div class="day"><span>Dom</span><strong>11</strong></div>
-    <div class="day active"><span>Lun</span><strong>12</strong></div>
-    <div class="day"><span>Mar</span><strong>13</strong></div>
-    <div class="day"><span>Mer</span><strong>14</strong></div>
-    <div class="day"><span>Gio</span><strong>15</strong></div>
-    <div class="day"><span>Ven</span><strong>16</strong></div>
-    <div class="day"><span>Sab</span><strong>17</strong></div>
+<div class="calendar-container">
+    <div class="calendar-row">
+        <div class="calendar-day">
+            <span class="day-label">Dom</span>
+            <span class="day-number">11</span>
+        </div>
+        <div class="calendar-day active">
+            <span class="day-label">Lun</span>
+            <span class="day-number">12</span>
+        </div>
+        <div class="calendar-day">
+            <span class="day-label">Mar</span>
+            <span class="day-number">13</span>
+        </div>
+        <div class="calendar-day">
+            <span class="day-label">Mer</span>
+            <span class="day-number">14</span>
+        </div>
+        <div class="calendar-day">
+            <span class="day-label">Gio</span>
+            <span class="day-number">15</span>
+        </div>
+        <div class="calendar-day">
+            <span class="day-label">Ven</span>
+            <span class="day-number">16</span>
+        </div>
+        <div class="calendar-day">
+            <span class="day-label">Sab</span>
+            <span class="day-number">17</span>
+        </div>
+    </div>
 </div>
 
 <style>
-    .week-calendar {
+    .calendar-container {
+        padding: 0 24px 30px;
+    }
+    .calendar-row {
         display: flex;
         justify-content: space-between;
-        padding: 0 24px;
-        margin-bottom: 30px;
+        gap: 8px;
     }
-
-    .day {
+    .calendar-day {
         display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        width: 42px;
-        height: 60px;
-        border-radius: 20px;
-        background: var(--white);
-        box-shadow: var(--shadow-soft);
+        flex: 1;
+        max-width: 46px;
+        height: 72px;
+        border-radius: 18px;
+        background-color: #fff;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+        transition: all 0.3s ease;
     }
-
-    .day span {
-        font-size: 11px;
-        color: var(--text-muted);
-        margin-bottom: 4px;
+    .day-label {
+        font-size: 10px;
+        color: #888;
+        margin-bottom: 6px;
     }
-
-    .day strong {
-        font-size: 16px;
-        font-weight: 600;
+    .day-number {
+        font-size: 15px;
+        font-weight: 700;
     }
-
-    .day.active {
-        background: var(--primary-green);
-        color: var(--white);
+    .calendar-day.active {
+        background-color: #8da67d; /* Verde più tenue come nel mockup */
+        color: #fff;
+        box-shadow: 0 8px 16px rgba(141, 166, 125, 0.3);
     }
-
-    .day.active span {
-        color: rgba(255, 255, 255, 0.8);
+    .calendar-day.active .day-label {
+        color: rgba(255,255,255,0.8);
     }
 </style>

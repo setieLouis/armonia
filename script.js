@@ -26,18 +26,14 @@ function loadScript(src) {
 }
 
 document.addEventListener('DOMContentLoaded', async () => {
-    // Caricamento sequenziale per evitare glitch visivi
-    await loadComponent('header-root', 'components/header/header.html');
-    await loadComponent('calendar-root', 'components/calendar/calendar.html');
+    // 1. Carichiamo la struttura "Today"
+    await loadComponent('app-root', 'components/today/today.html');
+
+    // 2. Carichiamo la logica di coordinamento di Today
+    await loadScript('components/today/today.js');
     
-    // Componente Meals con logica JS
-    await loadComponent('meals-root', 'components/meals/meals.html', async (element) => {
-        await loadScript('components/meals/meals.js');
-        if (window.initMeals) window.initMeals(element);
-    });
-
-    await loadComponent('progress-root', 'components/progress/progress.html');
-    await loadComponent('nav-root', 'components/nav/nav.html');
-
-    console.log("Mockup Armonia Flow caricato con successo.");
+    // 3. Inizializziamo i componenti (gestito ora da today.js o qui sotto)
+    if (window.initToday) {
+        await window.initToday();
+    }
 });
