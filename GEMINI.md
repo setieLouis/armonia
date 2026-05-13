@@ -78,6 +78,33 @@ Prima di iniziare l'implementazione di una nuova vista o pagina partendo da un m
 
 ---
 
+## Struttura Standard dei Componenti Principali (Viste)
+
+Ogni componente principale (che rappresenta una vista o una pagina intera) deve seguire rigorosamente questa struttura di cartelle e file:
+
+### Schema della Cartella
+```text
+components/[nome-componente]/
+├── [nome-componente].html      # Shell/Container principale
+├── [nome-componente].js        # Orchestratore della vista (opzionale)
+├── [nome-componente].md        # Piano di implementazione (Mockup-to-Plan)
+├── analisi.md                  # Note tecniche e documentazione specifica
+└── sub_components/             # Sotto-moduli atomici isolati
+    ├── [sub-1]/
+    │   └── [sub-1].html
+    └── [sub-2]/
+        ├── [sub-2].html
+        └── [sub-2].js
+```
+
+### Regole sui File:
+1.  **Nomi Coerenti**: Il file HTML principale deve avere lo stesso nome della cartella genitore.
+2.  **Orchestratore**: Se la vista carica più sotto-componenti, deve avere un file `.js` che coordina le chiamate `loadComponent`.
+3.  **Documentazione**: Ogni vista deve contenere il proprio piano di implementazione (`.md`) per tracciarne l'evoluzione rispetto al mockup originale.
+4.  **Isolamento**: I sotto-componenti non devono mai trovarsi alla radice di `components/` se sono specifici di una vista; devono essere dentro la cartella `sub_components/` della vista di appartenenza.
+
+---
+
 ## Come aggiungere un componente
 1.  Crea la cartella in `components/`.
 2.  Crea il file `.html` (con eventuali stili inline).
