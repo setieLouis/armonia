@@ -18,19 +18,44 @@ Il progetto utilizza un sistema di caricamento dinamico basato sulla Fetch API p
 
 ## Convenzioni di Sviluppo
 
-### Struttura di un Componente
-Ogni componente deve idealmente essere isolato utilizzando la **Strict Hierarchical Namespacing Rule**:
+### Regola Generale di Generazione Prefissi (Regola "3+3")
+Per garantire coerenza nei futuri sviluppi, i prefissi devono essere generati seguendo questo schema:
 
-1.  **Componente Padre**: Prefisso di 3 lettere (es. `today` -> `.tod`).
-2.  **Sub-Componente**: Prefisso Padre + 3 lettere del sub-componente (es. `today/header` -> `.tod-hea`).
+1.  **Componente Radice (Vista/Pagina)**: Prime 3 lettere del nome della cartella (es. `settings` -> `.set`).
+2.  **Sotto-Componente**: Prefisso della Radice + `-` + Prime 3 lettere del nome del sotto-componente (es. `settings/account` -> `.set-acc`).
 
-**Esempio di utilizzo:**
+**Linee guida per le abbreviazioni:**
+- Usa solo lettere minuscole.
+- Se il nome è composto da più parole, usa la prima lettera di ogni parola o le prime 3 dell'ultima (es. `user-profile` -> `.usp`).
+- In caso di collisione (es. `profile` e `products` entrambi `.pro`), aggiungi una quarta lettera o usa una consonante distintiva (es. `.pri` vs `.pro`).
+
+#### Esempio di Applicazione Generica:
+```text
+folder: components/profile/
+prefix: .pro
+
+folder: components/profile/sub_components/avatar/
+prefix: .pro-ava
+```
+
+#### Tabella dei Prefissi (Vista Today: `.tod`)
+
+| Componente | Percorso | Prefisso |
+| :--- | :--- | :--- |
+| **Today (Shell)** | `components/today/today.html` | `.tod` |
+| **Header** | `.../sub_components/header/` | `.tod-hea` |
+| **Calendar** | `.../sub_components/calendar/` | `.tod-cal` |
+| **Meals** | `.../sub_components/meals/` | `.tod-mea` |
+| **Progress** | `.../sub_components/progress/` | `.tod-pro` |
+
+**Regola Operativa:**
+Tutti i selettori CSS devono essere discendenti del prefisso o applicati direttamente ad esso.
 ```html
-<!-- today/sub_components/meals/meals.html -->
-<div class="tod-mea meals-container">
+<!-- Esempio: components/today/sub_components/header/header.html -->
+<div class="tod-hea header-container">
     <style>
-        .tod-mea.meals-container { ... }
-        .tod-mea .meal-card { ... }
+        .tod-hea.header-container { ... }
+        .tod-hea .greeting-text { ... }
     </style>
 </div>
 ```

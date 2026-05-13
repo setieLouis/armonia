@@ -1,4 +1,4 @@
-<div class="calendar-section">
+<div class="tod-cal calendar-section">
     <div class="date-header">
         <div class="date-info">
             <h1 class="day-name">Lunedì</h1>
@@ -45,35 +45,35 @@
 </div>
 
 <style>
-    .calendar-section {
+    .tod-cal.calendar-section {
         padding: 10px 24px 30px;
     }
-    .date-header {
+    .tod-cal .date-header {
         display: flex;
         justify-content: space-between;
         align-items: flex-end;
         margin-bottom: 25px;
     }
-    .day-name {
+    .tod-cal .day-name {
         font-size: 26px;
         font-weight: 700;
         margin: 0;
         letter-spacing: -0.5px;
     }
-    .date-full {
+    .tod-cal .date-full {
         font-size: 16px;
         color: #666;
         margin: 2px 0 0 0;
     }
-    .calendar-icon-box {
+    .tod-cal .calendar-icon-box {
         padding-bottom: 5px;
     }
-    .calendar-row {
+    .tod-cal .calendar-row {
         display: flex;
         justify-content: space-between;
         gap: 8px;
     }
-    .calendar-day {
+    .tod-cal .calendar-day {
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -85,21 +85,21 @@
         background-color: #fff;
         box-shadow: 0 4px 12px rgba(0,0,0,0.03);
     }
-    .day-label {
+    .tod-cal .day-label {
         font-size: 10px;
         color: #888;
         margin-bottom: 6px;
     }
-    .day-number {
+    .tod-cal .day-number {
         font-size: 15px;
         font-weight: 700;
     }
-    .calendar-day.active {
+    .tod-cal .calendar-day.active {
         background-color: #8da67d;
         color: #fff;
         box-shadow: 0 8px 16px rgba(141, 166, 125, 0.3);
     }
-    .calendar-day.active .day-label {
+    .tod-cal .calendar-day.active .day-label {
         color: rgba(255,255,255,0.8);
     }
 </style>
