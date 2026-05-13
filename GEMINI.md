@@ -74,7 +74,11 @@ Prima di iniziare l'implementazione di una nuova vista o pagina partendo da un m
 3.  **Logica e Gestione Dati**:
     - Distinzione tra elementi statici e dinamici (che richiedono file `.js`).
 4.  **Roadmap di Implementazione**:
-    - Step sequenziali per la costruzione dell'interfaccia, un componente alla volta.
+    - **Step 1 (Scaffolding & Root)**: 
+        - Creazione immediata della cartella e dei file core: `[nome].html`, `[nome].js`, e `analisi.md`.
+        - Definizione del container radice nel file HTML con la classe del prefisso (es. `.mea`).
+        - Registrazione dello script orchestratore.
+    - **Step 2...N**: Implementazione dei sotto-componenti (HTML + CSS isolato + JS).
 
 ---
 

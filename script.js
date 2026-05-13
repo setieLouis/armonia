@@ -27,6 +27,21 @@ function loadScript(src) {
 
 document.addEventListener('DOMContentLoaded', async () => {
     // 1. Carichiamo la struttura "Today"
+    await loadComponent('app-root', 'components/meal/meal.html');
+
+    // 2. Carichiamo la logica di coordinamento di Today
+    await loadScript('components/meal/meal.js');
+    
+    // 3. Inizializziamo i componenti (gestito ora da today.js o qui sotto)
+    if (window.initToday) {
+        await window.initToday();
+    }
+});
+
+
+/*
+document.addEventListener('DOMContentLoaded', async () => {
+    // 1. Carichiamo la struttura "Today"
     await loadComponent('app-root', 'components/today/today.html');
 
     // 2. Carichiamo la logica di coordinamento di Today
@@ -37,3 +52,4 @@ document.addEventListener('DOMContentLoaded', async () => {
         await window.initToday();
     }
 });
+*/
