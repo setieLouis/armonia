@@ -25,6 +25,9 @@ function loadScript(src) {
     });
 }
 
+
+
+
 document.addEventListener('DOMContentLoaded', async () => {
     // 1. Carichiamo la struttura "Today"
     await loadComponent('app-root', 'components/today/today.html');
@@ -37,19 +40,3 @@ document.addEventListener('DOMContentLoaded', async () => {
         await window.initToday();
     }
 });
-
-
-/*
-document.addEventListener('DOMContentLoaded', async () => {
-    // 1. Carichiamo la struttura "Today"
-    await loadComponent('app-root', 'components/today/today.html');
-
-    // 2. Carichiamo la logica di coordinamento di Today
-    await loadScript('components/today/today.js');
-    
-    // 3. Inizializziamo i componenti (gestito ora da today.js o qui sotto)
-    if (window.initToday) {
-        await window.initToday();
-    }
-});
-*/
