@@ -1,0 +1,51 @@
+<div class="mea-hea header-container">
+    <div class="status-bar-spacer"></div>
+    <div class="nav-row">
+        <button class="back-btn" onclick="console.log('Back to Today')">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M15 18L9 12L15 6" stroke="#333" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+        </button>
+        <h2 class="meal-title">Salmone con Asparagi</h2>
+        <button class="options-btn">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="12" cy="12" r="1" fill="#333" stroke="#333" stroke-width="2"/>
+                <circle cx="19" cy="12" r="1" fill="#333" stroke="#333" stroke-width="2"/>
+                <circle cx="5" cy="12" r="1" fill="#333" stroke="#333" stroke-width="2"/>
+            </svg>
+        </button>
+    </div>
+</div>
+
+<style>
+    .mea-hea .status-bar-spacer {
+        height: 20px;
+    }
+    .mea-hea.header-container {
+        padding: 10px 20px;
+        background: #fff;
+    }
+    .mea-hea .nav-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        height: 44px;
+    }
+    .mea-hea .back-btn, .mea-hea .options-btn {
+        background: none;
+        border: none;
+        padding: 8px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .mea-hea .meal-title {
+        font-size: 18px;
+        font-weight: 600;
+        color: #111;
+        margin: 0;
+        flex: 1;
+        text-align: center;
+    }
+</style>
