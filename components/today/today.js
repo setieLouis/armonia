@@ -2,8 +2,14 @@
 async function initToday() {
     console.log("Inizializzazione sub-componenti Today...");
     
-    // Step 2: Caricamento Header
-    await loadComponent('header-root', 'components/header/header.html');
+    // Step 2: Caricamento Header (Approccio Render)
+    const headerRoot = document.getElementById('header-root');
+    if (headerRoot) {
+        if (typeof window.initHeader !== 'function') {
+            await loadScript('components/header/header.js');
+        }
+        window.initHeader(headerRoot);
+    }
 
     // Step 3: Caricamento Calendario (che include la data)
     await loadComponent('calendar-root', 'components//calendar/calendar.html');
