@@ -21,7 +21,12 @@ async function initToday() {
     }
 
     // Step 3: Caricamento Calendario (che include la data)
-    await loadComponent('calendar-root', 'components//calendar/calendar.html');
+    await loadComponent('calendar-root', 'components//calendar/calendar.html', async (element) => {
+        if (typeof window.initCalendar !== 'function') {
+            await loadScript('components/calendar/calendar.js');
+        }
+        window.initCalendar(element);
+    });
 
     // Step 4: Caricamento Lista Pasti
     await loadComponent('meals-root', 'components/meals/meals.html', async (element) => {

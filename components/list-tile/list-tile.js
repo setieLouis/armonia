@@ -10,14 +10,20 @@ function renderListTile(props) {
         subtitle = '',   // Sottotitolo o contatore
         trailing = '',   // Elemento a destra (es. status icon)
         bgClass = '',    // Classe per il background del leading
-        onClick = ''     // Azione al click
+        onClick = '',    // Azione al click
+        variant = 'default' // 'default' o 'header'
     } = props;
 
+    const hasLeading = leading !== '';
+    const variantClass = `variant-${variant}`;
+
     return `
-        <div class="list-tile" ${onClick ? `onclick="${onClick}"` : ''}>
-            <div class="list-tile-leading ${bgClass}">
-                ${leading}
-            </div>
+        <div class="list-tile ${variantClass}" ${onClick ? `onclick="${onClick}"` : ''}>
+            ${hasLeading ? `
+                <div class="list-tile-leading ${bgClass}">
+                    ${leading}
+                </div>
+            ` : ''}
             <div class="list-tile-content">
                 <h4 class="list-tile-title">${title}</h4>
                 <p class="list-tile-subtitle">${subtitle}</p>
@@ -33,19 +39,43 @@ function renderListTile(props) {
 const listTileStyles = `
     <style id="list-tile-styles">
         .list-tile {
+            display: flex;
+            align-items: center;
+            transition: transform 0.1s ease;
+            box-sizing: border-box;
+        }
+
+        /* Variante Default (Card bianca) */
+        .list-tile.variant-default {
             background: #fff;
             border-radius: 20px;
             padding: 18px;
-            display: flex;
-            align-items: center;
             margin-bottom: 14px;
             box-shadow: 0 4px 12px rgba(0,0,0,0.02);
             cursor: pointer;
-            transition: transform 0.1s ease;
         }
-        .list-tile:active {
+        .list-tile.variant-default:active {
             transform: scale(0.98);
         }
+
+        /* Variante Header (Trasparente, font grandi) */
+        .list-tile.variant-header {
+            background: transparent;
+            padding: 0;
+            margin-bottom: 25px;
+            cursor: default;
+        }
+        .list-tile.variant-header .list-tile-title {
+            font-size: 26px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+        .list-tile.variant-header .list-tile-subtitle {
+            font-size: 16px;
+            color: #666;
+            margin-top: 2px;
+        }
+
         .list-tile-leading {
             width: 48px;
             height: 48px;
@@ -74,8 +104,6 @@ const listTileStyles = `
             display: flex;
             align-items: center;
             justify-content: center;
-            width: 26px;
-            height: 26px;
         }
 
         /* Backgrounds predifiniti per il leading */
