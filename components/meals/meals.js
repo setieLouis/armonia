@@ -1,7 +1,16 @@
-function initMeals(container) {
-    const listElement = container.querySelector('#meals-list');
-    
-    const mealsData = [
+/**
+ * meals.js: Componente Lista Pasti refactoring per usare ListTile
+ */
+
+async function initMeals(container) {
+    // 1. Assicuriamoci che ListTile sia caricato
+    if (typeof window.renderListTile !== 'function') {
+        await loadScript('components/list-tile/list-tile.js');
+    }
+    window.injectListTileStyles();
+
+    // 2. Stato/Dati (da passare poi esternamente)
+    let mealsData = [
         { name: 'Colazione', count: '3 / 3 completati', icon: '☀️', bgClass: 'bg-sun', status: 'checked' },
         { name: 'Spuntino', count: '2 / 2 completati', icon: '🍎', bgClass: 'bg-apple', status: 'checked' },
         { name: 'Pranzo', count: '3 / 4 completati', icon: '🥗', bgClass: 'bg-bowl', status: 'partial' },
@@ -24,18 +33,45 @@ function initMeals(container) {
             </svg>`
     };
 
-    listElement.innerHTML = mealsData.map(meal => `
-        <div class="meal-card">
-            <div class="meal-icon-box ${meal.bgClass}">${meal.icon}</div>
-            <div class="meal-details">
-                <h4 class="meal-name">${meal.name}</h4>
-                <p class="meal-count">${meal.count}</p>
+    // 3. Funzione di Render principale
+    function render() {
+        container.innerHTML = `
+            <div class="tod-mea meals-container">
+                <h3 class="meals-title">Pasti della giornata</h3>
+                <div class="meals-list">
+                    ${mealsData.map(meal => window.renderListTile({
+                        leading: meal.icon,
+                        title: meal.name,
+                        subtitle: meal.count,
+                        trailing: statusIcons[meal.status],
+                        bgClass: meal.bgClass,
+                        onClick: `console.log('Clicked on ${meal.name}')`
+                    })).join('')}
+                </div>
             </div>
-            <div class="status-indicator">
-                ${statusIcons[meal.status]}
-            </div>
-        </div>
-    `).join('');
+
+            <style>
+                .tod-mea.meals-container {
+                    padding: 0 24px;
+                    margin-top: 10px;
+                }
+                .tod-mea .meals-title {
+                    font-size: 16px;
+                    font-weight: 600;
+                    margin-bottom: 20px;
+                    color: #333;
+                }
+            </style>
+        `;
+    }
+
+    // Esponiamo aggiornamento
+    window.updateMeals = function(newData) {
+        mealsData = newData;
+        render();
+    };
+
+    render();
 }
 
 window.initMeals = initMeals;
