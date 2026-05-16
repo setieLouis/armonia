@@ -1,4 +1,13 @@
 // today.js: Orchestrator for Today sub-components
+
+headerLeftValue = "Ciao, Eli"
+const headerRightValue = `<svg class="icon-leaf" width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 21V11M12 11C12 11 9 7 5 7C5 7 5 11 9 13C10.5 13.75 12 11 12 11ZM12 11C12 11 15 5 19 5C19 5 20 10 16 12C14.5 12.75 12 11 12 11Z" stroke="#719b6e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>`
+
+
+
+
 async function initToday() {
     console.log("Inizializzazione sub-componenti Today...");
     
@@ -8,7 +17,7 @@ async function initToday() {
         if (typeof window.initHeader !== 'function') {
             await loadScript('components/header/header.js');
         }
-        window.initHeader(headerRoot);
+        window.initHeader(headerRoot,{left:headerLeftValue,rigth : headerRightValue });
     }
 
     // Step 3: Caricamento Calendario (che include la data)
