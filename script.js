@@ -53,7 +53,7 @@ async function navigateTo(view) {
     else if (view === 'ingredient') {
         await loadComponent(appRoot, 'components/ingredient/ingredient.html', async () => {
             await loadScript('components/ingredient/ingredient.js');
-            if (window.initCurrentMeal) await window.initCurrentMeal();
+            if (window.initIngredientAlternatives) await window.initIngredientAlternatives();
         });
     }
 }

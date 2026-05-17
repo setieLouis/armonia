@@ -1,7 +1,25 @@
-<!-- Step 1: Structure for Today Fragment -->
-<div class="tod mobile-container">
-    <div class="tod scrollable-content">
-        <!-- Sub-component Placeholders -->
-        <p>Ciao Mamma</p>
+<!-- Modal Overlay Background -->
+<div class="c-alt-overlay" onclick="navigateTo('current-meal')">
+    <!-- Context Header (Original Ingredient) -->
+    <div id="alt-context-root" class="c-alt-context"></div>
+</div>
+
+<!-- Modal Bottom Sheet -->
+<div class="c-alt-sheet mobile-container">
+    <div class="c-alt-sheet__handle"></div>
+
+    <div class="c-alt-sheet__content">
+        <!-- Header (Pluggable Header) -->
+        <div id="alt-header-root"></div>
+
+        <!-- Scrollable List of Alternatives -->
+        <div class="c-alt-sheet__scrollable">
+            <div id="alt-list-root" class="c-alt-list">
+                <!-- ListTile items will be rendered here -->
+            </div>
+
+            <!-- Info Banner -->
+            <div id="alt-info-root"></div>
+        </div>
     </div>
 </div>

@@ -1,23 +1,108 @@
-/* Step 1: Mobile Frame Styles for Today Page */
-.mobile-container {
-    width: 375px;
-    height: 812px;
-    background-color: var(--bg-color);
-    border-radius: 40px;
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-    overflow: hidden;
-    position: relative;
+/* Modal Overlay Background */
+.c-alt-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: #9FB094; /* Improved sage green to match mockup */
+    z-index: 100;
+}
+
+.c-alt-context {
+    padding: 20px 24px;
+    color: #FFFFFF;
+}
+
+.c-alt-context .list-tile.variant-header {
+    color: #FFFFFF;
+}
+
+.c-alt-context .list-tile-title, 
+.c-alt-context .list-tile-subtitle {
+    color: #FFFFFF !important;
+}
+
+.c-alt-sheet {
+    position: fixed;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #FFFFFF;
+    border-radius: 32px 32px 0 0;
+    height: 85%;
+    z-index: 101;
     display: flex;
     flex-direction: column;
+    box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.15);
+    animation: slideUp 0.3s ease-out;
 }
 
-.scrollable-content {
+@keyframes slideUp {
+    from { transform: translate(-50%, 100%); }
+    to { transform: translate(-50%, 0); }
+}
+
+.c-alt-sheet__handle {
+    width: 40px;
+    height: 4px;
+    background: #E0E0E0;
+    border-radius: 2px;
+    margin: 12px auto;
+}
+
+.c-alt-sheet__content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 0 0 20px;
+}
+
+.c-alt-sheet__scrollable {
     flex: 1;
     overflow-y: auto;
-    padding-bottom: 90px; /* Spazio per la bottom nav */
+    padding: 0 24px 40px;
 }
 
-/* Hide scrollbar */
-.scrollable-content::-webkit-scrollbar {
-    display: none;
+.c-alt-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-top: 20px;
+}
+
+/* Specific Card variants for this view */
+.c-alt-list .list-tile.variant-default {
+    border: 1.5px solid #F0F0F0;
+    box-shadow: none;
+}
+
+.c-alt-list .bg-alt-green { background-color: #E8F5E9; border-color: transparent !important; }
+.c-alt-list .bg-alt-yellow { background-color: #FFF9C4; border-color: transparent !important; }
+
+/* Info Banner Styling */
+.c-alt-info {
+    margin-top: 10px;
+    margin-bottom: 20px;
+    padding: 20px;
+    background-color: #FBF3E9; /* Warm beige from mockup */
+    border-radius: 24px;
+    display: flex;
+    gap: 16px;
+    align-items: center;
+}
+
+.c-alt-info__icon {
+    width: 24px;
+    height: 24px;
+    color: #9C744D; /* Golden brown icon color */
+    flex-shrink: 0;
+}
+
+.c-alt-info__text {
+    font-size: 14px;
+    font-weight: 500;
+    color: #9C744D;
+    line-height: 1.4;
+    margin: 0;
 }

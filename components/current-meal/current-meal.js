@@ -110,6 +110,7 @@ class CurrentMeal {
     renderStep4() {
         const footerRoot = document.getElementById('c-meal-footer-root');
         if (footerRoot) {
+            footerRoot.onclick = () => navigateTo('ingredient');
             footerRoot.innerHTML = `
                 <span style="font-weight: 500; font-size: 15px;">Alternative disponibili</span>
                 <div style="display: flex; align-items: center; gap: 10px;">
