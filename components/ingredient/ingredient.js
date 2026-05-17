@@ -25,7 +25,11 @@ class IngredientAlternatives {
         if (typeof window.renderListTile !== 'function') {
             await loadScript('components/list-tile/list-tile.js');
         }
+        if (typeof window.renderInfoBanner !== 'function') {
+            await loadScript('components/info-banner/info-banner.js');
+        }
         window.injectListTileStyles();
+        window.injectInfoBannerStyles();
 
         this.render();
     }
@@ -96,12 +100,9 @@ class IngredientAlternatives {
     renderInfo() {
         const infoRoot = document.getElementById('alt-info-root');
         if (infoRoot) {
-            infoRoot.innerHTML = `
-                <div class="c-alt-info">
-                    <svg class="c-alt-info__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
-                    <p class="c-alt-info__text">Le alternative sono calcolate per avere valori nutrizionali simili.</p>
-                </div>
-            `;
+            infoRoot.innerHTML = window.renderInfoBanner({
+                message: 'Le alternative sono calcolate per avere valori nutrizionali simili.'
+            });
         }
     }
 }

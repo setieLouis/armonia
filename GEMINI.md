@@ -38,6 +38,12 @@ Gestore della barra di navigazione superiore.
 - **Utilizzo**: Gestione di titoli dinamici, pulsanti "back" e menu opzioni.
 - **Stato**: Supporta `updateHeader` per aggiornamenti in tempo reale senza re-rendering dell'intera pagina.
 
+### 3. InfoBanner (`components/info-banner/info-banner.js`)
+Componente per messaggi informativi, alert o note.
+- **Funzione**: `renderInfoBanner({icon, message, variant})`.
+- **Utilizzo**: Banner a piè di pagina o messaggi di sistema.
+- **Varianti**: `info` (default beige/marrone).
+
 ### Regola d'Oro del Riuso
 Se un elemento del mockup somiglia a una riga di lista o a una barra superiore, **NON** scrivere HTML/CSS custom nella nuova vista. "Plugga" i componenti sopra citati e configurali via JavaScript nell'orchestratore della vista.
 
