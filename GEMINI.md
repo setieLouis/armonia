@@ -17,5 +17,6 @@ Prima di iniziare l'implementazione di una nuova vista o pagina partendo da un m
         - Definizione del container radice nel file HTML con la classe del prefisso (es. `.mea`).
         - Registrazione dello script orchestratore.
     - **Step 2...N**: Implementazione dei sotto-componenti (HTML + CSS isolato + JS).
+    - **Step Finale**: Inserire una checklist di riepilogo per monitorare l'avanzamento di tutti gli step definiti nella Roadmap.
 
 ---
