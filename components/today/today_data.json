@@ -1,0 +1,61 @@
+{
+    "user": {
+        "name": "Eli",
+        "greeting": "Ciao, Eli"
+    },
+    "calendar": {
+        "selectedDate": {
+            "dayName": "Lunedì",
+            "dateFull": "12 Maggio"
+        },
+        "weekView": [
+            { "label": "Dom", "number": 11, "active": false },
+            { "label": "Lun", "number": 12, "active": true },
+            { "label": "Mar", "number": 13, "active": false },
+            { "label": "Mer", "number": 14, "active": false },
+            { "label": "Gio", "number": 15, "active": false },
+            { "label": "Ven", "number": 16, "active": false },
+            { "label": "Sab", "number": 17, "active": false }
+        ]
+    },
+    "meals": [
+        { 
+            "id": "breakfast",
+            "name": "Colazione", 
+            "count": "3 / 3 completati", 
+            "icon": "☀️", 
+            "bgClass": "bg-sun", 
+            "status": "checked",
+            "isSelectable": true
+        },
+        { 
+            "id": "snack",
+            "name": "Spuntino", 
+            "count": "2 / 2 completati", 
+            "icon": "🍎", 
+            "bgClass": "bg-apple", 
+            "status": "checked" 
+        },
+        { 
+            "id": "lunch",
+            "name": "Pranzo", 
+            "count": "3 / 4 completati", 
+            "icon": "🥗", 
+            "bgClass": "bg-bowl", 
+            "status": "partial" 
+        },
+        { 
+            "id": "dinner",
+            "name": "Cena", 
+            "count": "0 / 4 completati", 
+            "icon": "🌙", 
+            "bgClass": "bg-moon", 
+            "status": "empty" 
+        }
+    ],
+    "progress": {
+        "label": "Giornata completata",
+        "percentage": 70,
+        "message": "Ottimo lavoro! 🌱"
+    }
+}

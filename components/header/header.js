@@ -6,7 +6,7 @@ const defaultImg = `<svg class="icon-leaf" width="22" height="22" viewBox="0 0 2
                 <path d="M12 21V11M12 11C12 11 9 7 5 7C5 7 5 11 9 13C10.5 13.75 12 11 12 11ZM12 11C12 11 15 5 19 5C19 5 20 10 16 12C14.5 12.75 12 11 12 11Z" stroke="#719b6e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>`
 
-function initHeader(container,input = {left:undefined,rigth : defaultImg }) {
+function initHeader(container,input = {left:undefined,rigth : defaultImg  }) {
     // 1. Lo "Stato" del componente
     let state = {
         //left: ,

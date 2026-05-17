@@ -2,20 +2,15 @@
  * meals.js: Componente Lista Pasti refactoring per usare ListTile
  */
 
-async function initMeals(container) {
+
+
+async function initMeals(container,meals) {
     // 1. Assicuriamoci che ListTile sia caricato
     if (typeof window.renderListTile !== 'function') {
         await loadScript('components/list-tile/list-tile.js');
     }
     window.injectListTileStyles();
-
-    // 2. Stato/Dati (da passare poi esternamente)
-    let mealsData = [
-        { name: 'Colazione', count: '3 / 3 completati', icon: '☀️', bgClass: 'bg-sun', status: 'checked' },
-        { name: 'Spuntino', count: '2 / 2 completati', icon: '🍎', bgClass: 'bg-apple', status: 'checked' },
-        { name: 'Pranzo', count: '3 / 4 completati', icon: '🥗', bgClass: 'bg-bowl', status: 'partial' },
-        { name: 'Cena', count: '0 / 4 completati', icon: '🌙', bgClass: 'bg-moon', status: 'empty' }
-    ];
+   
 
     const statusIcons = {
         checked: `
@@ -33,20 +28,48 @@ async function initMeals(container) {
             </svg>`
     };
 
+    function getIcon(value){
+        switch(value.toLowerCase()){
+            case "colazione":
+                return {icon: '☀️',bgClass: 'bg-sun'}
+            case "spuntino":
+                return {icon: '🍎',bgClass: 'bg-apple'}
+             case "pranzo":
+                return {icon: '🥗',bgClass: 'bg-bowl'}
+            case "merenda":
+                return {icon: '🍎',bgClass: 'bg-apple'}
+            case "cena":
+                return {icon: '🌙' ,bgClass: 'bg-moon'} 
+            default:
+                return {icon: '🥗',bgClass: 'bg-bowl'}
+        }
+    }
+
+    function countUsed(meals){
+        let res = 0;
+        for(let i = 0; i < meals.length;i++ ){
+            res += meals.use == true ? 1 : 0;
+        }
+        return res
+    }
+
     // 3. Funzione di Render principale
     function render() {
         container.innerHTML = `
             <div class="tod-mea meals-container">
                 <h3 class="meals-title">Pasti della giornata</h3>
                 <div class="meals-list">
-                    ${mealsData.map(meal => window.renderListTile({
-                        leading: meal.icon,
-                        title: meal.name,
-                        subtitle: meal.count,
-                        trailing: statusIcons[meal.status],
-                        bgClass: meal.bgClass,
-                        onClick: meal.name === 'Colazione' ? `navigateTo('current-meal')` : `console.log('Clicked on ${meal.name}')`
-                    })).join('')}
+                    ${meals.map(meal => {
+                       const icon  =  getIcon(meal.label);
+                       return window.renderListTile({
+                        leading: icon.icon,
+                        title: meal.label,
+                        subtitle: `${countUsed(meal.dishes)} " / ${meal.dishes.length} completati`,
+                        trailing: statusIcons['checked'],
+                        bgClass: icon.bgClass,
+                        onClick: meal.label === 'Colazione' ? `navigateTo('current-meal')` : `console.log('Clicked on ${meal.name}')`
+                    })
+                    }).join('')}
                 </div>
             </div>
 
