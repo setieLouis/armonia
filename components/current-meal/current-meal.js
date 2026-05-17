@@ -33,6 +33,61 @@ class CurrentMeal {
         window.currentMealApp = this;
 
         this.render();
+        this.setupLongPress();
+    }
+
+    setupLongPress() {
+        const listRoot = document.getElementById('c-meal-list-root');
+        if (!listRoot) return;
+
+        let timer;
+        this.isLongPressTriggered = false;
+
+        const start = (e) => {
+            const tile = e.target.closest('.list-tile.variant-default');
+            if (!tile) return;
+
+            this.isLongPressTriggered = false;
+            timer = setTimeout(() => {
+                this.isLongPressTriggered = true;
+                tile.style.transform = 'scale(0.95)';
+                tile.style.backgroundColor = '#f0f0f0';
+                setTimeout(() => {
+                    navigateTo('ingredient');
+                }, 100);
+            }, 600);
+        };
+
+        const cancel = (e) => {
+            clearTimeout(timer);
+            const tile = e.target.closest('.list-tile.variant-default');
+            if (tile && !this.isLongPressTriggered) {
+                tile.style.transform = '';
+                tile.style.backgroundColor = '';
+            }
+        };
+
+        listRoot.addEventListener('mousedown', start);
+        listRoot.addEventListener('touchstart', start, { passive: true });
+        listRoot.addEventListener('mouseup', cancel);
+        listRoot.addEventListener('mouseleave', cancel);
+        listRoot.addEventListener('touchend', cancel);
+
+        // Capture phase to intercept the click if long press was triggered
+        listRoot.addEventListener('click', (e) => {
+            if (this.isLongPressTriggered) {
+                e.stopImmediatePropagation();
+                e.preventDefault();
+                this.isLongPressTriggered = false;
+                
+                // Reset visual state
+                const tile = e.target.closest('.list-tile.variant-default');
+                if (tile) {
+                    tile.style.transform = '';
+                    tile.style.backgroundColor = '';
+                }
+            }
+        }, true);
     }
 
     render() {
