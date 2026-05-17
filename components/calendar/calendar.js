@@ -2,20 +2,20 @@
  * calendar.js: Componente Calendario dinamico che usa ListTile per l'header
  */
 
-async function initCalendar(container) {
+async function initCalendar(container, input = { dateData: undefined, days: undefined }) {
     // 1. Assicuriamoci che ListTile sia caricato
     if (typeof window.renderListTile !== 'function') {
         await loadScript('components/list-tile/list-tile.js');
     }
     window.injectListTileStyles();
 
-    // 2. Dati (Mockup)
-    const dateData = {
+    // 2. Dati (Mockup di fallback o input)
+    const dateData = input.dateData || {
         dayName: 'Lunedì',
         dateFull: '12 Maggio'
     };
 
-    const days = [
+    const days = input.days || [
         { label: 'Dom', number: 11, active: false },
         { label: 'Lun', number: 12, active: true },
         { label: 'Mar', number: 13, active: false },

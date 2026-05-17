@@ -38,7 +38,34 @@ async function initToday() {
         if (typeof window.initCalendar !== 'function') {
             await loadScript('components/calendar/calendar.js');
         }
-        window.initCalendar(element);
+
+        // Generazione dinamica dati calendario basata su currentDayMeals.day
+        const targetDate = new Date(currentDayMeals.day);
+        const dayNames = ['Dom', 'Lun', 'Mar', 'Mer', 'Gio', 'Ven', 'Sab'];
+        const fullDayNames = ['Domenica', 'Lunedì', 'Martedì', 'Mercoledì', 'Giovedì', 'Venerdì', 'Sabato'];
+        const months = ['Gennaio', 'Febbraio', 'Marzo', 'Aprile', 'Maggio', 'Giugno', 'Luglio', 'Agosto', 'Settembre', 'Ottobre', 'Novembre', 'Dicembre'];
+
+        const dateData = {
+            dayName: fullDayNames[targetDate.getDay()],
+            dateFull: `${targetDate.getDate()} ${months[targetDate.getMonth()]}`
+        };
+
+        // Calcolo della vista settimanale (centrata sulla data corrente)
+        const days = [];
+        const startOfWeek = new Date(targetDate);
+        startOfWeek.setDate(targetDate.getDate() - targetDate.getDay()); // Inizio Domenica
+
+        for (let i = 0; i < 7; i++) {
+            const current = new Date(startOfWeek);
+            current.setDate(startOfWeek.getDate() + i);
+            days.push({
+                label: dayNames[current.getDay()],
+                number: current.getDate(),
+                active: current.toDateString() === targetDate.toDateString()
+            });
+        }
+
+        window.initCalendar(element, { dateData, days });
     });
 
     // Step 4: Caricamento Lista Pasti

@@ -1,59 +1,49 @@
 {
-    "day": "2026-05-17T21:55:54.541Z",
+    "day": "2026-05-18T08:00:00.000Z",
     "meals": [
         {
-            "id": "6067489f-4abf-4d5f-a9f1-65b12aa82fb9",
+            "id": "breakfast-123",
             "label": "Colazione",
             "dishes": [
-                { "name": "Caffè", "quantity": "1 tazzina", "use": false },
-                { "name": "Latte vaccino", "quantity": "Mezzo bicchiere", "use": false },
-                { "name": "Yogurt greco interno", "quantity": "100 g", "use": false },
-                { "name": "Burro di arachidi", "quantity": "30 g", "use": false },
-                { "name": "Mirtilli", "quantity": "50 g", "use": false }
+                { "name": "Yogurt Greco", "quantity": "150g", "use": true },
+                { "name": "Granola Artigianale", "quantity": "30g", "use": true },
+                { "name": "Mirtilli Freschi", "quantity": "50g", "use": true },
+                { "name": "Caffè Nero", "quantity": "1 tazzina", "use": true }
             ]
         },
         {
-            "id": "5df8c892-d180-400b-8741-e8f117f0df1d",
-            "label": "Spuntino",
+            "id": "snack-am-456",
+            "label": "Spuntino Mattina",
             "dishes": [
-                { "name": "Caffè", "quantity": "1 tazzina", "use": false },
-                { "name": "Latte vaccino", "quantity": "Mezzo bicchiere", "use": false },
-                { "name": "Yogurt greco interno", "quantity": "100 g", "use": false },
-                { "name": "Burro di arachidi", "quantity": "30 g", "use": false },
-                { "name": "Mirtilli", "quantity": "50 g", "use": false }
+                { "name": "Mandorle", "quantity": "15g", "use": true },
+                { "name": "Mela", "quantity": "1 media", "use": false }
             ]
         },
         {
-            "id": "e85703f6-68de-4d0e-81e7-5c4622438e61",
+            "id": "lunch-789",
             "label": "Pranzo",
             "dishes": [
-                { "name": "Caffè", "quantity": "1 tazzina", "use": false },
-                { "name": "Latte vaccino", "quantity": "Mezzo bicchiere", "use": false },
-                { "name": "Yogurt greco interno", "quantity": "100 g", "use": false },
-                { "name": "Burro di arachidi", "quantity": "30 g", "use": false },
-                { "name": "Mirtilli", "quantity": "50 g", "use": false }
+                { "name": "Riso Integrale", "quantity": "80g", "use": true },
+                { "name": "Salmone al Vapore", "quantity": "120g", "use": true },
+                { "name": "Asparagi", "quantity": "200g", "use": false },
+                { "name": "Olio EVO", "quantity": "1 cucchiaio", "use": true }
             ]
         },
         {
-            "id": "1bfef08f-effd-443b-96f3-cd9f540c9a50",
+            "id": "snack-pm-012",
             "label": "Merenda",
             "dishes": [
-                { "name": "Caffè", "quantity": "1 tazzina", "use": false },
-                { "name": "Latte vaccino", "quantity": "Mezzo bicchiere", "use": false },
-                { "name": "Yogurt greco interno", "quantity": "100 g", "use": false },
-                { "name": "Burro di arachidi", "quantity": "30 g", "use": false },
-                { "name": "Mirtilli", "quantity": "50 g", "use": false }
+                { "name": "Hummus di Ceci", "quantity": "50g", "use": false },
+                { "name": "Carote a Stick", "quantity": "100g", "use": false }
             ]
         },
         {
-            "id": "1bfef08f-effd-443b-96f3-cd9f540c9a50",
+            "id": "dinner-345",
             "label": "Cena",
             "dishes": [
-                { "name": "Caffè", "quantity": "1 tazzina", "use": false },
-                { "name": "Latte vaccino", "quantity": "Mezzo bicchiere", "use": false },
-                { "name": "Yogurt greco interno", "quantity": "100 g", "use": false },
-                { "name": "Burro di arachidi", "quantity": "30 g", "use": false },
-                { "name": "Mirtilli", "quantity": "50 g", "use": false }
+                { "name": "Petto di Pollo ai Ferri", "quantity": "150g", "use": false },
+                { "name": "Insalata Mista", "quantity": "abbondante", "use": false },
+                { "name": "Pane di Segale", "quantity": "1 fetta", "use": false }
             ]
         }
     ]
