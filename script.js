@@ -1,3 +1,7 @@
+/**
+ * Core script for loading components and managing navigation
+ */
+
 async function loadComponent(id, path, initFunc = null) {
     try {
         const response = await fetch(path);
@@ -17,6 +21,10 @@ async function loadComponent(id, path, initFunc = null) {
 
 function loadScript(src) {
     return new Promise((resolve, reject) => {
+        // Remove existing script if it exists to allow re-initialization
+        const existingScript = document.querySelector(`script[src="${src}"]`);
+        if (existingScript) existingScript.remove();
+
         const script = document.createElement('script');
         script.src = src;
         script.onload = resolve;
@@ -25,30 +33,29 @@ function loadScript(src) {
     });
 }
 
-
-document.addEventListener('DOMContentLoaded', async () => {
-    // 1. Carichiamo la struttura "Today"
-    await loadComponent('app-root', 'components/current-meal/current-meal.html');
-
-    // 2. Carichiamo la logica di coordinamento di Today
-    await loadScript('components/current-meal/current-meal.js');
+// Global navigation function
+async function navigateTo(view) {
+    console.log(`Navigating to: ${view}`);
+    const appRoot = 'app-root';
     
-    // 3. Inizializziamo i componenti (gestito ora da today.js o qui sotto)
-    if (window.initCurrentMeal) {
-        await window.initCurrentMeal();
+    if (view === 'today') {
+        await loadComponent(appRoot, 'components/today/today.html', async () => {
+            await loadScript('components/today/today.js');
+            if (window.initToday) await window.initToday();
+        });
+    } 
+    else if (view === 'current-meal') {
+        await loadComponent(appRoot, 'components/current-meal/current-meal.html', async () => {
+            await loadScript('components/current-meal/current-meal.js');
+            if (window.initCurrentMeal) await window.initCurrentMeal();
+        });
     }
+}
+
+window.loadComponent = loadComponent;
+window.loadScript = loadScript;
+window.navigateTo = navigateTo;
+
+document.addEventListener('DOMContentLoaded', () => {
+    navigateTo('today');
 });
-
-
-/*document.addEventListener('DOMContentLoaded', async () => {
-    // 1. Carichiamo la struttura "Today"
-    await loadComponent('app-root', 'components/today/today.html');
-
-    // 2. Carichiamo la logica di coordinamento di Today
-    await loadScript('components/today/today.js');
-    
-    // 3. Inizializziamo i componenti (gestito ora da today.js o qui sotto)
-    if (window.initToday) {
-        await window.initToday();
-    }
-});*/

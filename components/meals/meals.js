@@ -45,7 +45,7 @@ async function initMeals(container) {
                         subtitle: meal.count,
                         trailing: statusIcons[meal.status],
                         bgClass: meal.bgClass,
-                        onClick: `console.log('Clicked on ${meal.name}')`
+                        onClick: meal.name === 'Colazione' ? `navigateTo('current-meal')` : `console.log('Clicked on ${meal.name}')`
                     })).join('')}
                 </div>
             </div>

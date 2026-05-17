@@ -51,7 +51,9 @@ class CurrentMeal {
         // 1. Top Navigation (Plugging Header)
         const navRoot = document.getElementById('c-meal-nav-root');
         if (navRoot) {
-            const backIcon = `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>`;
+            const backIcon = `<div onclick="navigateTo('today')" style="cursor: pointer; display: flex; align-items: center;">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+            </div>`;
             const moreIcon = `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/><circle cx="5" cy="12" r="1"/></svg>`;
             
             window.initHeader(navRoot, {
