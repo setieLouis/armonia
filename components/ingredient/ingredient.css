@@ -28,6 +28,8 @@
     bottom: 0;
     left: 50%;
     transform: translateX(-50%);
+    width: 375px;
+    max-width: 100vw;
     background: #FFFFFF;
     border-radius: 32px 32px 0 0;
     height: 85%;
@@ -36,6 +38,7 @@
     flex-direction: column;
     box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.15);
     animation: slideUp 0.3s ease-out;
+    overflow: hidden; /* Prevent content from leaking out of the sheet's radius */
 }
 
 @keyframes slideUp {
@@ -56,12 +59,20 @@
     display: flex;
     flex-direction: column;
     padding: 0 0 20px;
+    min-height: 0; /* Important for flex children to scroll */
 }
 
 .c-alt-sheet__scrollable {
     flex: 1;
     overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
     padding: 0 24px 40px;
+    min-height: 0;
+}
+
+/* Hide scrollbar for a cleaner look consistent with other components */
+.c-alt-sheet__scrollable::-webkit-scrollbar {
+    display: none;
 }
 
 .c-alt-list {
