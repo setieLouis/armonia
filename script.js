@@ -50,6 +50,12 @@ async function navigateTo(view) {
             if (window.initCurrentMeal) await window.initCurrentMeal();
         });
     }
+    else if (view === 'ingredient') {
+        await loadComponent(appRoot, 'components/ingredient/ingredient.html', async () => {
+            await loadScript('components/ingredient/ingredient.js');
+            if (window.initCurrentMeal) await window.initCurrentMeal();
+        });
+    }
 }
 
 window.loadComponent = loadComponent;
@@ -57,5 +63,5 @@ window.loadScript = loadScript;
 window.navigateTo = navigateTo;
 
 document.addEventListener('DOMContentLoaded', () => {
-    navigateTo('today');
+    navigateTo('ingredient');
 });
