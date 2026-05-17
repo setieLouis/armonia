@@ -1,6 +1,20 @@
-<!-- Step 1: Structure for Today Fragment -->
-<div class="tod mobile-container">
-    <div class="tod scrollable-content">
-        <p>Ciao Mamma</p>
+<!-- Root container for Current Meal -->
+<div class="c-meal mobile-container">
+    <div class="c-meal__scrollable scrollable-content">
+        <!-- Top Navigation (Pluggable Header) -->
+        <div id="c-meal-nav-root"></div>
+
+        <!-- Meal Header (Pluggable ListTile) -->
+        <div id="c-meal-header-root" class="c-meal__header"></div>
+
+        <!-- Food List -->
+        <main id="c-meal-list-root" class="c-meal__list">
+            <!-- Items will be rendered here -->
+        </main>
     </div>
+
+    <!-- Alternatives Footer -->
+    <footer id="c-meal-footer-root" class="c-meal__footer">
+        <!-- Alternatives button -->
+    </footer>
 </div>
