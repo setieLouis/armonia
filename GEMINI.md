@@ -20,3 +20,25 @@ Prima di iniziare l'implementazione di una nuova vista o pagina partendo da un m
     - **Step Finale**: Inserire una checklist di riepilogo per monitorare l'avanzamento di tutti gli step definiti nella Roadmap.
 
 ---
+
+## Componenti Plug-and-Play (Reusable Components)
+
+Per garantire coerenza visiva e velocità di sviluppo, è obbligatorio verificare e utilizzare i componenti "pluggable" prima di creare nuovo codice UI ridondante.
+
+### 1. ListTile (`components/list-tile/list-tile.js`)
+Il componente atomico più importante per liste e intestazioni.
+- **Varianti**:
+    - `default`: Card bianca con ombra, usata per elementi di liste cliccabili.
+    - `header`: Trasparente, font grandi, usata per titoli di sezione.
+- **Proprietà principali**: `leading` (icona/immagine), `title`, `subtitle`, `trailing` (azione/status), `bgClass`.
+
+### 2. Header (`components/header/header.js`)
+Gestore della barra di navigazione superiore.
+- **Funzione**: `initHeader(container, {left, rigth})`.
+- **Utilizzo**: Gestione di titoli dinamici, pulsanti "back" e menu opzioni.
+- **Stato**: Supporta `updateHeader` per aggiornamenti in tempo reale senza re-rendering dell'intera pagina.
+
+### Regola d'Oro del Riuso
+Se un elemento del mockup somiglia a una riga di lista o a una barra superiore, **NON** scrivere HTML/CSS custom nella nuova vista. "Plugga" i componenti sopra citati e configurali via JavaScript nell'orchestratore della vista.
+
+---
