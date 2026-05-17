@@ -1,4 +1,62 @@
-const today = [{"day":"2026-05-17T16:45:05.913Z","todayMeal":[{"id":"6067489f-4abf-4d5f-a9f1-65b12aa82fb9","label":"Colazione","meals":[{"name":"Caffè","quantity":"1 tazzina"},{"name":"Latte vaccino","quantity":"Mezzo bichiere"},{"name":"Yogurt greco interno","quantity":"100 g"},{"name":"Burro di arachidi","quantity":"30 g"},{"name":"Mirtilli","quantity":"50 g"}]},{"id":"5df8c892-d180-400b-8741-e8f117f0df1d","label":"Spuntino","meals":[{"name":"Caffè","quantity":"1 tazzina"},{"name":"Latte vaccino","quantity":"Mezzo bichiere"},{"name":"Yogurt greco interno","quantity":"100 g"},{"name":"Burro di arachidi","quantity":"30 g"},{"name":"Mirtilli","quantity":"50 g"}]},{"id":"e85703f6-68de-4d0e-81e7-5c4622438e61","label":"Pranzo","meals":[{"name":"Caffè","quantity":"1 tazzina"},{"name":"Latte vaccino","quantity":"Mezzo bichiere"},{"name":"Yogurt greco interno","quantity":"100 g"},{"name":"Burro di arachidi","quantity":"30 g"},{"name":"Mirtilli","quantity":"50 g"}]},{"id":"1bfef08f-effd-443b-96f3-cd9f540c9a50","label":"Meranda","meals":[{"name":"Caffè","quantity":"1 tazzina"},{"name":"Latte vaccino","quantity":"Mezzo bichiere"},{"name":"Yogurt greco interno","quantity":"100 g"},{"name":"Burro di arachidi","quantity":"30 g"},{"name":"Mirtilli","quantity":"50 g"}]},{"id":"1bfef08f-effd-443b-96f3-cd9f540c9a50","label":"Cena","meals":[{"name":"Caffè","quantity":"1 tazzina"},{"name":"Latte vaccino","quantity":"Mezzo bichiere"},{"name":"Yogurt greco interno","quantity":"100 g"},{"name":"Burro di arachidi","quantity":"30 g"},{"name":"Mirtilli","quantity":"50 g"}]}]}]
-
-
-
+const today = [
+    {
+        "day": "2026-05-17T16:45:05.913Z",
+        "meals": [
+            {
+                "id": "6067489f-4abf-4d5f-a9f1-65b12aa82fb9",
+                "label": "Colazione",
+                "dishes": [
+                    { "name": "Caffè", "quantity": "1 tazzina", "use": false },
+                    { "name": "Latte vaccino", "quantity": "Mezzo bicchiere", "use": false },
+                    { "name": "Yogurt greco interno", "quantity": "100 g", "use": false },
+                    { "name": "Burro di arachidi", "quantity": "30 g", "use": false },
+                    { "name": "Mirtilli", "quantity": "50 g", "use": false }
+                ]
+            },
+            {
+                "id": "5df8c892-d180-400b-8741-e8f117f0df1d",
+                "label": "Spuntino",
+                "dishes": [
+                    { "name": "Caffè", "quantity": "1 tazzina", "use": false },
+                    { "name": "Latte vaccino", "quantity": "Mezzo bicchiere", "use": false },
+                    { "name": "Yogurt greco interno", "quantity": "100 g", "use": false },
+                    { "name": "Burro di arachidi", "quantity": "30 g", "use": false },
+                    { "name": "Mirtilli", "quantity": "50 g", "use": false }
+                ]
+            },
+            {
+                "id": "e85703f6-68de-4d0e-81e7-5c4622438e61",
+                "label": "Pranzo",
+                "dishes": [
+                    { "name": "Caffè", "quantity": "1 tazzina", "use": false },
+                    { "name": "Latte vaccino", "quantity": "Mezzo bicchiere", "use": false },
+                    { "name": "Yogurt greco interno", "quantity": "100 g", "use": false },
+                    { "name": "Burro di arachidi", "quantity": "30 g", "use": false },
+                    { "name": "Mirtilli", "quantity": "50 g", "use": false }
+                ]
+            },
+            {
+                "id": "1bfef08f-effd-443b-96f3-cd9f540c9a50",
+                "label": "Merenda",
+                "dishes": [
+                    { "name": "Caffè", "quantity": "1 tazzina", "use": false },
+                    { "name": "Latte vaccino", "quantity": "Mezzo bicchiere", "use": false },
+                    { "name": "Yogurt greco interno", "quantity": "100 g", "use": false },
+                    { "name": "Burro di arachidi", "quantity": "30 g", "use": false },
+                    { "name": "Mirtilli", "quantity": "50 g", "use": false }
+                ]
+            },
+            {
+                "id": "1bfef08f-effd-443b-96f3-cd9f540c9a50",
+                "label": "Cena",
+                "dishes": [
+                    { "name": "Caffè", "quantity": "1 tazzina", "use": false },
+                    { "name": "Latte vaccino", "quantity": "Mezzo bicchiere", "use": false },
+                    { "name": "Yogurt greco interno", "quantity": "100 g", "use": false },
+                    { "name": "Burro di arachidi", "quantity": "30 g", "use": false },
+                    { "name": "Mirtilli", "quantity": "50 g", "use": false }
+                ]
+            }
+        ]
+    }
+];

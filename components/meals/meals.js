@@ -4,12 +4,14 @@
 
 
 
-async function initMeals(container,meals) {
+async function initMeals(container, initialMeals) {
     // 1. Assicuriamoci che ListTile sia caricato
     if (typeof window.renderListTile !== 'function') {
         await loadScript('components/list-tile/list-tile.js');
     }
     window.injectListTileStyles();
+
+    let meals = initialMeals;
    
 
     const statusIcons = {
@@ -45,10 +47,10 @@ async function initMeals(container,meals) {
         }
     }
 
-    function countUsed(meals){
+    function countUsed(dishes) {
         let res = 0;
-        for(let i = 0; i < meals.length;i++ ){
-            res += meals.use == true ? 1 : 0;
+        for (let i = 0; i < dishes.length; i++) {
+            res += dishes[i].use === true ? 1 : 0;
         }
         return res
     }
@@ -60,15 +62,15 @@ async function initMeals(container,meals) {
                 <h3 class="meals-title">Pasti della giornata</h3>
                 <div class="meals-list">
                     ${meals.map(meal => {
-                       const icon  =  getIcon(meal.label);
-                       return window.renderListTile({
-                        leading: icon.icon,
-                        title: meal.label,
-                        subtitle: `${countUsed(meal.dishes)} " / ${meal.dishes.length} completati`,
-                        trailing: statusIcons['checked'],
-                        bgClass: icon.bgClass,
-                        onClick: meal.label === 'Colazione' ? `navigateTo('current-meal')` : `console.log('Clicked on ${meal.name}')`
-                    })
+                        const icon = getIcon(meal.label);
+                        return window.renderListTile({
+                            leading: icon.icon,
+                            title: meal.label,
+                            subtitle: `${countUsed(meal.dishes)} / ${meal.dishes.length} completati`,
+                            trailing: statusIcons['checked'],
+                            bgClass: icon.bgClass,
+                            onClick: meal.label === 'Colazione' ? `navigateTo('current-meal')` : `console.log('Clicked on ${meal.label}')`
+                        })
                     }).join('')}
                 </div>
             </div>
@@ -90,7 +92,7 @@ async function initMeals(container,meals) {
 
     // Esponiamo aggiornamento
     window.updateMeals = function(newData) {
-        mealsData = newData;
+        meals = newData;
         render();
     };
 
