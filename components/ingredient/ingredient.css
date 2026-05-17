@@ -75,6 +75,27 @@
     display: none;
 }
 
+/* Header Centering Override */
+#alt-header-root .greeting-row {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    width: 100%;
+}
+
+#alt-header-root .greeting-text {
+    width: 100%;
+    text-align: center;
+    display: block; /* Force block to respect width and text-align */
+    padding: 0 40px;
+}
+
+#alt-header-root .icon-container {
+    position: absolute;
+    right: 20px;
+}
+
 .c-alt-list {
     display: flex;
     flex-direction: column;
