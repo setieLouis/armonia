@@ -63,5 +63,5 @@ window.loadScript = loadScript;
 window.navigateTo = navigateTo;
 
 document.addEventListener('DOMContentLoaded', () => {
-    navigateTo('ingredient');
+    navigateTo('today');
 });
