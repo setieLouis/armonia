@@ -16,7 +16,7 @@
             "label": "Spuntino Mattina",
             "dishes": [
                 { "name": "Mandorle", "quantity": "15g", "use": true },
-                { "name": "Mela", "quantity": "1 media", "use": false }
+                { "name": "Mela", "quantity": "1 media", "use": true }
             ]
         },
         {
@@ -25,7 +25,7 @@
             "dishes": [
                 { "name": "Riso Integrale", "quantity": "80g", "use": true },
                 { "name": "Salmone al Vapore", "quantity": "120g", "use": true },
-                { "name": "Asparagi", "quantity": "200g", "use": false },
+                { "name": "Asparagi", "quantity": "200g", "use": true },
                 { "name": "Olio EVO", "quantity": "1 cucchiaio", "use": true }
             ]
         },

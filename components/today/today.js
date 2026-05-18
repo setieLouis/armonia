@@ -3,19 +3,20 @@
 async function initToday() {
     console.log("Inizializzazione sub-componenti Today...");
 
-    // Caricamento dati da JSON
+    // Caricamento dati tramite DataService
     let currentDayMeals;
     let todayData;
 
     try {
-        const [mealsRes, dataRes] = await Promise.all([
-            fetch('components/today/today_meals.json'),
-            fetch('components/today/today_data.json')
-        ]);
-        currentDayMeals = await mealsRes.json();
+        // Carichiamo i pasti dal servizio centralizzato
+        currentDayMeals = await window.dataService.loadData();
+        
+        // Per oggi_data.json (info utente), manteniamo il fetch locale o lo portiamo nel servizio?
+        // Per ora manteniamolo semplice
+        const dataRes = await fetch('components/today/today_data.json');
         todayData = await dataRes.json();
     } catch (error) {
-        console.error("Errore nel caricamento dei dati JSON:", error);
+        console.error("Errore nel caricamento dei dati:", error);
         return;
     }
 
@@ -50,7 +51,7 @@ async function initToday() {
             dateFull: `${targetDate.getDate()} ${months[targetDate.getMonth()]}`
         };
 
-        // Calcolo della vista settimanale (centrata sulla data corrente)
+        // Calcolo della vista settimanale
         const days = [];
         const startOfWeek = new Date(targetDate);
         startOfWeek.setDate(targetDate.getDate() - targetDate.getDay()); // Inizio Domenica
@@ -83,34 +84,38 @@ async function initToday() {
             await loadScript('components/progress/progress.js');
         }
 
-        // Calcolo progresso reale
-        let totalDishes = 0;
-        let completedDishes = 0;
+        // Funzione per aggiornare la progress bar
+        const updateProgressBar = () => {
+            const percentage = window.dataService.calculateProgress();
+            
+            let message = "";
+            if (percentage >= 100) message = "Giornata completata! Bravissima! 🎉";
+            else if (percentage >= 90) message = "Ultimo sforzo, ci sei quasi! 🔥";
+            else if (percentage >= 80) message = "Quasi tutto completato! 🌟";
+            else if (percentage >= 70) message = "Ottimo lavoro! Manca poco! 🌱";
+            else if (percentage >= 60) message = "Superato il 60%! Continua così! 🌿";
+            else if (percentage >= 50) message = "Metà giornata superata! Grandiosa! ⚡";
+            else if (percentage >= 40) message = "Ti stai avvicinando alla metà! 🌤️";
+            else if (percentage >= 30) message = "Un terzo del percorso è andato! ✨";
+            else if (percentage >= 20) message = "Stai prendendo il ritmo giusto! 💃";
+            else if (percentage >= 10) message = "Il primo passo è fatto! Dai! 🚀";
+            else message = "Inizia la tua giornata con energia! ☕";
 
-        currentDayMeals.meals.forEach(meal => {
-            totalDishes += meal.dishes.length;
-            completedDishes += meal.dishes.filter(d => d.use).length;
-        });
+            window.initProgress(progressRoot, {
+                label: "Giornata completata",
+                percentage: percentage,
+                message: message
+            });
+        };
 
-        const percentage = totalDishes > 0 ? Math.round((completedDishes / totalDishes) * 100) : 0;
-        
-        let message = "";
-        if (percentage >= 100) message = "Giornata completata! Bravissima! 🎉";
-        else if (percentage >= 90) message = "Ultimo sforzo, ci sei quasi! 🔥";
-        else if (percentage >= 80) message = "Quasi tutto completato! 🌟";
-        else if (percentage >= 70) message = "Ottimo lavoro! Manca poco! 🌱";
-        else if (percentage >= 60) message = "Superato il 60%! Continua così! 🌿";
-        else if (percentage >= 50) message = "Metà giornata superata! Grandiosa! ⚡";
-        else if (percentage >= 40) message = "Ti stai avvicinando alla metà! 🌤️";
-        else if (percentage >= 30) message = "Un terzo del percorso è andato! ✨";
-        else if (percentage >= 20) message = "Stai prendendo il ritmo giusto! 💃";
-        else if (percentage >= 10) message = "Il primo passo è fatto! Dai! 🚀";
-        else message = "Inizia la tua giornata con energia! ☕";
+        // Inizializzazione
+        updateProgressBar();
 
-        window.initProgress(progressRoot, {
-            label: "Giornata completata",
-            percentage: percentage,
-            message: message
+        // Iscrizione ai cambiamenti per aggiornare in tempo reale
+        window.dataService.subscribe(() => {
+            updateProgressBar();
+            // Aggiorniamo anche la lista pasti se visibile
+            if (window.updateMeals) window.updateMeals(window.dataService.getMeals());
         });
     }
 }

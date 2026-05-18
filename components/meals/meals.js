@@ -71,11 +71,11 @@ async function initMeals(container, initialMeals) {
                         else if (completedCount > 0) status = 'partial';
 
                         return window.renderListTile({
-                            leading: icon.icon,
+                            leading: `<div onclick="toggleMealConsumption('${meal.id}', event)" class="status-toggle">${statusIcons[status]}</div>`,
                             title: meal.label,
                             subtitle: `${completedCount} / ${totalCount} completati`,
-                            trailing: statusIcons[status],
-                            bgClass: icon.bgClass,
+                            trailing: `<div class="meal-icon-box ${icon.bgClass}">${icon.icon}</div>`,
+                            bgClass: '', 
                             onClick: `navigateTo('current-meal', { mealId: '${meal.id}' })`
                         })
                     }).join('')}
@@ -93,9 +93,39 @@ async function initMeals(container, initialMeals) {
                     margin-bottom: 20px;
                     color: #333;
                 }
+                .status-toggle {
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    cursor: pointer;
+                    transition: transform 0.2s ease;
+                }
+                .status-toggle:active {
+                    transform: scale(0.9);
+                }
+                .meal-icon-box {
+                    width: 48px;
+                    height: 48px;
+                    border-radius: 14px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    font-size: 24px;
+                }
+                /* Icon Backgrounds */
+                .tod-mea .bg-sun { background-color: #fff9ed; }
+                .tod-mea .bg-apple { background-color: #fef1f0; }
+                .tod-mea .bg-bowl { background-color: #fff3eb; }
+                .tod-mea .bg-moon { background-color: #f3f7fb; }
             </style>
         `;
     }
+
+    // Funzione globale per il toggle (esposta per l'onclick inline)
+    window.toggleMealConsumption = function(mealId, event) {
+        if (event) event.stopPropagation();
+        window.dataService.toggleMealStatus(mealId);
+    };
 
     // Esponiamo aggiornamento
     window.updateMeals = function(newData) {

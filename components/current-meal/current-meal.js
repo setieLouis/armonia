@@ -49,19 +49,20 @@ class CurrentMeal {
         await Promise.all(deps);
         window.injectListTileStyles();
 
-        // Load data from JSON
+        // Load data using DataService
         try {
-            const response = await fetch('components/today/today_meals.json');
-            const mealsData = await response.json();
+            await window.dataService.loadData();
             
             // Find selected meal by ID from navData, or default to first meal
             let selectedMeal;
             if (this.navData && this.navData.mealId) {
-                selectedMeal = mealsData.meals.find(m => m.id === this.navData.mealId);
+                selectedMeal = window.dataService.getMealById(this.navData.mealId);
+                this.currentMealId = this.navData.mealId;
             }
             
             if (!selectedMeal) {
-                selectedMeal = mealsData.meals[0];
+                selectedMeal = window.dataService.getMeals()[0];
+                this.currentMealId = selectedMeal.id;
             }
             
             const iconInfo = this.getMealIcon(selectedMeal.label);
@@ -69,12 +70,10 @@ class CurrentMeal {
             this.data.mealName = selectedMeal.label;
             this.data.icon = iconInfo.icon;
             this.data.bgClass = iconInfo.bgClass;
-            this.data.items = selectedMeal.dishes.map((dish, index) => ({
-                id: index + 1,
-                name: dish.name,
-                quantity: dish.quantity,
-                completed: dish.use
-            }));
+            
+            // Map dishes to our local data format
+            this.updateLocalItems(selectedMeal);
+            
         } catch (error) {
             console.error("Errore nel caricamento dei pasti:", error);
         }
@@ -84,6 +83,15 @@ class CurrentMeal {
 
         this.render();
         this.setupLongPress();
+    }
+
+    updateLocalItems(selectedMeal) {
+        this.data.items = selectedMeal.dishes.map((dish, index) => ({
+            id: index, // Use index for toggling in the service
+            name: dish.name,
+            quantity: dish.quantity,
+            completed: dish.use
+        }));
     }
 
     setupLongPress() {
@@ -180,11 +188,11 @@ class CurrentMeal {
         }
     }
 
-    toggleItem(id) {
-        const item = this.data.items.find(i => i.id === id);
-        if (item) {
-            item.completed = !item.completed;
-            this.render(); // Re-render everything to update state
+    toggleItem(index) {
+        if (window.dataService.toggleDishStatus(this.currentMealId, index)) {
+            const selectedMeal = window.dataService.getMealById(this.currentMealId);
+            this.updateLocalItems(selectedMeal);
+            this.render();
         }
     }
 
@@ -206,11 +214,11 @@ class CurrentMeal {
         listRoot.innerHTML = this.data.items.map(item => {
             const iconData = window.getDishIcon(item.name);
             return window.renderListTile({
-                leading: iconData.emoji,
-                bgClass: iconData.bg,
+                leading: item.completed ? checkIcon : emptyCircle,
+                bgClass: '', 
                 title: item.name,
                 subtitle: item.quantity,
-                trailing: item.completed ? checkIcon : emptyCircle,
+                trailing: `<div class="meal-icon-wrapper ${iconData.bg}">${iconData.emoji}</div>`,
                 onClick: `currentMealApp.toggleItem(${item.id})`
             });
         }).join('');
