@@ -214,11 +214,11 @@ class CurrentMeal {
         listRoot.innerHTML = this.data.items.map(item => {
             const iconData = window.getDishIcon(item.name);
             return window.renderListTile({
-                leading: item.completed ? checkIcon : emptyCircle,
-                bgClass: '', 
+                leading: iconData.emoji,
+                bgClass: iconData.bg,
                 title: item.name,
                 subtitle: item.quantity,
-                trailing: `<div class="meal-icon-wrapper ${iconData.bg}">${iconData.emoji}</div>`,
+                trailing: item.completed ? checkIcon : emptyCircle,
                 onClick: `currentMealApp.toggleItem(${item.id})`
             });
         }).join('');

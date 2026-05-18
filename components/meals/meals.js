@@ -71,11 +71,11 @@ async function initMeals(container, initialMeals) {
                         else if (completedCount > 0) status = 'partial';
 
                         return window.renderListTile({
-                            leading: `<div onclick="toggleMealConsumption('${meal.id}', event)" class="status-toggle">${statusIcons[status]}</div>`,
+                            leading: icon.icon,
                             title: meal.label,
                             subtitle: `${completedCount} / ${totalCount} completati`,
-                            trailing: `<div class="meal-icon-box ${icon.bgClass}">${icon.icon}</div>`,
-                            bgClass: '', 
+                            trailing: `<div onclick="toggleMealConsumption('${meal.id}', event)" class="status-toggle">${statusIcons[status]}</div>`,
+                            bgClass: icon.bgClass,
                             onClick: `navigateTo('current-meal', { mealId: '${meal.id}' })`
                         })
                     }).join('')}
