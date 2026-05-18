@@ -77,7 +77,34 @@ async function initToday() {
     });
 
     // Step 5: Caricamento Progress bar
-    await loadComponent('progress-root', 'components/progress/progress.html');
+    const progressRoot = document.getElementById('progress-root');
+    if (progressRoot) {
+        if (typeof window.initProgress !== 'function') {
+            await loadScript('components/progress/progress.js');
+        }
+
+        // Calcolo progresso reale
+        let totalDishes = 0;
+        let completedDishes = 0;
+
+        currentDayMeals.meals.forEach(meal => {
+            totalDishes += meal.dishes.length;
+            completedDishes += meal.dishes.filter(d => d.use).length;
+        });
+
+        const percentage = totalDishes > 0 ? Math.round((completedDishes / totalDishes) * 100) : 0;
+        
+        let message = "Continua così! 💪";
+        if (percentage === 100) message = "Giornata completata! Bravissima! 🎉";
+        else if (percentage >= 70) message = "Ottimo lavoro! 🌱";
+        else if (percentage >= 40) message = "Sei a metà strada! ⚡";
+
+        window.initProgress(progressRoot, {
+            label: "Giornata completata",
+            percentage: percentage,
+            message: message
+        });
+    }
 }
 
 // Chiamiamo l'inizializzazione se siamo nel contesto giusto
