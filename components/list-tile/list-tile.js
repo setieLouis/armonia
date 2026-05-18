@@ -111,6 +111,8 @@ const listTileStyles = `
         .bg-apple { background-color: #fef1f0; }
         .bg-bowl { background-color: #fff3eb; }
         .bg-moon { background-color: #f3f7fb; }
+        .bg-alt-green { background-color: #eaf1e8; color: #719b6e; }
+        .bg-alt-yellow { background-color: #fff9ed; color: #f29c54; }
     </style>
 `;
 

@@ -6,10 +6,10 @@ class IngredientAlternatives {
         this.data = {
             title: 'Alternative disponibili',
             items: [
-                { name: 'Yogurt greco 0%', quantity: '100 g', macros: '59 kcal • 10 g proteine • 0 g grassi', img: 'https://images.unsplash.com/photo-1488477181946-6428a0291777?w=100', bgClass: 'bg-alt-green' },
-                { name: 'Skyr bianco', quantity: '100 g', macros: '60 kcal • 11 g proteine • 0.2 g grassi', img: 'https://images.unsplash.com/photo-1488477181946-6428a0291777?w=100', bgClass: 'bg-alt-yellow' },
-                { name: 'Yogurt naturale', quantity: '100 g', macros: '61 kcal • 3.5 g proteine • 3.3 g grassi', img: 'https://images.unsplash.com/photo-1488477181946-6428a0291777?w=100', bgClass: '' },
-                { name: 'Yogurt di soia', quantity: '100 g', macros: '80 kcal • 6 g proteine • 3 g grassi', img: 'https://images.unsplash.com/photo-1488477181946-6428a0291777?w=100', bgClass: '' }
+                { name: 'Yogurt greco 0%', quantity: '100 g', macros: '59 kcal • 10 g proteine • 0 g grassi', bgClass: 'bg-alt-green' },
+                { name: 'Skyr bianco', quantity: '100 g', macros: '60 kcal • 11 g proteine • 0.2 g grassi', bgClass: 'bg-alt-yellow' },
+                { name: 'Yogurt naturale', quantity: '100 g', macros: '61 kcal • 3.5 g proteine • 3.3 g grassi', bgClass: '' },
+                { name: 'Yogurt di soia', quantity: '100 g', macros: '80 kcal • 6 g proteine • 3 g grassi', bgClass: '' }
             ]
         };
         this.init();
@@ -19,15 +19,21 @@ class IngredientAlternatives {
         console.log('IngredientAlternatives initializing...');
         
         // Load dependencies
+        const deps = [];
         if (typeof window.initHeader !== 'function') {
-            await loadScript('components/header/header.js');
+            deps.push(loadScript('components/header/header.js'));
         }
         if (typeof window.renderListTile !== 'function') {
-            await loadScript('components/list-tile/list-tile.js');
+            deps.push(loadScript('components/list-tile/list-tile.js'));
         }
         if (typeof window.renderInfoBanner !== 'function') {
-            await loadScript('components/info-banner/info-banner.js');
+            deps.push(loadScript('components/info-banner/info-banner.js'));
         }
+        if (typeof window.getDishIcon !== 'function') {
+            deps.push(loadScript('service/emoji_service.js'));
+        }
+        
+        await Promise.all(deps);
         window.injectListTileStyles();
         window.injectInfoBannerStyles();
 
@@ -48,10 +54,13 @@ class IngredientAlternatives {
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
             </div>`;
 
+            const iconData = window.getDishIcon('Yogurt greco intero');
+            
             contextRoot.innerHTML = `
                 ${backIcon}
                 ${window.renderListTile({
-                    leading: `<img src="https://images.unsplash.com/photo-1488477181946-6428a0291777?w=100" style="width: 100%; height: 100%; border-radius: 50%; object-fit: cover;">`,
+                    leading: iconData.emoji,
+                    bgClass: iconData.bg,
                     title: 'Yogurt greco intero',
                     subtitle: '100 g',
                     variant: 'header'
@@ -69,7 +78,7 @@ class IngredientAlternatives {
             
             window.initHeader(headerRoot, {
                 left: `<span style="font-size: 20px; font-weight: 700; color: #111;">${this.data.title}</span>`,
-                rigth: closeIcon
+                right: closeIcon
             });
 
             // Specific adjustment: remove status bar spacer for modal
@@ -88,13 +97,16 @@ class IngredientAlternatives {
                 <path d="M12 8V16M8 12H16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
             </svg>`;
 
-        listRoot.innerHTML = this.data.items.map(item => window.renderListTile({
-            leading: `<img src="${item.img}" style="width: 100%; height: 100%; border-radius: 50%; object-fit: cover;">`,
-            title: item.name,
-            subtitle: `<span>${item.quantity}</span><br><span style="color: #888; font-size: 12px;">${item.macros}</span>`,
-            trailing: `<div style="color: ${item.bgClass ? 'inherit' : '#8da67d'}">${addIcon}</div>`,
-            bgClass: item.bgClass
-        })).join('');
+        listRoot.innerHTML = this.data.items.map(item => {
+            const iconData = window.getDishIcon(item.name);
+            return window.renderListTile({
+                leading: iconData.emoji,
+                title: item.name,
+                subtitle: `<span>${item.quantity}</span><br><span style="color: #888; font-size: 12px;">${item.macros}</span>`,
+                trailing: `<div style="color: ${item.bgClass ? 'inherit' : '#8da67d'}">${addIcon}</div>`,
+                bgClass: item.bgClass || iconData.bg
+            });
+        }).join('');
     }
 
     renderInfo() {

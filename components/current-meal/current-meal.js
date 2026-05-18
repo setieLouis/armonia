@@ -5,13 +5,7 @@ class CurrentMeal {
     constructor() {
         this.data = {
             mealName: 'Colazione',
-            items: [
-                { id: 1, name: 'Caffè', quantity: '1 tazzina', img: 'https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=100', completed: true },
-                { id: 2, name: 'Latte vaccino', quantity: 'Mezzo bicchiere', img: 'https://images.unsplash.com/photo-1564419320461-6870880221ad?w=100', completed: true },
-                { id: 3, name: 'Yogurt greco intero', quantity: '100 g', img: 'https://images.unsplash.com/photo-1488477181946-6428a0291777?w=100', completed: true },
-                { id: 4, name: 'Burro di arachidi', quantity: '30 g', img: 'https://images.unsplash.com/photo-1590301157890-4810ed352733?w=100', completed: true },
-                { id: 5, name: 'Mirtilli', quantity: '50 g', img: 'https://images.unsplash.com/photo-1498557850523-fd3d118b962e?w=100', completed: true }
-            ],
+            items: [],
             alternatives: 5
         };
         this.init();
@@ -21,13 +15,38 @@ class CurrentMeal {
         console.log('CurrentMeal initializing...');
         
         // Load dependencies
+        const deps = [];
         if (typeof window.initHeader !== 'function') {
-            await loadScript('components/header/header.js');
+            deps.push(loadScript('components/header/header.js'));
         }
         if (typeof window.renderListTile !== 'function') {
-            await loadScript('components/list-tile/list-tile.js');
+            deps.push(loadScript('components/list-tile/list-tile.js'));
         }
+        if (typeof window.getDishIcon !== 'function') {
+            deps.push(loadScript('service/emoji_service.js'));
+        }
+        
+        await Promise.all(deps);
         window.injectListTileStyles();
+
+        // Load data from JSON
+        try {
+            const response = await fetch('components/today/today_meals.json');
+            const mealsData = await response.json();
+            
+            // Per ora prendiamo la colazione come default
+            const selectedMeal = mealsData.meals[0]; 
+            
+            this.data.mealName = selectedMeal.label;
+            this.data.items = selectedMeal.dishes.map((dish, index) => ({
+                id: index + 1,
+                name: dish.name,
+                quantity: dish.quantity,
+                completed: dish.use
+            }));
+        } catch (error) {
+            console.error("Errore nel caricamento dei pasti:", error);
+        }
 
         // Global reference for event handlers
         window.currentMealApp = this;
@@ -113,7 +132,7 @@ class CurrentMeal {
             
             window.initHeader(navRoot, {
                 left: backIcon,
-                rigth: moreIcon
+                right: moreIcon
             });
         }
 
@@ -153,13 +172,17 @@ class CurrentMeal {
                 <circle cx="12" cy="12" r="10" stroke="#ddd" stroke-width="2"/>
             </svg>`;
 
-        listRoot.innerHTML = this.data.items.map(item => window.renderListTile({
-            leading: `<img src="${item.img}" style="width: 100%; height: 100%; border-radius: 50%; object-fit: cover;">`,
-            title: item.name,
-            subtitle: item.quantity,
-            trailing: item.completed ? checkIcon : emptyCircle,
-            onClick: `currentMealApp.toggleItem(${item.id})`
-        })).join('');
+        listRoot.innerHTML = this.data.items.map(item => {
+            const iconData = window.getDishIcon(item.name);
+            return window.renderListTile({
+                leading: iconData.emoji,
+                bgClass: iconData.bg,
+                title: item.name,
+                subtitle: item.quantity,
+                trailing: item.completed ? checkIcon : emptyCircle,
+                onClick: `currentMealApp.toggleItem(${item.id})`
+            });
+        }).join('');
     }
 
     renderStep4() {
