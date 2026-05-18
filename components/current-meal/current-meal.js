@@ -151,7 +151,6 @@ class CurrentMeal {
     render() {
         this.renderStep2(); // Nav & Header
         this.renderStep3(); // Food List
-        this.renderStep4(); // Footer
     }
 
     getProgressText() {
@@ -222,20 +221,6 @@ class CurrentMeal {
                 onClick: `currentMealApp.toggleItem(${item.id})`
             });
         }).join('');
-    }
-
-    renderStep4() {
-        const footerRoot = document.getElementById('c-meal-footer-root');
-        if (footerRoot) {
-            footerRoot.onclick = () => navigateTo('ingredient');
-            footerRoot.innerHTML = `
-                <span style="font-weight: 500; font-size: 15px;">Alternative disponibili</span>
-                <div style="display: flex; align-items: center; gap: 10px;">
-                    <span style="font-weight: 500; font-size: 15px;">${this.data.alternatives}</span>
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
-                </div>
-            `;
-        }
     }
 }
 
