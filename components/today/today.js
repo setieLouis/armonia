@@ -94,10 +94,18 @@ async function initToday() {
 
         const percentage = totalDishes > 0 ? Math.round((completedDishes / totalDishes) * 100) : 0;
         
-        let message = "Continua così! 💪";
-        if (percentage === 100) message = "Giornata completata! Bravissima! 🎉";
-        else if (percentage >= 70) message = "Ottimo lavoro! 🌱";
-        else if (percentage >= 40) message = "Sei a metà strada! ⚡";
+        let message = "";
+        if (percentage >= 100) message = "Giornata completata! Bravissima! 🎉";
+        else if (percentage >= 90) message = "Ultimo sforzo, ci sei quasi! 🔥";
+        else if (percentage >= 80) message = "Quasi tutto completato! 🌟";
+        else if (percentage >= 70) message = "Ottimo lavoro! Manca poco! 🌱";
+        else if (percentage >= 60) message = "Superato il 60%! Continua così! 🌿";
+        else if (percentage >= 50) message = "Metà giornata superata! Grandiosa! ⚡";
+        else if (percentage >= 40) message = "Ti stai avvicinando alla metà! 🌤️";
+        else if (percentage >= 30) message = "Un terzo del percorso è andato! ✨";
+        else if (percentage >= 20) message = "Stai prendendo il ritmo giusto! 💃";
+        else if (percentage >= 10) message = "Il primo passo è fatto! Dai! 🚀";
+        else message = "Inizia la tua giornata con energia! ☕";
 
         window.initProgress(progressRoot, {
             label: "Giornata completata",
