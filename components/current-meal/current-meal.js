@@ -2,17 +2,37 @@
  * Current Meal Component Orchestrator
  */
 class CurrentMeal {
-    constructor() {
+    constructor(navData = null) {
+        this.navData = navData;
         this.data = {
             mealName: 'Colazione',
             items: [],
-            alternatives: 5
+            alternatives: 5,
+            icon: '☀️',
+            bgClass: 'bg-sun'
         };
         this.init();
     }
 
+    getMealIcon(label) {
+        switch(label.toLowerCase()){
+            case "colazione":
+                return {icon: '☀️', bgClass: 'bg-sun'}
+            case "spuntino mattina":
+            case "spuntino":
+            case "merenda":
+                return {icon: '🍎', bgClass: 'bg-apple'}
+            case "pranzo":
+                return {icon: '🥗', bgClass: 'bg-bowl'}
+            case "cena":
+                return {icon: '🌙' , bgClass: 'bg-moon'} 
+            default:
+                return {icon: '🥗', bgClass: 'bg-bowl'}
+        }
+    }
+
     async init() {
-        console.log('CurrentMeal initializing...');
+        console.log('CurrentMeal initializing with data:', this.navData);
         
         // Load dependencies
         const deps = [];
@@ -34,10 +54,21 @@ class CurrentMeal {
             const response = await fetch('components/today/today_meals.json');
             const mealsData = await response.json();
             
-            // Per ora prendiamo la colazione come default
-            const selectedMeal = mealsData.meals[0]; 
+            // Find selected meal by ID from navData, or default to first meal
+            let selectedMeal;
+            if (this.navData && this.navData.mealId) {
+                selectedMeal = mealsData.meals.find(m => m.id === this.navData.mealId);
+            }
+            
+            if (!selectedMeal) {
+                selectedMeal = mealsData.meals[0];
+            }
+            
+            const iconInfo = this.getMealIcon(selectedMeal.label);
             
             this.data.mealName = selectedMeal.label;
+            this.data.icon = iconInfo.icon;
+            this.data.bgClass = iconInfo.bgClass;
             this.data.items = selectedMeal.dishes.map((dish, index) => ({
                 id: index + 1,
                 name: dish.name,
@@ -140,11 +171,11 @@ class CurrentMeal {
         const headerRoot = document.getElementById('c-meal-header-root');
         if (headerRoot) {
             headerRoot.innerHTML = window.renderListTile({
-                leading: '☀️',
+                leading: this.data.icon,
                 title: this.data.mealName,
                 subtitle: this.getProgressText(),
                 variant: 'header',
-                bgClass: 'bg-sun'
+                bgClass: this.data.bgClass
             });
         }
     }
@@ -204,4 +235,4 @@ class CurrentMeal {
 if (document.getElementById('c-meal-nav-root')) {
     new CurrentMeal();
 }
-window.initCurrentMeal = () => new CurrentMeal();
+window.initCurrentMeal = (data) => new CurrentMeal(data);

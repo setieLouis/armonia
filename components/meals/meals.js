@@ -63,13 +63,20 @@ async function initMeals(container, initialMeals) {
                 <div class="meals-list">
                     ${meals.map(meal => {
                         const icon = getIcon(meal.label);
+                        const completedCount = countUsed(meal.dishes);
+                        const totalCount = meal.dishes.length;
+                        
+                        let status = 'empty';
+                        if (completedCount === totalCount) status = 'checked';
+                        else if (completedCount > 0) status = 'partial';
+
                         return window.renderListTile({
                             leading: icon.icon,
                             title: meal.label,
-                            subtitle: `${countUsed(meal.dishes)} / ${meal.dishes.length} completati`,
-                            trailing: statusIcons['checked'],
+                            subtitle: `${completedCount} / ${totalCount} completati`,
+                            trailing: statusIcons[status],
                             bgClass: icon.bgClass,
-                            onClick: meal.label === 'Colazione' ? `navigateTo('current-meal')` : `console.log('Clicked on ${meal.label}')`
+                            onClick: `navigateTo('current-meal', { mealId: '${meal.id}' })`
                         })
                     }).join('')}
                 </div>

@@ -34,26 +34,26 @@ function loadScript(src) {
 }
 
 // Global navigation function
-async function navigateTo(view) {
-    console.log(`Navigating to: ${view}`);
+async function navigateTo(view, data = null) {
+    console.log(`Navigating to: ${view}`, data);
     const appRoot = 'app-root';
     
     if (view === 'today') {
         await loadComponent(appRoot, 'components/today/today.html', async () => {
             await loadScript('components/today/today.js');
-            if (window.initToday) await window.initToday();
+            if (window.initToday) await window.initToday(data);
         });
     } 
     else if (view === 'current-meal') {
         await loadComponent(appRoot, 'components/current-meal/current-meal.html', async () => {
             await loadScript('components/current-meal/current-meal.js');
-            if (window.initCurrentMeal) await window.initCurrentMeal();
+            if (window.initCurrentMeal) await window.initCurrentMeal(data);
         });
     }
     else if (view === 'ingredient') {
         await loadComponent(appRoot, 'components/ingredient/ingredient.html', async () => {
             await loadScript('components/ingredient/ingredient.js');
-            if (window.initIngredientAlternatives) await window.initIngredientAlternatives();
+            if (window.initIngredientAlternatives) await window.initIngredientAlternatives(data);
         });
     }
 }
