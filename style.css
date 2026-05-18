@@ -23,11 +23,29 @@
 
 body {
     font-family: var(--font-family);
-    background-color: var(--bg-page);
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    background-color: var(--white);
     min-height: 100vh;
     color: var(--text-main);
-    overflow: hidden; /* Evita scroll della pagina esterna */
+}
+
+.mobile-container {
+    width: 100%;
+    max-width: 500px; /* Optional: cap width on desktop for better look */
+    margin: 0 auto;
+    min-height: 100vh;
+    background-color: var(--white);
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+.scrollable-content {
+    flex: 1;
+    overflow-y: auto;
+    padding-bottom: 20px;
+}
+
+/* Hide scrollbar */
+.scrollable-content::-webkit-scrollbar {
+    display: none;
 }
