@@ -48,23 +48,15 @@ class IngredientAlternatives {
     renderContext() {
         const contextRoot = document.getElementById('alt-context-root');
         if (contextRoot) {
-            const mealParam = this.navData?.mealId ? `, { mealId: '${this.navData.mealId}' }` : '';
-            const backIcon = `<div onclick="navigateTo('current-meal'${mealParam})" style="cursor: pointer; margin-bottom: 20px;">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
-            </div>`;
-
             const iconData = window.getDishIcon(this.data.originalDish);
             
-            contextRoot.innerHTML = `
-                ${backIcon}
-                ${window.renderListTile({
-                    leading: iconData.emoji,
-                    bgClass: iconData.bg,
-                    title: this.data.originalDish,
-                    subtitle: this.data.originalQuantity,
-                    variant: 'header'
-                })}
-            `;
+            contextRoot.innerHTML = window.renderListTile({
+                leading: iconData.emoji,
+                bgClass: iconData.bg,
+                title: this.data.originalDish,
+                subtitle: this.data.originalQuantity,
+                variant: 'header'
+            });
         }
     }
 
@@ -73,17 +65,13 @@ class IngredientAlternatives {
         if (headerRoot) {
             const mealParam = this.navData?.mealId ? `, { mealId: '${this.navData.mealId}' }` : '';
             const closeIcon = `<div onclick="navigateTo('current-meal'${mealParam})" style="cursor: pointer; padding: 10px;">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
             </div>`;
             
             window.initHeader(headerRoot, {
-                left: `<span style="font-size: 20px; font-weight: 700; color: #111;">${this.data.title}</span>`,
+                left: this.data.title,
                 right: closeIcon
             });
-
-            // Specific adjustment: remove status bar spacer for modal
-            const spacer = headerRoot.querySelector('.status-bar-spacer');
-            if (spacer) spacer.style.display = 'none';
         }
     }
 

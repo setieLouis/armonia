@@ -1,123 +1,91 @@
-/* Modal Overlay Background */
-.c-alt-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: #9FB094; /* Improved sage green to match mockup */
-    z-index: 100;
+/* Scoped styles for Ingredient Alternatives - Unifying with Today/CurrentMeal */
+.c-alt {
+    background-color: var(--white);
+}
+
+.c-alt-hero {
+    background-color: #9FB094;
+    padding-bottom: 20px;
+    margin-bottom: 20px;
+    color: #FFFFFF;
 }
 
 .c-alt-context {
-    padding: 20px 24px;
+    padding: 0 24px;
+}
+
+/* Ensure ListTile in hero is white */
+.c-alt-hero .list-tile.variant-header {
     color: #FFFFFF;
 }
 
-.c-alt-context .list-tile.variant-header {
-    color: #FFFFFF;
-}
-
-.c-alt-context .list-tile-title, 
-.c-alt-context .list-tile-subtitle {
+.c-alt-hero .list-tile-title, 
+.c-alt-hero .list-tile-subtitle {
     color: #FFFFFF !important;
 }
 
-.c-alt-sheet {
-    position: fixed;
-    bottom: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 375px;
-    max-width: 100vw;
-    background: #FFFFFF;
-    border-radius: 32px 32px 0 0;
-    height: 85%;
-    z-index: 101;
-    display: flex;
-    flex-direction: column;
-    box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.15);
-    animation: slideUp 0.3s ease-out;
-    overflow: hidden; /* Prevent content from leaking out of the sheet's radius */
+/* Header Centering - Symmetrical and Robust */
+#alt-header-root .header-container {
+    padding: 10px 0;
+    background: transparent !important;
 }
 
-@keyframes slideUp {
-    from { transform: translate(-50%, 100%); }
-    to { transform: translate(-50%, 0); }
-}
-
-.c-alt-sheet__handle {
-    width: 40px;
-    height: 4px;
-    background: #E0E0E0;
-    border-radius: 2px;
-    margin: 12px auto;
-}
-
-.c-alt-sheet__content {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    padding: 0 0 20px;
-    min-height: 0; /* Important for flex children to scroll */
-}
-
-.c-alt-sheet__scrollable {
-    flex: 1;
-    overflow-y: auto;
-    -webkit-overflow-scrolling: touch;
-    padding: 0 24px 40px;
-    min-height: 0;
-}
-
-/* Hide scrollbar for a cleaner look consistent with other components */
-.c-alt-sheet__scrollable::-webkit-scrollbar {
-    display: none;
-}
-
-/* Header Centering Override */
 #alt-header-root .greeting-row {
     display: flex;
     justify-content: center;
     align-items: center;
     position: relative;
     width: 100%;
+    min-height: 48px;
 }
 
 #alt-header-root .greeting-text {
     width: 100%;
     text-align: center;
-    display: block; /* Force block to respect width and text-align */
-    padding: 0 40px;
+    display: block;
+    padding: 0 56px;
+    box-sizing: border-box;
+    font-size: 19px;
+    font-weight: 700;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: #FFFFFF !important;
 }
 
 #alt-header-root .icon-container {
     position: absolute;
-    right: 20px;
+    right: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    align-items: center;
 }
 
 .c-alt-list {
     display: flex;
     flex-direction: column;
-    gap: 16px;
-    margin-top: 20px;
+    padding: 0 24px;
+    gap: 12px;
 }
 
-/* Specific Card variants for this view */
+/* Consistent ListTile cards */
 .c-alt-list .list-tile.variant-default {
-    border: 1.5px solid #F0F0F0;
-    box-shadow: none;
+    box-shadow: 0 2px 15px rgba(0,0,0,0.03);
+    border: 1px solid rgba(0,0,0,0.02);
 }
 
-.c-alt-list .bg-alt-green { background-color: #E8F5E9; border-color: transparent !important; }
-.c-alt-list .bg-alt-yellow { background-color: #FFF9C4; border-color: transparent !important; }
+.c-alt-list .bg-alt-green { background-color: #E8F5E9; }
+.c-alt-list .bg-alt-yellow { background-color: #FFF9C4; }
 
 /* Info Banner Styling */
+#alt-info-root {
+    padding: 24px;
+}
+
 .c-alt-info {
-    margin-top: 10px;
-    margin-bottom: 20px;
     padding: 20px;
-    background-color: #FBF3E9; /* Warm beige from mockup */
+    background-color: #FBF3E9;
     border-radius: 24px;
     display: flex;
     gap: 16px;
@@ -127,7 +95,7 @@
 .c-alt-info__icon {
     width: 24px;
     height: 24px;
-    color: #9C744D; /* Golden brown icon color */
+    color: #9C744D;
     flex-shrink: 0;
 }
 
