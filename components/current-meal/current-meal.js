@@ -90,7 +90,8 @@ class CurrentMeal {
             id: index, // Use index for toggling in the service
             name: dish.name,
             quantity: dish.quantity,
-            completed: dish.use
+            completed: dish.use,
+            alternatives: dish.alternatives || []
         }));
     }
 
@@ -105,13 +106,23 @@ class CurrentMeal {
             const tile = e.target.closest('.list-tile.variant-default');
             if (!tile) return;
 
+            // Find the index of the tile among its siblings to identify the dish
+            const tiles = Array.from(listRoot.querySelectorAll('.list-tile.variant-default'));
+            const tileIndex = tiles.indexOf(tile);
+            const dishData = this.data.items[tileIndex];
+
             this.isLongPressTriggered = false;
             timer = setTimeout(() => {
                 this.isLongPressTriggered = true;
                 tile.style.transform = 'scale(0.95)';
                 tile.style.backgroundColor = '#f0f0f0';
                 setTimeout(() => {
-                    navigateTo('ingredient');
+                    navigateTo('ingredient', { 
+                        mealId: this.currentMealId,
+                        dishName: dishData.name,
+                        quantity: dishData.quantity,
+                        alternatives: dishData.alternatives
+                    });
                 }, 100);
             }, 600);
         };

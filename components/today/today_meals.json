@@ -5,7 +5,15 @@
             "id": "breakfast-123",
             "label": "Colazione",
             "dishes": [
-                { "name": "Yogurt Greco", "quantity": "150g", "use": true },
+                { 
+                    "name": "Yogurt Greco", 
+                    "quantity": "150g", 
+                    "use": true,
+                    "alternatives": [
+                        { "name": "Skyr Bianco", "quantity": "150g", "macros": "95 kcal • 16g P • 0g G" },
+                        { "name": "Yogurt di Soia", "quantity": "200g", "macros": "110 kcal • 10g P • 4g G" }
+                    ]
+                },
                 { "name": "Granola Artigianale", "quantity": "30g", "use": true },
                 { "name": "Mirtilli Freschi", "quantity": "50g", "use": true },
                 { "name": "Caffè Nero", "quantity": "1 tazzina", "use": true }
@@ -23,7 +31,15 @@
             "id": "lunch-789",
             "label": "Pranzo",
             "dishes": [
-                { "name": "Riso Integrale", "quantity": "80g", "use": true },
+                { 
+                    "name": "Riso Integrale", 
+                    "quantity": "80g", 
+                    "use": true,
+                    "alternatives": [
+                        { "name": "Quinoa", "quantity": "80g", "macros": "290 kcal • 10g P • 5g G" },
+                        { "name": "Pasta Integrale", "quantity": "70g", "macros": "250 kcal • 9g P • 2g G" }
+                    ]
+                },
                 { "name": "Salmone al Vapore", "quantity": "120g", "use": true },
                 { "name": "Asparagi", "quantity": "200g", "use": true },
                 { "name": "Olio EVO", "quantity": "1 cucchiaio", "use": true }
