@@ -1,13 +1,19 @@
-/* Scoped styles for Ingredient Alternatives - Unifying with Today/CurrentMeal */
+/* Scoped styles for Ingredient Alternatives - Branded Green Layout */
 .c-alt {
-    background-color: var(--white);
+    background-color: #719b6e; /* Primary brand green */
 }
 
 .c-alt-hero {
-    background-color: #9FB094;
+    background-color: transparent; /* Show the root green background */
     padding-bottom: 20px;
-    margin-bottom: 20px;
     color: #FFFFFF;
+}
+
+.c-alt-content {
+    background-color: var(--white);
+    min-height: 100vh; /* Ensure white background extends to bottom */
+    padding-top: 20px;
+    border-radius: 32px 32px 0 0; /* Add back the rounded top for the white section */
 }
 
 .c-alt-context {
