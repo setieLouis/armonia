@@ -78,6 +78,29 @@ class DataService {
     }
 
     /**
+     * Replaces a dish at a specific index within a meal with a new dish.
+     */
+    replaceDish(mealId, dishIndex, newDishData) {
+        const meal = this.getMealById(mealId);
+        if (meal && meal.dishes[dishIndex]) {
+            // Keep the 'use' status of the original dish
+            const originalUseStatus = meal.dishes[dishIndex].use;
+            
+            // Create the new dish object, preserving alternatives if they exist in the original or new data
+            meal.dishes[dishIndex] = {
+                ...newDishData,
+                use: originalUseStatus,
+                // We might want to keep the original alternatives or clear them
+                alternatives: meal.dishes[dishIndex].alternatives 
+            };
+            
+            this.notifyListeners();
+            return true;
+        }
+        return false;
+    }
+
+    /**
      * Calculates the overall progress percentage.
      */
     calculateProgress() {

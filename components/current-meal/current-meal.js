@@ -119,6 +119,7 @@ class CurrentMeal {
                 setTimeout(() => {
                     navigateTo('ingredient', { 
                         mealId: this.currentMealId,
+                        dishIndex: tileIndex,
                         dishName: dishData.name,
                         quantity: dishData.quantity,
                         alternatives: dishData.alternatives

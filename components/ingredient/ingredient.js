@@ -8,13 +8,18 @@ class IngredientAlternatives {
             title: 'Alternative disponibili',
             items: (navData && navData.alternatives) ? navData.alternatives : [],
             originalDish: navData?.dishName || 'Ingrediente',
-            originalQuantity: navData?.quantity || '-'
+            originalQuantity: navData?.quantity || '-',
+            mealId: navData?.mealId,
+            dishIndex: navData?.dishIndex
         };
         this.init();
     }
 
     async init() {
         console.log('IngredientAlternatives initializing with data:', this.navData);
+        
+        // Global reference for event handlers
+        window.ingredientApp = this;
         
         // Load dependencies
         const deps = [];
@@ -96,14 +101,15 @@ class IngredientAlternatives {
                 <path d="M12 8V16M8 12H16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
             </svg>`;
 
-        listRoot.innerHTML = this.data.items.map(item => {
+        listRoot.innerHTML = this.data.items.map((item, index) => {
             const iconData = window.getDishIcon(item.name);
             return window.renderListTile({
                 leading: iconData.emoji,
                 title: item.name,
                 subtitle: `<span>${item.quantity}</span><br><span style="color: #888; font-size: 12px;">${item.macros}</span>`,
                 trailing: `<div style="color: ${item.bgClass ? 'inherit' : '#8da67d'}">${addIcon}</div>`,
-                bgClass: item.bgClass || iconData.bg
+                bgClass: item.bgClass || iconData.bg,
+                onClick: `ingredientApp.selectAlternative(${index})`
             });
         }).join('');
     }
@@ -114,6 +120,20 @@ class IngredientAlternatives {
             infoRoot.innerHTML = window.renderInfoBanner({
                 message: 'Le alternative sono calcolate per avere valori nutrizionali simili.'
             });
+        }
+    }
+
+    selectAlternative(itemIndex) {
+        const item = this.data.items[itemIndex];
+        if (this.data.mealId !== undefined && this.data.dishIndex !== undefined) {
+            window.dataService.replaceDish(this.data.mealId, this.data.dishIndex, {
+                name: item.name,
+                quantity: item.quantity,
+                macros: item.macros
+            });
+            
+            // Navigate back to current meal
+            navigateTo('current-meal', { mealId: this.data.mealId });
         }
     }
 }
