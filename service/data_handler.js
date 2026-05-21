@@ -13,36 +13,27 @@ class DataService {
 
     /**
      * Loads the initial data.
-     * Strategy: Try LocalDB first, fallback to JSON for initialization.
+     * Strategy: Exclusive usage of LocalDB.
      */
     async loadData() {
         if (this.isLoaded) return this.data;
 
         try {
-            // 1. Try to load from Local Database (Dexie)
+            // Try to load from Local Database (Dexie)
             let localData = await window.localDB.getMeal(this.todayId);
 
             if (localData) {
                 console.log("DataService: Loaded data from LocalDB");
                 this.data = localData;
             } else {
-                // 2. Fallback to JSON if DB is empty
-                console.log("DataService: DB empty, loading from JSON...");
-                const response = await fetch('components/today/today_meals.json');
-                const jsonData = await response.json();
-                
-                // Use the fixed ID to ensure consistency in this demo
-                jsonData.id = this.todayId;
-                
-                // 3. Save to LocalDB for future use
-                await window.localDB.saveMeal(jsonData);
-                this.data = jsonData;
+                console.log("DataService: No data found in LocalDB");
+                this.data = null;
             }
 
             this.isLoaded = true;
             return this.data;
         } catch (error) {
-            console.error("DataService: Error loading data", error);
+            console.error("DataService: Error loading data from DB", error);
             throw error;
         }
     }
