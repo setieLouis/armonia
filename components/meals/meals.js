@@ -57,9 +57,17 @@ async function initMeals(container, initialMeals) {
 
     // 3. Funzione di Render principale
     function render() {
-        container.innerHTML = `
-            <div class="tod-mea meals-container">
-                <h3 class="meals-title">Pasti della giornata</h3>
+        let content = '';
+        
+        if (meals.length === 0) {
+            content = `
+                <div class="no-meals-state" style="padding: 30px 0; text-align: center; color: #888;">
+                    <div style="font-size: 40px; margin-bottom: 10px; opacity: 0.5;">🥗</div>
+                    <p style="font-size: 14px;">Nessun pasto pianificato per oggi.</p>
+                </div>
+            `;
+        } else {
+            content = `
                 <div class="meals-list">
                     ${meals.map(meal => {
                         const icon = getIcon(meal.label);
@@ -80,6 +88,13 @@ async function initMeals(container, initialMeals) {
                         })
                     }).join('')}
                 </div>
+            `;
+        }
+
+        container.innerHTML = `
+            <div class="tod-mea meals-container">
+                <h3 class="meals-title">Pasti della giornata</h3>
+                ${content}
             </div>
 
             <style>

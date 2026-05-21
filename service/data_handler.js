@@ -8,32 +8,35 @@ class DataService {
         this.data = null;
         this.isLoaded = false;
         this.listeners = [];
-        this.todayId = "2026-05-18"; // Hardcoded for this demo, should be dynamic in real app
+        this.todayId = new Date().toISOString().split('T')[0];
+        this.currentDateId = null;
     }
 
     /**
-     * Loads the initial data.
+     * Loads the initial data for a specific date.
      * Strategy: Exclusive usage of LocalDB.
      */
-    async loadData() {
-        if (this.isLoaded) return this.data;
+    async loadData(dateId = this.todayId) {
+        // Use a cache for the currently loaded data if it matches the requested date
+        if (this.isLoaded && this.currentDateId === dateId) return this.data;
 
         try {
             // Try to load from Local Database (Dexie)
-            let localData = await window.localDB.getMeal(this.todayId);
+            let localData = await window.localDB.getMeal(dateId);
 
             if (localData) {
-                console.log("DataService: Loaded data from LocalDB");
+                console.log(`DataService: Loaded data for ${dateId} from LocalDB`);
                 this.data = localData;
             } else {
-                console.log("DataService: No data found in LocalDB");
+                console.log(`DataService: No data found for ${dateId} in LocalDB`);
                 this.data = null;
             }
 
+            this.currentDateId = dateId;
             this.isLoaded = true;
             return this.data;
         } catch (error) {
-            console.error("DataService: Error loading data from DB", error);
+            console.error(`DataService: Error loading data for ${dateId} from DB`, error);
             throw error;
         }
     }

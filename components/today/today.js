@@ -40,8 +40,9 @@ async function initToday() {
             await loadScript('components/calendar/calendar.js');
         }
 
-        // Generazione dinamica dati calendario basata su currentDayMeals.day
-        const targetDate = new Date(currentDayMeals.day);
+        // Generazione dinamica dati calendario
+        // Se non ci sono pasti per oggi, usiamo la data corrente del sistema
+        const targetDate = currentDayMeals ? new Date(currentDayMeals.day) : new Date();
         const dayNames = ['Dom', 'Lun', 'Mar', 'Mer', 'Gio', 'Ven', 'Sab'];
         const fullDayNames = ['Domenica', 'Lunedì', 'Martedì', 'Mercoledì', 'Giovedì', 'Venerdì', 'Sabato'];
         const months = ['Gennaio', 'Febbraio', 'Marzo', 'Aprile', 'Maggio', 'Giugno', 'Luglio', 'Agosto', 'Settembre', 'Ottobre', 'Novembre', 'Dicembre'];
@@ -74,7 +75,8 @@ async function initToday() {
         if (typeof window.initMeals !== 'function') {
             await loadScript('components/meals/meals.js');
         }
-        window.initMeals(element, currentDayMeals.meals);
+        // Se non ci sono pasti, passiamo un array vuoto
+        window.initMeals(element, currentDayMeals ? currentDayMeals.meals : []);
     });
 
     // Step 5: Caricamento Progress bar
@@ -123,4 +125,4 @@ async function initToday() {
 // Chiamiamo l'inizializzazione se siamo nel contesto giusto
 if (document.getElementById('header-root')) {
     initToday();
-}
+} 
