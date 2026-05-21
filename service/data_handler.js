@@ -8,7 +8,6 @@ class DataService {
         this.data = null;
         this.isLoaded = false;
         this.listeners = [];
-        this.todayId = new Date().toISOString().split('T')[0];
         this.currentDateId = null;
     }
 
@@ -16,7 +15,11 @@ class DataService {
      * Loads the initial data for a specific date.
      * Strategy: Exclusive usage of LocalDB.
      */
-    async loadData(dateId = this.todayId) {
+    async loadData(dateId) {
+        if (!dateId) {
+            throw new Error("DataService: dateId is required as a parameter");
+        }
+
         // Use a cache for the currently loaded data if it matches the requested date
         if (this.isLoaded && this.currentDateId === dateId) return this.data;
 

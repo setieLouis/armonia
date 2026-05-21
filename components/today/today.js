@@ -1,15 +1,18 @@
 // today.js: Orchestrator for Today sub-components
 
-async function initToday() {
-    console.log("Inizializzazione sub-componenti Today...");
+async function initToday(navData = null) {
+    console.log("Inizializzazione sub-componenti Today con navData:", navData);
 
     // Caricamento dati tramite DataService
     let currentDayMeals;
     let todayData;
 
     try {
-        // Carichiamo i pasti dal servizio centralizzato
-        currentDayMeals = await window.dataService.loadData();
+        // La data viene gestita come parametro. Se non presente in navData, usiamo la data odierna.
+        const dateId = navData?.dateId || new Date().toISOString().split('T')[0];
+
+        // Carichiamo i pasti dal servizio centralizzato passando il dateId
+        currentDayMeals = await window.dataService.loadData(dateId);
         
         // Per oggi_data.json (info utente), manteniamo il fetch locale o lo portiamo nel servizio?
         // Per ora manteniamolo semplice
