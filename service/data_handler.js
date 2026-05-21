@@ -1,6 +1,6 @@
 /**
  * data_handler.js: Centralized Data Service for Armonia Flow
- * Manages state, persistence (mock), and data transformations.
+ * Manages state, persistence (Dexie DB), and data transformations.
  */
 
 class DataService {
@@ -8,18 +8,37 @@ class DataService {
         this.data = null;
         this.isLoaded = false;
         this.listeners = [];
+        this.todayId = "2026-05-18"; // Hardcoded for this demo, should be dynamic in real app
     }
 
     /**
-     * Loads the initial data from the JSON file.
-     * In a real app, this could check localStorage first.
+     * Loads the initial data.
+     * Strategy: Try LocalDB first, fallback to JSON for initialization.
      */
     async loadData() {
         if (this.isLoaded) return this.data;
 
         try {
-            const response = await fetch('components/today/today_meals.json');
-            this.data = await response.json();
+            // 1. Try to load from Local Database (Dexie)
+            let localData = await window.localDB.getMeal(this.todayId);
+
+            if (localData) {
+                console.log("DataService: Loaded data from LocalDB");
+                this.data = localData;
+            } else {
+                // 2. Fallback to JSON if DB is empty
+                console.log("DataService: DB empty, loading from JSON...");
+                const response = await fetch('components/today/today_meals.json');
+                const jsonData = await response.json();
+                
+                // Use the fixed ID to ensure consistency in this demo
+                jsonData.id = this.todayId;
+                
+                // 3. Save to LocalDB for future use
+                await window.localDB.saveMeal(jsonData);
+                this.data = jsonData;
+            }
+
             this.isLoaded = true;
             return this.data;
         } catch (error) {
@@ -51,13 +70,23 @@ class DataService {
     }
 
     /**
+     * Persists the current state to the local database.
+     */
+    async persist() {
+        if (this.data) {
+            await window.localDB.saveMeal(this.data);
+            this.notifyListeners();
+        }
+    }
+
+    /**
      * Updates the 'use' (completed) status of a specific dish within a meal.
      */
-    toggleDishStatus(mealId, dishIndex) {
+    async toggleDishStatus(mealId, dishIndex) {
         const meal = this.getMealById(mealId);
         if (meal && meal.dishes[dishIndex]) {
             meal.dishes[dishIndex].use = !meal.dishes[dishIndex].use;
-            this.notifyListeners();
+            await this.persist();
             return true;
         }
         return false;
@@ -66,12 +95,12 @@ class DataService {
     /**
      * Mark an entire meal as consumed or unconsumed.
      */
-    toggleMealStatus(mealId) {
+    async toggleMealStatus(mealId) {
         const meal = this.getMealById(mealId);
         if (meal) {
             const allCompleted = meal.dishes.every(d => d.use);
             meal.dishes.forEach(d => d.use = !allCompleted);
-            this.notifyListeners();
+            await this.persist();
             return true;
         }
         return false;
@@ -80,21 +109,18 @@ class DataService {
     /**
      * Replaces a dish at a specific index within a meal with a new dish.
      */
-    replaceDish(mealId, dishIndex, newDishData) {
+    async replaceDish(mealId, dishIndex, newDishData) {
         const meal = this.getMealById(mealId);
         if (meal && meal.dishes[dishIndex]) {
-            // Keep the 'use' status of the original dish
             const originalUseStatus = meal.dishes[dishIndex].use;
             
-            // Create the new dish object, preserving alternatives if they exist in the original or new data
             meal.dishes[dishIndex] = {
                 ...newDishData,
                 use: originalUseStatus,
-                // We might want to keep the original alternatives or clear them
                 alternatives: meal.dishes[dishIndex].alternatives 
             };
             
-            this.notifyListeners();
+            await this.persist();
             return true;
         }
         return false;
