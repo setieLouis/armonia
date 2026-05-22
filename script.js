@@ -21,9 +21,12 @@ async function loadComponent(id, path, initFunc = null) {
 
 function loadScript(src) {
     return new Promise((resolve, reject) => {
-        // Remove existing script if it exists to allow re-initialization
+        // Check if script is already loaded
         const existingScript = document.querySelector(`script[src="${src}"]`);
-        if (existingScript) existingScript.remove();
+        if (existingScript) {
+            console.log(`Script already loaded: ${src}`);
+            return resolve();
+        }
 
         const script = document.createElement('script');
         script.src = src;
