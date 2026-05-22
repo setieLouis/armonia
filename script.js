@@ -40,8 +40,14 @@ function loadScript(src) {
 async function navigateTo(view, data = null) {
     console.log(`Navigating to: ${view}`, data);
     const appRoot = 'app-root';
+
+     if (view === 'welcome') {
+        await loadComponent(appRoot, 'components/welcome/welcome.html', async () => {
+            await loadScript('components/welcome/welcome.js');
+        });
+    } 
     
-    if (view === 'today') {
+   else if (view === 'today') {
         await loadComponent(appRoot, 'components/today/today.html', async () => {
             await loadScript('components/today/today.js');
             const navData = data || { dateId: new Date().toISOString().split('T')[0] };
@@ -67,5 +73,11 @@ window.loadScript = loadScript;
 window.navigateTo = navigateTo;
 
 document.addEventListener('DOMContentLoaded', () => {
+    navigateTo('welcome');
+});
+
+/*
+document.addEventListener('DOMContentLoaded', () => {
     navigateTo('today',{dateId: "2026-05-18"});
 });
+*/
