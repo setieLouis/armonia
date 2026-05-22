@@ -2,7 +2,7 @@
  * emoji_service.js: Service to map dish names/keywords to Unicode emojis.
  */
 
-const emojiMap = {
+var emojiMap = {
     // Breakfast
     "caffè": { emoji: "☕", bg: "bg-sun" },
     "latte": { emoji: "🥛", bg: "bg-sun" },
@@ -60,7 +60,7 @@ const emojiMap = {
     "cioccolato": { emoji: "🍫", bg: "bg-bowl" }
 };
 
-const defaultData = { emoji: "🥗", bg: "bg-bowl" };
+var defaultData = { emoji: "🥗", bg: "bg-bowl" };
 
 /**
  * Returns an emoji and background class based on the dish name.

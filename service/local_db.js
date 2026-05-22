@@ -5,17 +5,18 @@
 // Step 2: Definizione dello Schema
 const db = new Dexie("ArmoniaFlowDB");
 
+// Definizione del nuovo schema allineato a tmp_meal.json
 db.version(1).stores({
-    meals: 'id', // id è la data (es. "2026-05-18")
-    user_profile: 'key', // key può essere "info", "goals", ecc.
-    alternatives_cache: 'dishName' // cache per le alternative degli ingredienti
+    meals: 'day', // Usiamo 'day' come chiave primaria (es. "2026-05-18T08:00:00.000Z")
+    user_profile: 'key',
+    alternatives_cache: 'dishName'
 });
 
 // Funzioni helper per semplificare l'uso del DB nel DataService
 const LocalDB = {
     // Pasti
-    async getMeal(id) {
-        return await db.meals.get(id);
+    async getMeal(day) {
+        return await db.meals.get(day);
     },
     async saveMeal(mealData) {
         return await db.meals.put(mealData);
@@ -27,9 +28,17 @@ const LocalDB = {
     },
     async saveUserData(key, data) {
         return await db.user_profile.put({ key, ...data });
+    },
+
+    // Utilità per pulire tutto
+    async clearAll() {
+        await db.meals.clear();
+        await db.user_profile.clear();
+        await db.alternatives_cache.clear();
+        console.log("LocalDB: All tables cleared.");
     }
 };
 
 // Esponiamo l'istanza globalmente
 window.localDB = LocalDB;
-window.db = db; // Esponiamo anche l'istanza Dexie per debug o query avanzate
+window.db = db; 

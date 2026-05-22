@@ -139,8 +139,5 @@ class IngredientAlternatives {
     }
 }
 
-// Auto-initialize
-if (document.getElementById('alt-header-root')) {
-    new IngredientAlternatives();
-}
+// Orchestration is handled via navigateTo -> initIngredientAlternatives
 window.initIngredientAlternatives = (data) => new IngredientAlternatives(data);

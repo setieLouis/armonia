@@ -125,7 +125,5 @@ async function initToday(navData = null) {
     }
 }
 
-// Chiamiamo l'inizializzazione se siamo nel contesto giusto
-if (document.getElementById('header-root')) {
-    initToday();
-} 
+// Orchestration is handled via navigateTo -> initToday
+window.initToday = initToday;

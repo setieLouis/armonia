@@ -8,38 +8,74 @@ class DataService {
         this.data = null;
         this.isLoaded = false;
         this.listeners = [];
-        this.currentDateId = null;
+        this.currentDay = null;
+        this.isSeeded = false;
     }
 
     /**
-     * Loads the initial data for a specific date.
-     * Strategy: Exclusive usage of LocalDB.
+     * Seeds the database with initial data from tmp_meal.json if empty.
      */
-    async loadData(dateId) {
-        if (!dateId) {
-            throw new Error("DataService: dateId is required as a parameter");
-        }
-
-        // Use a cache for the currently loaded data if it matches the requested date
-        if (this.isLoaded && this.currentDateId === dateId) return this.data;
+    async seedDatabase() {
+        if (this.isSeeded) return;
 
         try {
-            // Try to load from Local Database (Dexie)
-            let localData = await window.localDB.getMeal(dateId);
+            const count = await window.db.meals.count();
+            if (count === 0) {
+                console.log("DataService: DB is empty, seeding from tmp_meal.json...");
+                const response = await fetch('tmp_meal.json');
+                const seedData = await response.json();
+                
+                for (const dayData of seedData) {
+                    // Normalize 'day' to YYYY-MM-DD format (remove timestamp)
+                    const normalizedDay = dayData.day.split('T')[0];
+                    await window.localDB.saveMeal({
+                        ...dayData,
+                        day: normalizedDay
+                    });
+                }
+                console.log("DataService: Database seeded successfully with normalized dates");
+            }
+            this.isSeeded = true;
+        } catch (error) {
+            console.warn("DataService: Could not seed database (file might not exist)", error);
+        }
+    }
+
+    /**
+     * Loads the initial data for a specific day.
+     * Strategy: Exclusive usage of LocalDB.
+     */
+    async loadData(day) {
+        if (!day) {
+            throw new Error("DataService: day is required as a parameter");
+        }
+
+        // Normalize requested day to YYYY-MM-DD
+        const targetDay = day.split('T')[0];
+
+        // Ensure database is seeded before loading
+        await this.seedDatabase();
+
+        // Use a cache for the currently loaded data if it matches the requested day
+        if (this.isLoaded && this.currentDay === targetDay) return this.data;
+
+        try {
+            // Try to load from Local Database (Dexie) using normalized 'targetDay'
+            let localData = await window.localDB.getMeal(targetDay);
 
             if (localData) {
-                console.log(`DataService: Loaded data for ${dateId} from LocalDB`);
+                console.log(`DataService: Loaded data for ${targetDay} from LocalDB`);
                 this.data = localData;
             } else {
-                console.log(`DataService: No data found for ${dateId} in LocalDB`);
+                console.log(`DataService: No data found for ${targetDay} in LocalDB`);
                 this.data = null;
             }
 
-            this.currentDateId = dateId;
+            this.currentDay = targetDay;
             this.isLoaded = true;
             return this.data;
         } catch (error) {
-            console.error(`DataService: Error loading data for ${dateId} from DB`, error);
+            console.error(`DataService: Error loading data for ${targetDay} from DB`, error);
             throw error;
         }
     }
@@ -52,18 +88,18 @@ class DataService {
     }
 
     /**
-     * Returns all meals.
+     * Returns all meals for the current loaded day.
      */
     getMeals() {
-        return this.data ? this.data.meals : [];
+        return (this.data && this.data.meals) ? this.data.meals : [];
     }
 
     /**
-     * Finds a meal by its ID.
+     * Finds a meal by its ID within the current day.
      */
-    getMealById(id) {
-        if (!this.data) return null;
-        return this.data.meals.find(m => m.id === id);
+    getMealById(mealId) {
+        if (!this.data || !this.data.meals) return null;
+        return this.data.meals.find(m => m.id === mealId);
     }
 
     /**
@@ -114,9 +150,10 @@ class DataService {
             meal.dishes[dishIndex] = {
                 ...newDishData,
                 use: originalUseStatus,
-                alternatives: meal.dishes[dishIndex].alternatives 
+                alternatives: meal.dishes[mealId === meal.id ? dishIndex : -1]?.alternatives || []
             };
             
+            // Note: alternatives handling might need refinement depending on structure
             await this.persist();
             return true;
         }
@@ -124,10 +161,10 @@ class DataService {
     }
 
     /**
-     * Calculates the overall progress percentage.
+     * Calculates the overall progress percentage for the current day.
      */
     calculateProgress() {
-        if (!this.data) return 0;
+        if (!this.data || !this.data.meals) return 0;
         
         let total = 0;
         let completed = 0;

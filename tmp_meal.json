@@ -1,0 +1,238 @@
+[
+  {
+    "day": "2026-05-18T08:00:00.000Z",
+    "meals": [
+      {
+        "id": "breakfast-123",
+        "label": "Colazione",
+        "dishes": [
+          {
+            "name": "Yogurt Greco",
+            "quantity": "150g",
+            "use": true,
+            "alternatives": [
+              {
+                "name": "Skyr Bianco",
+                "quantity": "150g",
+                "macros": "95 kcal • 16g P • 0g G"
+              },
+              {
+                "name": "Yogurt di Soia",
+                "quantity": "200g",
+                "macros": "110 kcal • 10g P • 4g G"
+              }
+            ]
+          },
+          {
+            "name": "Granola Artigianale",
+            "quantity": "30g",
+            "use": true,
+            "alternatives": [
+              {
+                "name": "Fiocchi d'Avena",
+                "quantity": "40g",
+                "macros": "150 kcal • 5g P • 3g G"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "snack-am-123",
+        "label": "Spuntino Mattina",
+        "dishes": [
+          {
+            "name": "Mandorle",
+            "quantity": "15g",
+            "use": true,
+            "alternatives": [
+              {
+                "name": "Noci",
+                "quantity": "15g",
+                "macros": "100 kcal • 2g P • 9g G"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "lunch-123",
+        "label": "Pranzo",
+        "dishes": [
+          {
+            "name": "Riso Integrale",
+            "quantity": "80g",
+            "use": true,
+            "alternatives": [
+              {
+                "name": "Quinoa",
+                "quantity": "80g",
+                "macros": "290 kcal • 10g P • 5g G"
+              },
+              {
+                "name": "Pasta Integrale",
+                "quantity": "70g",
+                "macros": "250 kcal • 9g P • 2g G"
+              }
+            ]
+          },
+          {
+            "name": "Salmone al Vapore",
+            "quantity": "120g",
+            "use": true,
+            "alternatives": [
+              {
+                "name": "Tonno Fresco",
+                "quantity": "120g",
+                "macros": "180 kcal • 25g P • 7g G"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "snack-pm-123",
+        "label": "Merenda",
+        "dishes": [
+          {
+            "name": "Hummus di Ceci",
+            "quantity": "50g",
+            "use": false,
+            "alternatives": [
+              {
+                "name": "Guacamole",
+                "quantity": "50g",
+                "macros": "90 kcal • 1g P • 8g G"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "dinner-123",
+        "label": "Cena",
+        "dishes": [
+          {
+            "name": "Petto di Pollo ai Ferri",
+            "quantity": "150g",
+            "use": false,
+            "alternatives": [
+              {
+                "name": "Tacchino ai Ferri",
+                "quantity": "150g",
+                "macros": "160 kcal • 30g P • 3g G"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "day": "2026-05-19T08:00:00.000Z",
+    "meals": [
+      {
+        "id": "breakfast-124",
+        "label": "Colazione",
+        "dishes": [
+          {
+            "name": "Porridge d'Avena",
+            "quantity": "60g",
+            "use": true,
+            "alternatives": [
+              {
+                "name": "Muesli Integrale",
+                "quantity": "50g",
+                "macros": "210 kcal • 6g P • 4g G"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "snack-am-124",
+        "label": "Spuntino Mattina",
+        "dishes": [
+          {
+            "name": "Noci",
+            "quantity": "20g",
+            "use": true,
+            "alternatives": [
+              {
+                "name": "Anacardi",
+                "quantity": "20g",
+                "macros": "115 kcal • 4g P • 9g G"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "lunch-124",
+        "label": "Pranzo",
+        "dishes": [
+          {
+            "name": "Pasta Integrale",
+            "quantity": "80g",
+            "use": true,
+            "alternatives": [
+              {
+                "name": "Farro",
+                "quantity": "80g",
+                "macros": "260 kcal • 8g P • 2g G"
+              }
+            ]
+          },
+          {
+            "name": "Tonno Naturale",
+            "quantity": "100g",
+            "use": true,
+            "alternatives": [
+              {
+                "name": "Sgombro",
+                "quantity": "100g",
+                "macros": "190 kcal • 21g P • 11g G"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "snack-pm-124",
+        "label": "Merenda",
+        "dishes": [
+          {
+            "name": "Yogurt Magro",
+            "quantity": "125g",
+            "use": true,
+            "alternatives": [
+              {
+                "name": "Kefir",
+                "quantity": "150ml",
+                "macros": "80 kcal • 6g P • 3g G"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "dinner-124",
+        "label": "Cena",
+        "dishes": [
+          {
+            "name": "Omelette",
+            "quantity": "2 uova",
+            "use": true,
+            "alternatives": [
+              {
+                "name": "Frittata di Albumi",
+                "quantity": "200g",
+                "macros": "120 kcal • 22g P • 1g G"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+]

@@ -253,8 +253,5 @@ class CurrentMeal {
     }
 }
 
-// Auto-initialize
-if (document.getElementById('c-meal-nav-root')) {
-    new CurrentMeal();
-}
+// Orchestration is handled via navigateTo -> initCurrentMeal
 window.initCurrentMeal = (data) => new CurrentMeal(data);

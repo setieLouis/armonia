@@ -84,7 +84,7 @@ async function initMeals(container, initialMeals) {
                             subtitle: `${completedCount} / ${totalCount} completati`,
                             trailing: `<div onclick="toggleMealConsumption('${meal.id}', event)" class="status-toggle">${statusIcons[status]}</div>`,
                             bgClass: icon.bgClass,
-                            onClick: `navigateTo('current-meal', { mealId: '${meal.id}', dateId: '${window.dataService.currentDateId}' })`
+                            onClick: `navigateTo('current-meal', { mealId: '${meal.id}', dateId: '${window.dataService.currentDay}' })`
                         })
                     }).join('')}
                 </div>
