@@ -76,6 +76,12 @@
     color: #333333;
     text-align: left;
     padding-left: 55px;
+    outline: none;
+}
+
+.wel__input:focus {
+    border-color: #4A7856; /* Verde scuro della parola ARMONIA */
+    box-shadow: 0 0 0 1px #4A7856; /* Effetto bordo leggermente più marcato */
 }
 
 .wel__input::placeholder {
@@ -117,39 +123,10 @@
     margin-right: 0;
 }
 
-/* Bottom Navigation */
-.wel__nav {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 80px;
-    background-color: #FFFFFF;
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    border-top: 1px solid #F0F0F0;
-    padding-bottom: 20px; /* Safe area per iPhone */
-    z-index: 10;
-}
-
-.wel__nav-item {
-    font-size: 12px;
-    color: #A0A0A0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 5px;
-}
-
-.wel__nav-item:first-child {
-    color: #8DA67D; /* Home attiva */
-}
-
 /* Decoration */
 .wel__decoration {
     position: absolute;
-    bottom: 80px;
+    bottom: 0;
     left: 0;
     width: 100%;
     height: 300px;
@@ -171,13 +148,58 @@
     margin-top: 20px;
 }
 
-.wel__leaves {
-    width: 50px;
-    height: 50px;
-    background-color: #8DA67D;
-    /* Placeholder per l'icona foglie tramite mask */
-    mask: url('../../ui/armonia-flow-img.svg') no-repeat center;
-    -webkit-mask: url('../../ui/armonia-flow-img.svg') no-repeat center;
+.wel__logo-svg {
+    width: 60px;
+    height: 60px;
+    filter: drop-shadow(0 4px 8px rgba(141, 166, 125, 0.2));
+}
+/* 
+   Welcome Component - Specific Iconography
+   Prefix: .wel
+*/
+
+/* Base style for icons */
+.wel__icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+    background-color: currentColor;
     mask-size: contain;
     -webkit-mask-size: contain;
+    mask-repeat: no-repeat;
+    -webkit-mask-repeat: no-repeat;
+    mask-position: center;
+    -webkit-mask-position: center;
 }
+
+/* 1. Icona Utente (per input Nome) */
+.wel__icon--user {
+    position: absolute;
+    left: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #8DA67D;
+    mask-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>');
+    -webkit-mask-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>');
+}
+
+/* 2. Icona PDF / Documento */
+.wel__icon--pdf {
+    color: #333333;
+    margin-right: 12px;
+    mask-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>');
+    -webkit-mask-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>');
+}
+
+/* 3. Icona Freccia (per bottone Inizia) */
+.wel__icon--arrow {
+    position: absolute;
+    right: 25px;
+    color: #FFFFFF;
+    width: 14px;
+    height: 14px;
+    mask-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>');
+    -webkit-mask-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>');
+/* Decoration */

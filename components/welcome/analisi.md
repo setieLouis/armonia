@@ -7,7 +7,7 @@ Riprodurre fedelmente il mockup visivo `prima_bis.png` utilizzando esclusivament
 La gerarchia dei tag deve seguire la disposizione verticale del mockup, suddivisa in aree logiche:
 
 - **Root Container (`.wel`)**: Contenitore principale per isolare lo stile e gestire il layout Flexbox.
-- **Header (`.wel__header`)**: Area superiore per il menu hamburger e il logo centrale con le foglie.
+- **Header (`.wel__header`)**: Area superiore per il logo centrale con le foglie.
 - **Branding (`.wel__content`)**: 
     - Titolo `<h1>`: Testo "ARMONIA" con font Serif e spaziatura ampia.
     - Sottotitolo `<p>`: Testo "Il tuo equilibrio inizia oggi".
@@ -16,7 +16,6 @@ La gerarchia dei tag deve seguire la disposizione verticale del mockup, suddivis
     - Pulsante secondario "Importa PDF".
     - Pulsante primario "Inizia" con freccia di navigazione.
 - **Decoration Area (`.wel__decoration`)**: Area riservata all'immagine dei vasi e delle piante posizionata in background.
-- **Navigation Footer (`.wel__nav`)**: Barra fissa inferiore con le quattro sezioni (Home, Piano, Progressi, Profilo).
 
 ## 3. Design Tokens & Tipografia
 - **Titolo "ARMONIA"**:
@@ -38,3 +37,14 @@ La gerarchia dei tag deve seguire la disposizione verticale del mockup, suddivis
 3. [x] Implementazione dello stile CSS per Input, Bottoni e Navigation.
 4. [x] Documentazione del piano tecnico (`analisi.md`).
 5. [ ] Implementazione della logica interattiva in `welcome.js`.
+
+## 6. Da Fare (Elementi Mancanti)
+Per una riproduzione identica al mockup `prima_bis.png`, occorre integrare:
+
+- **Iconografia specifica**: 
+    - Icona utente per l'input Nome.
+    - Icona documento per "Importa PDF".
+    - Icona freccia (`>`) per il pulsante "Inizia".
+- **Barra di Stato Sistema**: Aggiunta di orario (9:41), segnale, Wi-Fi e batteria per realismo demo.
+- **Sfondo Decorativo**: Inserimento dell'immagine dei vasi e delle piante nell'area `.wel__decoration`.
+- **Font Esterni**: Link a Google Fonts nell'HTML per caricare il font Serif (es. Cinzel) invece del fallback locale.
