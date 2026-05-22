@@ -1,0 +1,183 @@
+/* 
+   Welcome Component - Branding Section Refinement
+   Based on prima_bis.png
+*/
+
+.wel {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #FDFBFA; /* Sfondo crema chiarissimo come mockup */
+    padding: 20px;
+    box-sizing: border-box;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+/* Branding Section */
+.wel__content {
+    margin-top: 40px;
+    margin-bottom: 50px;
+    text-align: center;
+}
+
+.wel__title {
+    /* Font Serif 'Lapidario' ispirato al mockup */
+    font-family: "Cinzel", "Georgia", serif;
+    font-size: 42px;
+    font-weight: 400;
+    color: #4A7856; 
+    letter-spacing: 0.25em; /* Spaziatura ancora più ampia */
+    text-transform: uppercase;
+    margin-bottom: 8px;
+}
+
+.wel__subtitle {
+    font-size: 18px;
+    color: #4A4A4A;
+    font-weight: 300;
+    letter-spacing: 0.01em;
+}
+
+/* Actions Section */
+.wel__actions {
+    width: 100%;
+    max-width: 340px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    z-index: 2;
+}
+
+/* Base style per input e bottoni (Pill shaped) */
+.wel__input, .wel__btn-secondary, .wel__btn-primary {
+    width: 100%;
+    height: 60px;
+    border-radius: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 17px;
+    border: none;
+    padding: 0 25px;
+    box-sizing: border-box;
+    transition: all 0.2s ease;
+}
+
+/* Input Nome */
+.wel__field {
+    position: relative;
+    width: 100%;
+}
+
+.wel__input {
+    background-color: #FFFFFF;
+    border: 1px solid #8DA67D; /* Bordo verde salvia */
+    color: #333333;
+    text-align: left;
+    padding-left: 55px;
+}
+
+.wel__input::placeholder {
+    color: #A0A0A0;
+}
+
+/* Bottoni */
+.wel__btn-secondary {
+    background-color: #FFFFFF;
+    color: #333333;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+}
+
+.wel__btn-primary {
+    background-color: #8DA67D; /* Verde Salvia pieno */
+    color: #FFFFFF;
+    font-weight: 500;
+    justify-content: center;
+    position: relative;
+}
+
+.wel__btn-primary:active {
+    transform: scale(0.98);
+    background-color: #7A936B;
+}
+
+/* Icone (Placeholder strutturali) */
+.wel__icon {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    background-color: currentColor;
+    margin-right: 12px;
+}
+
+.wel__icon--arrow {
+    position: absolute;
+    right: 25px;
+    margin-right: 0;
+}
+
+/* Bottom Navigation */
+.wel__nav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 80px;
+    background-color: #FFFFFF;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    border-top: 1px solid #F0F0F0;
+    padding-bottom: 20px; /* Safe area per iPhone */
+    z-index: 10;
+}
+
+.wel__nav-item {
+    font-size: 12px;
+    color: #A0A0A0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+}
+
+.wel__nav-item:first-child {
+    color: #8DA67D; /* Home attiva */
+}
+
+/* Decoration */
+.wel__decoration {
+    position: absolute;
+    bottom: 80px;
+    left: 0;
+    width: 100%;
+    height: 300px;
+    /* Qui andrebbe l'immagine dei vasi/piante */
+    pointer-events: none;
+    z-index: 1;
+}
+
+/* Header & Logo Section */
+.wel__header {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 20px;
+}
+
+.wel__brand-logo {
+    margin-top: 20px;
+}
+
+.wel__leaves {
+    width: 50px;
+    height: 50px;
+    background-color: #8DA67D;
+    /* Placeholder per l'icona foglie tramite mask */
+    mask: url('../../ui/armonia-flow-img.svg') no-repeat center;
+    -webkit-mask: url('../../ui/armonia-flow-img.svg') no-repeat center;
+    mask-size: contain;
+    -webkit-mask-size: contain;
+}
