@@ -137,6 +137,12 @@
     z-index: 1;
 }
 
+.wel__btn-secondary.is-uploaded {
+    background-color: #E8F0E4;
+    border: 1px solid #4A7856;
+    color: #4A7856;
+}
+
 /* Modal Styling */
 .wel-modal {
     position: fixed;

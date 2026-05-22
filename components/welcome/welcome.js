@@ -9,6 +9,7 @@
     const modal = document.getElementById('modal-import');
     const modalClose = document.getElementById('modal-close');
     const modalOverlay = document.querySelector('.wel-modal__overlay');
+    const btnModalSave = document.getElementById('btn-modal-save');
     const fileInput = document.getElementById('file-input');
     const userNameInput = document.getElementById('user-name');
     const weeksDisplay = document.getElementById('weeks-display');
@@ -48,6 +49,13 @@
         modalOverlay.addEventListener('click', closeModal);
     }
 
+    if (btnModalSave) {
+        btnModalSave.addEventListener('click', () => {
+            // Qui si potrebbe aggiungere logica per validare se il file è stato effettivamente caricato
+            closeModal();
+        });
+    }
+
     // Counter logic
     if (weeksMinus) {
         weeksMinus.addEventListener('click', () => {
@@ -71,6 +79,17 @@
     if (btnBrowse) {
         btnBrowse.addEventListener('click', () => {
             fileInput.click();
+        });
+    }
+
+    if (fileInput) {
+        fileInput.addEventListener('change', (e) => {
+            if (e.target.files.length > 0) {
+                const fileName = e.target.files[0].name;
+                btnBrowse.textContent = 'Caricato';
+                btnBrowse.classList.add('is-uploaded');
+                console.log(`File selected: ${fileName}`);
+            }
         });
     }
 
