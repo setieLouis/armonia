@@ -9,7 +9,7 @@
     align-items: center;
     min-height: 100vh;
     background-color: #FDFBFA; /* Sfondo crema chiarissimo come mockup */
-    background-image: url('sfondo.jpg');
+    background-image: url('other_sfondo.jpg');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -30,7 +30,7 @@
     font-family: "Cinzel", "Georgia", serif;
     font-size: 42px;
     font-weight: 400;
-    color: #5E7A63; 
+    color: #4A7856; 
     letter-spacing: 0.25em; /* Spaziatura ancora più ampia */
     text-transform: uppercase;
     margin-bottom: 8px;
