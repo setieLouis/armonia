@@ -44,7 +44,5 @@ Per una riproduzione identica al mockup `prima_bis.png`, occorre integrare:
 - **Iconografia specifica**: 
     - Icona utente per l'input Nome.
     - Icona documento per "Importa PDF".
-    - Icona freccia (`>`) per il pulsante "Inizia".
-- **Barra di Stato Sistema**: Aggiunta di orario (9:41), segnale, Wi-Fi e batteria per realismo demo.
 - **Sfondo Decorativo**: Inserimento dell'immagine dei vasi e delle piante nell'area `.wel__decoration`.
 - **Font Esterni**: Link a Google Fonts nell'HTML per caricare il font Serif (es. Cinzel) invece del fallback locale.
