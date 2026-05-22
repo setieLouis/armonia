@@ -46,11 +46,21 @@
                 <button id="modal-close" class="wel-modal__close-btn">&times;</button>
             </div>
             <div class="wel-modal__body">
-                <div class="wel-modal__upload-area">
-                    <span class="wel__icon wel__icon--pdf" style="width: 40px; height: 40px; margin-bottom: 16px;"></span>
-                    <p>Trascina qui il tuo file PDF o clicca per selezionarlo</p>
+                <div class="wel-modal__actions">
                     <input type="file" id="file-input" accept=".pdf" style="display: none;">
-                    <button id="btn-browse" class="wel__btn-secondary" style="margin-top: 20px; height: 50px;">Sfoglia File</button>
+                    <button id="btn-browse" class="wel__btn-secondary" style="height: 60px; margin-bottom: 24px;">Sfoglia File</button>
+                    
+                    <div class="wel-modal__field">
+                        <label class="wel-modal__label">Durata piano</label>
+                        <div class="wel-modal__counter">
+                            <button type="button" id="weeks-minus" class="wel-modal__counter-btn">−</button>
+                            <div class="wel-modal__counter-value">
+                                <span id="weeks-display">1</span>
+                                <span class="wel-modal__counter-unit">settimana</span>
+                            </div>
+                            <button type="button" id="weeks-plus" class="wel-modal__counter-btn">+</button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

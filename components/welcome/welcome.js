@@ -11,6 +11,12 @@
     const modalOverlay = document.querySelector('.wel-modal__overlay');
     const fileInput = document.getElementById('file-input');
     const userNameInput = document.getElementById('user-name');
+    const weeksDisplay = document.getElementById('weeks-display');
+    const weeksMinus = document.getElementById('weeks-minus');
+    const weeksPlus = document.getElementById('weeks-plus');
+    const weeksUnit = document.querySelector('.wel-modal__counter-unit');
+
+    let currentWeeks = 1;
 
     // Modal logic
     const openModal = () => {
@@ -19,6 +25,15 @@
 
     const closeModal = () => {
         modal.classList.remove('is-active');
+    };
+
+    const updateWeeksDisplay = () => {
+        if (weeksDisplay) {
+            weeksDisplay.textContent = currentWeeks;
+        }
+        if (weeksUnit) {
+            weeksUnit.textContent = currentWeeks === 1 ? 'settimana' : 'settimane';
+        }
     };
 
     if (btnImport) {
@@ -31,6 +46,25 @@
 
     if (modalOverlay) {
         modalOverlay.addEventListener('click', closeModal);
+    }
+
+    // Counter logic
+    if (weeksMinus) {
+        weeksMinus.addEventListener('click', () => {
+            if (currentWeeks > 1) {
+                currentWeeks--;
+                updateWeeksDisplay();
+            }
+        });
+    }
+
+    if (weeksPlus) {
+        weeksPlus.addEventListener('click', () => {
+            if (currentWeeks < 12) {
+                currentWeeks++;
+                updateWeeksDisplay();
+            }
+        });
     }
 
     // Trigger file input
