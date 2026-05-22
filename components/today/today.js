@@ -9,7 +9,7 @@ async function initToday(navData = null) {
 
     try {
         // La data viene gestita come parametro. Se non presente in navData, usiamo la data odierna.
-        const dateId = navData?.dateId || new Date().toISOString().split('T')[0];
+        const dateId = navData?.dateId;
 
         // Carichiamo i pasti dal servizio centralizzato passando il dateId
         currentDayMeals = await window.dataService.loadData(dateId);

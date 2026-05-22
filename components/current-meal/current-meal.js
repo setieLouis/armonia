@@ -51,7 +51,15 @@ class CurrentMeal {
 
         // Load data using DataService
         try {
-            await window.dataService.loadData();
+            // Determine the date to load: from navData, or the current active one in the service
+            const dateToLoad = this.navData?.dateId || window.dataService.currentDateId;
+            
+            if (!dateToLoad) {
+                console.warn("CurrentMeal: No dateId available for loading");
+                return;
+            }
+
+            await window.dataService.loadData(dateToLoad);
             
             // Find selected meal by ID from navData, or default to first meal
             let selectedMeal;
@@ -61,8 +69,16 @@ class CurrentMeal {
             }
             
             if (!selectedMeal) {
-                selectedMeal = window.dataService.getMeals()[0];
-                this.currentMealId = selectedMeal.id;
+                const meals = window.dataService.getMeals();
+                if (meals.length > 0) {
+                    selectedMeal = meals[0];
+                    this.currentMealId = selectedMeal.id;
+                }
+            }
+
+            if (!selectedMeal) {
+                console.warn("CurrentMeal: No meal found for ID:", this.navData?.mealId);
+                return;
             }
             
             const iconInfo = this.getMealIcon(selectedMeal.label);
@@ -119,6 +135,7 @@ class CurrentMeal {
                 setTimeout(() => {
                     navigateTo('ingredient', { 
                         mealId: this.currentMealId,
+                        dateId: window.dataService.currentDateId,
                         dishIndex: tileIndex,
                         dishName: dishData.name,
                         quantity: dishData.quantity,
@@ -175,7 +192,7 @@ class CurrentMeal {
         // 1. Top Navigation (Plugging Header)
         const navRoot = document.getElementById('c-meal-nav-root');
         if (navRoot) {
-            const backIcon = `<div onclick="navigateTo('today')" style="cursor: pointer; display: flex; align-items: center;">
+            const backIcon = `<div onclick="navigateTo('today', { dateId: '${window.dataService.currentDateId}' })" style="cursor: pointer; display: flex; align-items: center;">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
             </div>`;
             const moreIcon = `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/><circle cx="5" cy="12" r="1"/></svg>`;

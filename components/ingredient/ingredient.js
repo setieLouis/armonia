@@ -10,6 +10,7 @@ class IngredientAlternatives {
             originalDish: navData?.dishName || 'Ingrediente',
             originalQuantity: navData?.quantity || '-',
             mealId: navData?.mealId,
+            dateId: navData?.dateId,
             dishIndex: navData?.dishIndex
         };
         this.init();
@@ -68,8 +69,8 @@ class IngredientAlternatives {
     renderHeader() {
         const headerRoot = document.getElementById('alt-header-root');
         if (headerRoot) {
-            const mealParam = this.navData?.mealId ? `, { mealId: '${this.navData.mealId}' }` : '';
-            const closeIcon = `<div onclick="navigateTo('current-meal'${mealParam})" style="cursor: pointer; padding: 10px;">
+            const params = { mealId: this.data.mealId, dateId: this.data.dateId };
+            const closeIcon = `<div onclick="navigateTo('current-meal', ${JSON.stringify(params).replace(/"/g, "'")})" style="cursor: pointer; padding: 10px;">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
             </div>`;
             
@@ -133,7 +134,7 @@ class IngredientAlternatives {
             });
             
             // Navigate back to current meal
-            navigateTo('current-meal', { mealId: this.data.mealId });
+            navigateTo('current-meal', { mealId: this.data.mealId, dateId: this.data.dateId });
         }
     }
 }

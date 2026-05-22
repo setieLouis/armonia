@@ -41,7 +41,7 @@ async function navigateTo(view, data = null) {
     if (view === 'today') {
         await loadComponent(appRoot, 'components/today/today.html', async () => {
             await loadScript('components/today/today.js');
-            if (window.initToday) await window.initToday(data);
+            if (window.initToday) await window.initToday({dateId: "2026-05-18"});
         });
     } 
     else if (view === 'current-meal') {
@@ -63,5 +63,5 @@ window.loadScript = loadScript;
 window.navigateTo = navigateTo;
 
 document.addEventListener('DOMContentLoaded', () => {
-    navigateTo('today');
+    navigateTo('today',{dateId: "2026-05-18"});
 });
