@@ -1,34 +1,52 @@
 /**
- * calendar.js: Componente Calendario dinamico che usa ListTile per l'header
+ * calendar.js: Componente Calendario autonomo.
+ * Riceve una data e genera automaticamente la settimana e i metadati.
  */
 
-async function initCalendar(container, input = { dateData: undefined, days: undefined }) {
+async function initCalendar(container, targetDateInput = null) {
     // 1. Assicuriamoci che ListTile sia caricato
     if (typeof window.renderListTile !== 'function') {
         await loadScript('components/list-tile/list-tile.js');
     }
     window.injectListTileStyles();
 
-    // 2. Dati (Mockup di fallback o input)
-    const dateData = input.dateData || {
-        dayName: 'Lunedì',
-        dateFull: '12 Maggio'
+    // 2. Elaborazione Date (Logica interna autonoma)
+    const targetDate = targetDateInput ? new Date(targetDateInput) : new Date();
+    
+    const dayNames = ['Dom', 'Lun', 'Mar', 'Mer', 'Gio', 'Ven', 'Sab'];
+    const fullDayNames = ['Domenica', 'Lunedì', 'Martedì', 'Mercoledì', 'Giovedì', 'Venerdì', 'Sabato'];
+    const months = ['Gennaio', 'Febbraio', 'Marzo', 'Aprile', 'Maggio', 'Giugno', 'Luglio', 'Agosto', 'Settembre', 'Ottobre', 'Novembre', 'Dicembre'];
+
+    // Dati per l'Header
+    const dateData = {
+        dayName: fullDayNames[targetDate.getDay()],
+        dateFull: `${targetDate.getDate()} ${months[targetDate.getMonth()]}`
     };
 
-    const days = input.days || [
-        { label: 'Dom', number: 11, active: false },
-        { label: 'Lun', number: 12, active: true },
-        { label: 'Mar', number: 13, active: false },
-        { label: 'Mer', number: 14, active: false },
-        { label: 'Gio', number: 15, active: false },
-        { label: 'Ven', number: 16, active: false },
-        { label: 'Sab', number: 17, active: false },
-    ];
+    // Generazione della riga settimanale
+    const days = [];
+    const startOfWeek = new Date(targetDate);
+    // Portiamo alla domenica precedente (inizio settimana)
+    startOfWeek.setDate(targetDate.getDate() - targetDate.getDay());
 
-    // 3. Helper per renderizzare il singolo giorno (atomo simile a ListTile)
+    for (let i = 0; i < 7; i++) {
+        const current = new Date(startOfWeek);
+        current.setDate(startOfWeek.getDate() + i);
+        
+        days.push({
+            label: dayNames[current.getDay()],
+            number: current.getDate(),
+            dateId: current.toISOString().split('T')[0],
+            active: current.toDateString() === targetDate.toDateString()
+        });
+    }
+
+    // 3. Helper per renderizzare il singolo giorno
     function renderCalendarDay(day) {
         return `
-            <div class="calendar-day ${day.active ? 'active' : ''}">
+            <div class="calendar-day ${day.active ? 'active' : ''}" 
+                 onclick="console.log('Day selected:', '${day.dateId}'); navigateTo('today', { dateId: '${day.dateId}' })"
+                 style="cursor: pointer;">
                 <span class="day-label">${day.label}</span>
                 <span class="day-number">${day.number}</span>
             </div>

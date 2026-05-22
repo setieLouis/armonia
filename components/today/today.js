@@ -6,16 +6,17 @@ async function initToday(navData = null) {
     // Caricamento dati tramite DataService
     let currentDayMeals;
     let todayData;
+    
+    // Gestione della data: parametro o fallback odierno
+    const dateId = (navData && typeof navData === 'object' && navData.dateId) 
+        ? navData.dateId 
+        : new Date().toISOString().split('T')[0];
 
     try {
-        // La data viene gestita come parametro. Se non presente in navData, usiamo la data odierna.
-        const dateId = navData?.dateId;
-
         // Carichiamo i pasti dal servizio centralizzato passando il dateId
         currentDayMeals = await window.dataService.loadData(dateId);
         
-        // Per oggi_data.json (info utente), manteniamo il fetch locale o lo portiamo nel servizio?
-        // Per ora manteniamolo semplice
+        // Per oggi_data.json (info utente)
         const dataRes = await fetch('components/today/today_data.json');
         todayData = await dataRes.json();
     } catch (error) {
@@ -36,42 +37,15 @@ async function initToday(navData = null) {
         }
         window.initHeader(headerRoot, { left: headerLeftValue, right: headerRightValue });
     }
+// Step 3: Caricamento Calendario
+await loadComponent('calendar-root', 'components/calendar/calendar.html', async (element) => {
+    if (typeof window.initCalendar !== 'function') {
+        await loadScript('components/calendar/calendar.js');
+    }
 
-    // Step 3: Caricamento Calendario
-    await loadComponent('calendar-root', 'components/calendar/calendar.html', async (element) => {
-        if (typeof window.initCalendar !== 'function') {
-            await loadScript('components/calendar/calendar.js');
-        }
-
-        // Generazione dinamica dati calendario
-        // Se non ci sono pasti per oggi, usiamo la data corrente del sistema
-        const targetDate = currentDayMeals ? new Date(currentDayMeals.day) : new Date();
-        const dayNames = ['Dom', 'Lun', 'Mar', 'Mer', 'Gio', 'Ven', 'Sab'];
-        const fullDayNames = ['Domenica', 'Lunedì', 'Martedì', 'Mercoledì', 'Giovedì', 'Venerdì', 'Sabato'];
-        const months = ['Gennaio', 'Febbraio', 'Marzo', 'Aprile', 'Maggio', 'Giugno', 'Luglio', 'Agosto', 'Settembre', 'Ottobre', 'Novembre', 'Dicembre'];
-
-        const dateData = {
-            dayName: fullDayNames[targetDate.getDay()],
-            dateFull: `${targetDate.getDate()} ${months[targetDate.getMonth()]}`
-        };
-
-        // Calcolo della vista settimanale
-        const days = [];
-        const startOfWeek = new Date(targetDate);
-        startOfWeek.setDate(targetDate.getDate() - targetDate.getDay()); // Inizio Domenica
-
-        for (let i = 0; i < 7; i++) {
-            const current = new Date(startOfWeek);
-            current.setDate(startOfWeek.getDate() + i);
-            days.push({
-                label: dayNames[current.getDay()],
-                number: current.getDate(),
-                active: current.toDateString() === targetDate.toDateString()
-            });
-        }
-
-        window.initCalendar(element, { dateData, days });
-    });
+    // Il componente calendario è ora autonomo: gli passiamo solo la data target
+    window.initCalendar(element, dateId);
+});
 
     // Step 4: Caricamento Lista Pasti
     await loadComponent('meals-root', 'components/meals/meals.html', async (element) => {
