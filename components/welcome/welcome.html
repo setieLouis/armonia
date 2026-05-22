@@ -21,19 +21,38 @@
             <span class="wel__icon wel__icon--user"></span>
             <input type="text" id="user-name" class="wel__input" placeholder="Nome">
         </div>
-        
         <!-- Pulsante Importa PDF con icona -->
-        <button class="wel__btn-secondary">
+        <button id="btn-import" class="wel__btn-secondary">
             <span class="wel__icon wel__icon--pdf"></span>
             Importa PDF
         </button>
-        
+
         <!-- Pulsante Inizia con freccia -->
         <button id="btn-start" class="wel__btn-primary">
             Inizia
+            <span class="wel__icon wel__icon--arrow"></span>
         </button>
-    </div>
+        </div>
 
-    <!-- Background Decoration (Vasi e Piante - placeholder strutturale) -->
-    <div class="wel__decoration"></div>
-</div>
+        <!-- Background Decoration -->
+        <div class="wel__decoration"></div>
+
+        <!-- Modal Importazione -->
+        <div id="modal-import" class="wel-modal">
+        <div class="wel-modal__overlay"></div>
+        <div class="wel-modal__content">
+            <div class="wel-modal__header">
+                <h2 class="wel-modal__title">Importa Piano</h2>
+                <button id="modal-close" class="wel-modal__close-btn">&times;</button>
+            </div>
+            <div class="wel-modal__body">
+                <div class="wel-modal__upload-area">
+                    <span class="wel__icon wel__icon--pdf" style="width: 40px; height: 40px; margin-bottom: 16px;"></span>
+                    <p>Trascina qui il tuo file PDF o clicca per selezionarlo</p>
+                    <input type="file" id="file-input" accept=".pdf" style="display: none;">
+                    <button id="btn-browse" class="wel__btn-secondary" style="margin-top: 20px; height: 50px;">Sfoglia File</button>
+                </div>
+            </div>
+        </div>
+        </div>
+        </div>
