@@ -53,6 +53,14 @@
     z-index: 2;
 }
 
+#btn-start {
+    display: none; /* Nascosto di default */
+}
+
+#btn-start.is-visible {
+    display: flex;
+}
+
 /* Base style per input e bottoni (Pill shaped) */
 .wel__input, .wel__btn-secondary, .wel__btn-primary {
     width: 100%;

@@ -1,0 +1,1403 @@
+{
+  "weekPlan": [
+    {
+      "day": "Lunedì",
+      "meals": {
+        "colazione": [
+          {
+            "name": "Caffè Una Tazzina",
+            "quantity": "30 g",
+            "alternatives": []
+          },
+          {
+            "name": "Yogurt greco intero Mezzo Vasetto",
+            "quantity": "100 g",
+            "alternatives": []
+          },
+          {
+            "name": "Burro d'arachidi Tre Cucchiaini",
+            "quantity": "13 g",
+            "alternatives": [
+              {
+                "name": "Un Cucchiaio e mezzo",
+                "quantity": "15 g"
+              },
+              {
+                "name": "Mirtilli",
+                "quantity": "50 g"
+              },
+              {
+                "name": "Pera Mezzo Frutto",
+                "quantity": "50 g"
+              }
+            ]
+          }
+        ],
+        "spuntino matt.": [
+          {
+            "name": "Pane integrale Una Fetta",
+            "quantity": "30 g",
+            "alternatives": []
+          },
+          {
+            "name": "Pomodori ciliegino",
+            "quantity": "30 g",
+            "alternatives": []
+          },
+          {
+            "name": "Origano",
+            "quantity": "5 g",
+            "alternatives": []
+          },
+          {
+            "name": "Un Cucchiaino",
+            "quantity": "5 g",
+            "alternatives": []
+          }
+        ],
+        "pranzo": [
+          {
+            "name": "Patate",
+            "quantity": "300 g",
+            "alternatives": [
+              {
+                "name": "Pane di grano duro Tre Fette e mezza",
+                "quantity": "100 g"
+              },
+              {
+                "name": "Pollo lesso in insalata",
+                "quantity": "150 g"
+              }
+            ]
+          }
+        ],
+        "merenda": [
+          {
+            "name": "Cocomero verde o carosello salentino",
+            "quantity": "80 g",
+            "alternatives": []
+          },
+          {
+            "name": "Frutta fresca",
+            "quantity": "100 g",
+            "alternatives": [
+              {
+                "name": "Ciliegie",
+                "quantity": "100 g"
+              },
+              {
+                "name": "Fragole",
+                "quantity": "150 g"
+              },
+              {
+                "name": "Kiwi Un Frutto",
+                "quantity": "100 g"
+              },
+              {
+                "name": "Mela Mezzo Frutto",
+                "quantity": "100 g"
+              },
+              {
+                "name": "Melone Una Fetta e mezza",
+                "quantity": "150 g"
+              },
+              {
+                "name": "Mirtilli",
+                "quantity": "100 g"
+              },
+              {
+                "name": "Nespole Quattro Frutti",
+                "quantity": "150 g"
+              },
+              {
+                "name": "Pera Mezzo Frutto",
+                "quantity": "100 g"
+              },
+              {
+                "name": "Pesca Un Frutto e mezzo",
+                "quantity": "150 g"
+              },
+              {
+                "name": "Due Frutti",
+                "quantity": "100 g"
+              }
+            ]
+          }
+        ],
+        "cena": [
+          {
+            "name": "Pane integrale Una Fetta e mezza",
+            "quantity": "50 g",
+            "alternatives": []
+          },
+          {
+            "name": "Pomodori ciliegino",
+            "quantity": "Quanto basta",
+            "alternatives": []
+          },
+          {
+            "name": "Origano",
+            "quantity": "Quanto basta",
+            "alternatives": []
+          },
+          {
+            "name": "Un Cucchiaio",
+            "quantity": "10 g",
+            "alternatives": []
+          },
+          {
+            "name": "Fagiolini all'agro",
+            "quantity": "100 g",
+            "alternatives": [
+              {
+                "name": "Tonno al naturale",
+                "quantity": "80 g"
+              },
+              {
+                "name": "Tonno sott'olio - sgocciolato Una Lattina",
+                "quantity": "80 g"
+              },
+              {
+                "name": "Prosciutto crudo",
+                "quantity": "50 g"
+              },
+              {
+                "name": "Prosciutto cotto",
+                "quantity": "50 g"
+              },
+              {
+                "name": "Bresaola",
+                "quantity": "50 g"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "day": "Martedì",
+      "meals": {
+        "colazione": [
+          {
+            "name": "Caffè Una Tazzina",
+            "quantity": "30 g",
+            "alternatives": []
+          },
+          {
+            "name": "Pane tostato Due Fette",
+            "quantity": "60 g",
+            "alternatives": []
+          },
+          {
+            "name": "Un Cucchiaio e mezzo",
+            "quantity": "15 g",
+            "alternatives": [
+              {
+                "name": "Burro d'arachidi Tre Cucchiaini",
+                "quantity": "13 g"
+              },
+              {
+                "name": "Mirtilli",
+                "quantity": "50 g"
+              },
+              {
+                "name": "Pera Mezzo Frutto",
+                "quantity": "50 g"
+              }
+            ]
+          }
+        ],
+        "spuntino matt.": [
+          {
+            "name": "Frutta fresca",
+            "quantity": "100 g",
+            "alternatives": [
+              {
+                "name": "Albicocche Due Frutti",
+                "quantity": "100 g"
+              },
+              {
+                "name": "Ciliegie",
+                "quantity": "100 g"
+              },
+              {
+                "name": "Fragole",
+                "quantity": "150 g"
+              },
+              {
+                "name": "Kiwi Un Frutto",
+                "quantity": "100 g"
+              },
+              {
+                "name": "Mela Mezzo Frutto",
+                "quantity": "100 g"
+              },
+              {
+                "name": "Melone Una Fetta e mezza",
+                "quantity": "150 g"
+              },
+              {
+                "name": "Mirtilli",
+                "quantity": "100 g"
+              },
+              {
+                "name": "Nespole Quattro Frutti",
+                "quantity": "150 g"
+              },
+              {
+                "name": "Pera Mezzo Frutto",
+                "quantity": "100 g"
+              },
+              {
+                "name": "Pesca Un Frutto e mezzo",
+                "quantity": "150 g"
+              },
+              {
+                "name": "Due Frutti",
+                "quantity": "100 g"
+              },
+              {
+                "name": "Frutta secca-oleosa",
+                "quantity": "10 g"
+              },
+              {
+                "name": "Anacardi",
+                "quantity": "10 g"
+              },
+              {
+                "name": "Arachidi",
+                "quantity": "10 g"
+              },
+              {
+                "name": "Mandorle",
+                "quantity": "10 g"
+              },
+              {
+                "name": "Nocciole",
+                "quantity": "20 g"
+              },
+              {
+                "name": "Noci",
+                "quantity": "20 g"
+              },
+              {
+                "name": "Pistacchi",
+                "quantity": "20 g"
+              }
+            ]
+          }
+        ],
+        "pranzo": [
+          {
+            "name": "Riso basmati",
+            "quantity": "90 g",
+            "alternatives": [
+              {
+                "name": "Riso integrale Un Piatto",
+                "quantity": "90 g"
+              },
+              {
+                "name": "Carote",
+                "quantity": "50 g"
+              },
+              {
+                "name": "Zucchine",
+                "quantity": "200 g"
+              },
+              {
+                "name": "Pomodori ciliegino",
+                "quantity": "60 g"
+              },
+              {
+                "name": "Peperoni - rossi",
+                "quantity": "150 g"
+              },
+              {
+                "name": "Ceci cotti",
+                "quantity": "100 g"
+              },
+              {
+                "name": "Un Cucchiaio",
+                "quantity": "10 g"
+              }
+            ]
+          }
+        ],
+        "merenda": [
+          {
+            "name": "Cocomero verde o carosello salentino",
+            "quantity": "80 g",
+            "alternatives": []
+          },
+          {
+            "name": "Frutta fresca",
+            "quantity": "100 g",
+            "alternatives": [
+              {
+                "name": "Ciliegie",
+                "quantity": "100 g"
+              },
+              {
+                "name": "Fragole",
+                "quantity": "150 g"
+              },
+              {
+                "name": "Kiwi Un Frutto",
+                "quantity": "100 g"
+              },
+              {
+                "name": "Mela Mezzo Frutto",
+                "quantity": "100 g"
+              },
+              {
+                "name": "Melone Una Fetta e mezza",
+                "quantity": "150 g"
+              },
+              {
+                "name": "Mirtilli",
+                "quantity": "100 g"
+              },
+              {
+                "name": "Nespole Quattro Frutti",
+                "quantity": "150 g"
+              },
+              {
+                "name": "Pera Mezzo Frutto",
+                "quantity": "100 g"
+              },
+              {
+                "name": "Pesca Un Frutto e mezzo",
+                "quantity": "150 g"
+              },
+              {
+                "name": "Due Frutti",
+                "quantity": "100 g"
+              }
+            ]
+          }
+        ],
+        "cena": [
+          {
+            "name": "Patate",
+            "quantity": "300 g",
+            "alternatives": [
+              {
+                "name": "Pane di grano duro Due Fette e mezza",
+                "quantity": "70 g"
+              },
+              {
+                "name": "Una porzione di pesce",
+                "quantity": "250 g"
+              },
+              {
+                "name": "Merluzzo o nasello",
+                "quantity": "300 g"
+              },
+              {
+                "name": "Orata fresca",
+                "quantity": "230 g"
+              },
+              {
+                "name": "Polpo",
+                "quantity": "300 g"
+              },
+              {
+                "name": "Rana pescatrice",
+                "quantity": "300 g"
+              },
+              {
+                "name": "Sarago",
+                "quantity": "280 g"
+              },
+              {
+                "name": "Scorfano",
+                "quantity": "300 g"
+              },
+              {
+                "name": "Seppia",
+                "quantity": "250 g"
+              },
+              {
+                "name": "Sogliola",
+                "quantity": "300 g"
+              },
+              {
+                "name": "Sgombro o maccarello",
+                "quantity": "160 g"
+              },
+              {
+                "name": "Spigola",
+                "quantity": "300 g"
+              },
+              {
+                "name": "Un Cucchiaio",
+                "quantity": "10 g"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "day": "Mercoledì",
+      "meals": {
+        "colazione": [
+          {
+            "name": "Caffè Una Tazzina",
+            "quantity": "30 g",
+            "alternatives": []
+          },
+          {
+            "name": "Yogurt greco intero Mezzo Vasetto",
+            "quantity": "100 g",
+            "alternatives": []
+          },
+          {
+            "name": "Miele Un Cucchiaio",
+            "quantity": "10 g",
+            "alternatives": []
+          },
+          {
+            "name": "Noci",
+            "quantity": "20 g",
+            "alternatives": []
+          }
+        ],
+        "spuntino matt.": [
+          {
+            "name": "Pane integrale Una Fetta e mezza",
+            "quantity": "50 g",
+            "alternatives": []
+          },
+          {
+            "name": "Prosciutto crudo",
+            "quantity": "50 g",
+            "alternatives": []
+          },
+          {
+            "name": "Indivia",
+            "quantity": "60 g",
+            "alternatives": [
+              {
+                "name": "Insalata",
+                "quantity": "100 g"
+              },
+              {
+                "name": "Rughetta o rucola",
+                "quantity": "30 g"
+              }
+            ]
+          }
+        ],
+        "pranzo": [
+          {
+            "name": "Pasta alle melanzane",
+            "quantity": "80 g",
+            "alternatives": [
+              {
+                "name": "Pasta con zucchine e pomodorini",
+                "quantity": "100 g"
+              },
+              {
+                "name": "Frittata",
+                "quantity": "120 g"
+              },
+              {
+                "name": "Piselli surgelati",
+                "quantity": "50 g"
+              }
+            ]
+          }
+        ],
+        "merenda": [
+          {
+            "name": "Cocomero verde o carosello salentino",
+            "quantity": "80 g",
+            "alternatives": []
+          },
+          {
+            "name": "Frutta fresca",
+            "quantity": "100 g",
+            "alternatives": [
+              {
+                "name": "Ciliegie",
+                "quantity": "100 g"
+              },
+              {
+                "name": "Fragole",
+                "quantity": "150 g"
+              },
+              {
+                "name": "Kiwi Un Frutto",
+                "quantity": "100 g"
+              },
+              {
+                "name": "Mela Mezzo Frutto",
+                "quantity": "100 g"
+              },
+              {
+                "name": "Melone Una Fetta e mezza",
+                "quantity": "150 g"
+              },
+              {
+                "name": "Mirtilli",
+                "quantity": "100 g"
+              },
+              {
+                "name": "Nespole Quattro Frutti",
+                "quantity": "150 g"
+              },
+              {
+                "name": "Pera Mezzo Frutto",
+                "quantity": "100 g"
+              },
+              {
+                "name": "Pesca Un Frutto e mezzo",
+                "quantity": "150 g"
+              },
+              {
+                "name": "Due Frutti",
+                "quantity": "100 g"
+              }
+            ]
+          }
+        ],
+        "cena": [
+          {
+            "name": "Patate",
+            "quantity": "300 g",
+            "alternatives": [
+              {
+                "name": "Pane di grano duro Due Fette e mezza",
+                "quantity": "70 g"
+              },
+              {
+                "name": "Petto di pollo",
+                "quantity": "150 g"
+              },
+              {
+                "name": "Pollo - sovracoscio - senza pelle",
+                "quantity": "190 g"
+              },
+              {
+                "name": "Pollo coscia - senza pelle",
+                "quantity": "190 g"
+              },
+              {
+                "name": "Tacchina petto",
+                "quantity": "160 g"
+              },
+              {
+                "name": "Un Cucchiaio",
+                "quantity": "10 g"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "day": "Giovedì",
+      "meals": {
+        "colazione": [
+          {
+            "name": "Caffè Una Tazzina",
+            "quantity": "30 g",
+            "alternatives": []
+          },
+          {
+            "name": "Pane tostato Due Fette",
+            "quantity": "60 g",
+            "alternatives": []
+          },
+          {
+            "name": "Due Cucchiaini",
+            "quantity": "10 g",
+            "alternatives": []
+          },
+          {
+            "name": "Mandorle",
+            "quantity": "20 g",
+            "alternatives": []
+          }
+        ],
+        "spuntino matt.": [
+          {
+            "name": "Frutta fresca",
+            "quantity": "100 g",
+            "alternatives": [
+              {
+                "name": "Ciliegie",
+                "quantity": "100 g"
+              },
+              {
+                "name": "Fragole",
+                "quantity": "150 g"
+              },
+              {
+                "name": "Kiwi Un Frutto",
+                "quantity": "100 g"
+              },
+              {
+                "name": "Mela Mezzo Frutto",
+                "quantity": "100 g"
+              },
+              {
+                "name": "Melone Una Fetta e mezza",
+                "quantity": "150 g"
+              },
+              {
+                "name": "Mirtilli",
+                "quantity": "100 g"
+              },
+              {
+                "name": "Nespole Quattro Frutti",
+                "quantity": "150 g"
+              },
+              {
+                "name": "Pera Mezzo Frutto",
+                "quantity": "100 g"
+              },
+              {
+                "name": "Pesca Un Frutto e mezzo",
+                "quantity": "150 g"
+              },
+              {
+                "name": "Due Frutti",
+                "quantity": "100 g"
+              },
+              {
+                "name": "Frutta secca-oleosa",
+                "quantity": "10 g"
+              },
+              {
+                "name": "Anacardi",
+                "quantity": "10 g"
+              },
+              {
+                "name": "Arachidi",
+                "quantity": "10 g"
+              },
+              {
+                "name": "Mandorle",
+                "quantity": "10 g"
+              },
+              {
+                "name": "Nocciole",
+                "quantity": "20 g"
+              },
+              {
+                "name": "Noci",
+                "quantity": "20 g"
+              },
+              {
+                "name": "Pistacchi",
+                "quantity": "20 g"
+              }
+            ]
+          }
+        ],
+        "pranzo": [
+          {
+            "name": "Insalata di cereali",
+            "quantity": "80 g",
+            "alternatives": []
+          }
+        ],
+        "merenda": [
+          {
+            "name": "Cocomero verde o carosello salentino",
+            "quantity": "80 g",
+            "alternatives": []
+          },
+          {
+            "name": "Frutta fresca",
+            "quantity": "100 g",
+            "alternatives": [
+              {
+                "name": "Ciliegie",
+                "quantity": "100 g"
+              },
+              {
+                "name": "Fragole",
+                "quantity": "150 g"
+              },
+              {
+                "name": "Kiwi Un Frutto",
+                "quantity": "100 g"
+              },
+              {
+                "name": "Mela Mezzo Frutto",
+                "quantity": "100 g"
+              },
+              {
+                "name": "Melone Una Fetta e mezza",
+                "quantity": "150 g"
+              },
+              {
+                "name": "Mirtilli",
+                "quantity": "100 g"
+              },
+              {
+                "name": "Nespole Quattro Frutti",
+                "quantity": "150 g"
+              },
+              {
+                "name": "Pera Mezzo Frutto",
+                "quantity": "100 g"
+              },
+              {
+                "name": "Pesca Un Frutto e mezzo",
+                "quantity": "150 g"
+              },
+              {
+                "name": "Due Frutti",
+                "quantity": "100 g"
+              }
+            ]
+          }
+        ],
+        "cena": [
+          {
+            "name": "Patate",
+            "quantity": "300 g",
+            "alternatives": [
+              {
+                "name": "Pane di grano duro Due Fette e mezza",
+                "quantity": "70 g"
+              },
+              {
+                "name": "Una porzione di pesce",
+                "quantity": "250 g"
+              },
+              {
+                "name": "Merluzzo o nasello",
+                "quantity": "250 g"
+              },
+              {
+                "name": "Orata fresca",
+                "quantity": "150 g"
+              },
+              {
+                "name": "Rana pescatrice",
+                "quantity": "290 g"
+              },
+              {
+                "name": "Sarago",
+                "quantity": "180 g"
+              },
+              {
+                "name": "Scorfano",
+                "quantity": "220 g"
+              },
+              {
+                "name": "Spigola",
+                "quantity": "220 g"
+              },
+              {
+                "name": "Sogliola",
+                "quantity": "210 g"
+              },
+              {
+                "name": "Sgombro o maccarello",
+                "quantity": "200 g"
+              },
+              {
+                "name": "Polpo",
+                "quantity": "300 g"
+              },
+              {
+                "name": "Seppia",
+                "quantity": "250 g"
+              },
+              {
+                "name": "Fagiolini",
+                "quantity": "200 g"
+              },
+              {
+                "name": "Un Cucchiaio",
+                "quantity": "10 g"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "day": "Venerdì",
+      "meals": {
+        "colazione": [
+          {
+            "name": "Caffè Una Tazzina",
+            "quantity": "30 g",
+            "alternatives": []
+          },
+          {
+            "name": "Mezzo Vasetto",
+            "quantity": "100 g",
+            "alternatives": []
+          },
+          {
+            "name": "Un Cucchiaio e mezzo",
+            "quantity": "15 g",
+            "alternatives": [
+              {
+                "name": "Burro d'arachidi Tre Cucchiaini",
+                "quantity": "13 g"
+              },
+              {
+                "name": "Mirtilli",
+                "quantity": "50 g"
+              },
+              {
+                "name": "Pera Mezzo Frutto",
+                "quantity": "50 g"
+              }
+            ]
+          }
+        ],
+        "spuntino matt.": [
+          {
+            "name": "Pane integrale Una Fetta",
+            "quantity": "30 g",
+            "alternatives": []
+          },
+          {
+            "name": "Tonno al naturale",
+            "quantity": "80 g",
+            "alternatives": [
+              {
+                "name": "Tonno sott'olio - sgocciolato Una Lattina",
+                "quantity": "80 g"
+              },
+              {
+                "name": "Capperi sott'aceto",
+                "quantity": "5 g"
+              },
+              {
+                "name": "Indivia",
+                "quantity": "60 g"
+              },
+              {
+                "name": "Insalata",
+                "quantity": "100 g"
+              },
+              {
+                "name": "Rughetta o rucola",
+                "quantity": "30 g"
+              }
+            ]
+          }
+        ],
+        "pranzo": [
+          {
+            "name": "Pane di grano duro Una Fetta e mezza",
+            "quantity": "50 g",
+            "alternatives": []
+          }
+        ],
+        "merenda": [
+          {
+            "name": "Cocomero verde o carosello salentino",
+            "quantity": "80 g",
+            "alternatives": []
+          },
+          {
+            "name": "Frutta fresca",
+            "quantity": "100 g",
+            "alternatives": [
+              {
+                "name": "Ciliegie",
+                "quantity": "100 g"
+              },
+              {
+                "name": "Fragole",
+                "quantity": "150 g"
+              },
+              {
+                "name": "Kiwi Un Frutto",
+                "quantity": "100 g"
+              },
+              {
+                "name": "Mela Mezzo Frutto",
+                "quantity": "100 g"
+              },
+              {
+                "name": "Melone Una Fetta e mezza",
+                "quantity": "150 g"
+              },
+              {
+                "name": "Mirtilli",
+                "quantity": "100 g"
+              },
+              {
+                "name": "Nespole Quattro Frutti",
+                "quantity": "150 g"
+              },
+              {
+                "name": "Pera Mezzo Frutto",
+                "quantity": "100 g"
+              },
+              {
+                "name": "Pesca Un Frutto e mezzo",
+                "quantity": "150 g"
+              },
+              {
+                "name": "Due Frutti",
+                "quantity": "100 g"
+              }
+            ]
+          }
+        ],
+        "cena": [
+          {
+            "name": "Pane integrale Tre Fette e mezza",
+            "quantity": "100 g",
+            "alternatives": []
+          },
+          {
+            "name": "Frittata",
+            "quantity": "120 g",
+            "alternatives": []
+          },
+          {
+            "name": "Verdure cotte",
+            "quantity": "A piacere",
+            "alternatives": [
+              {
+                "name": "Un Cucchiaio",
+                "quantity": "10 g"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "day": "Sabato",
+      "meals": {
+        "colazione": [
+          {
+            "name": "Caffè Una Tazzina",
+            "quantity": "30 g",
+            "alternatives": []
+          },
+          {
+            "name": "Porridge d'avena",
+            "quantity": "40 g",
+            "alternatives": []
+          }
+        ],
+        "spuntino matt.": [
+          {
+            "name": "Cocomero verde o carosello salentino",
+            "quantity": "80 g",
+            "alternatives": []
+          },
+          {
+            "name": "Frutta fresca",
+            "quantity": "100 g",
+            "alternatives": [
+              {
+                "name": "Ciliegie",
+                "quantity": "100 g"
+              },
+              {
+                "name": "Fragole",
+                "quantity": "150 g"
+              },
+              {
+                "name": "Kiwi Un Frutto",
+                "quantity": "100 g"
+              },
+              {
+                "name": "Mela Mezzo Frutto",
+                "quantity": "100 g"
+              },
+              {
+                "name": "Melone Una Fetta e mezza",
+                "quantity": "150 g"
+              },
+              {
+                "name": "Mirtilli",
+                "quantity": "100 g"
+              },
+              {
+                "name": "Nespole Quattro Frutti",
+                "quantity": "150 g"
+              },
+              {
+                "name": "Pera Mezzo Frutto",
+                "quantity": "100 g"
+              },
+              {
+                "name": "Pesca Un Frutto e mezzo",
+                "quantity": "150 g"
+              },
+              {
+                "name": "Due Frutti",
+                "quantity": "100 g"
+              }
+            ]
+          }
+        ],
+        "pranzo": [
+          {
+            "name": "Patate",
+            "quantity": "300 g",
+            "alternatives": [
+              {
+                "name": "Pane di grano duro Tre Fette e mezza",
+                "quantity": "100 g"
+              },
+              {
+                "name": "Petto di pollo",
+                "quantity": "200 g"
+              },
+              {
+                "name": "Tacchina petto",
+                "quantity": "170 g"
+              },
+              {
+                "name": "Una porzione di pesce",
+                "quantity": "250 g"
+              },
+              {
+                "name": "Merluzzo o nasello",
+                "quantity": "300 g"
+              },
+              {
+                "name": "Orata fresca",
+                "quantity": "230 g"
+              },
+              {
+                "name": "Polpo",
+                "quantity": "300 g"
+              },
+              {
+                "name": "Rana pescatrice",
+                "quantity": "300 g"
+              },
+              {
+                "name": "Sarago",
+                "quantity": "280 g"
+              },
+              {
+                "name": "Scorfano",
+                "quantity": "300 g"
+              },
+              {
+                "name": "Seppia",
+                "quantity": "250 g"
+              },
+              {
+                "name": "Sogliola",
+                "quantity": "300 g"
+              },
+              {
+                "name": "Sgombro o maccarello",
+                "quantity": "160 g"
+              },
+              {
+                "name": "Spigola",
+                "quantity": "300 g"
+              },
+              {
+                "name": "Un Cucchiaio",
+                "quantity": "10 g"
+              }
+            ]
+          }
+        ],
+        "merenda": [
+          {
+            "name": "Cocomero verde o carosello salentino",
+            "quantity": "80 g",
+            "alternatives": []
+          },
+          {
+            "name": "Frutta fresca",
+            "quantity": "100 g",
+            "alternatives": [
+              {
+                "name": "Ciliegie",
+                "quantity": "100 g"
+              },
+              {
+                "name": "Fragole",
+                "quantity": "150 g"
+              },
+              {
+                "name": "Kiwi Un Frutto",
+                "quantity": "100 g"
+              },
+              {
+                "name": "Mela Mezzo Frutto",
+                "quantity": "100 g"
+              },
+              {
+                "name": "Melone Una Fetta e mezza",
+                "quantity": "150 g"
+              },
+              {
+                "name": "Mirtilli",
+                "quantity": "100 g"
+              },
+              {
+                "name": "Nespole Quattro Frutti",
+                "quantity": "150 g"
+              },
+              {
+                "name": "Pera Mezzo Frutto",
+                "quantity": "100 g"
+              },
+              {
+                "name": "Pesca Un Frutto e mezzo",
+                "quantity": "150 g"
+              },
+              {
+                "name": "Due Frutti",
+                "quantity": "100 g"
+              }
+            ]
+          }
+        ],
+        "cena": []
+      }
+    },
+    {
+      "day": "Domenica",
+      "meals": {
+        "colazione": [
+          {
+            "name": "Caffè Una Tazzina",
+            "quantity": "30 g",
+            "alternatives": []
+          },
+          {
+            "name": "Yogurt greco intero Mezzo Vasetto",
+            "quantity": "100 g",
+            "alternatives": []
+          },
+          {
+            "name": "Miele Un Cucchiaio",
+            "quantity": "10 g",
+            "alternatives": []
+          },
+          {
+            "name": "Noci",
+            "quantity": "20 g",
+            "alternatives": []
+          }
+        ],
+        "spuntino matt.": [
+          {
+            "name": "Cocomero verde o carosello salentino",
+            "quantity": "80 g",
+            "alternatives": []
+          },
+          {
+            "name": "Frutta fresca",
+            "quantity": "100 g",
+            "alternatives": [
+              {
+                "name": "Ciliegie",
+                "quantity": "100 g"
+              },
+              {
+                "name": "Fragole",
+                "quantity": "150 g"
+              },
+              {
+                "name": "Kiwi Un Frutto",
+                "quantity": "100 g"
+              },
+              {
+                "name": "Mela Mezzo Frutto",
+                "quantity": "100 g"
+              },
+              {
+                "name": "Melone Una Fetta e mezza",
+                "quantity": "150 g"
+              },
+              {
+                "name": "Mirtilli",
+                "quantity": "100 g"
+              },
+              {
+                "name": "Nespole Quattro Frutti",
+                "quantity": "150 g"
+              },
+              {
+                "name": "Pera Mezzo Frutto",
+                "quantity": "100 g"
+              },
+              {
+                "name": "Pesca Un Frutto e mezzo",
+                "quantity": "150 g"
+              },
+              {
+                "name": "Due Frutti",
+                "quantity": "100 g"
+              }
+            ]
+          }
+        ],
+        "pranzo": [
+          {
+            "name": "Pasta al pesto",
+            "quantity": "80 g",
+            "alternatives": [
+              {
+                "name": "Pasta al pomodoro",
+                "quantity": "90 g"
+              },
+              {
+                "name": "Una porzione di pesce",
+                "quantity": "250 g"
+              },
+              {
+                "name": "Merluzzo o nasello",
+                "quantity": "300 g"
+              },
+              {
+                "name": "Orata fresca",
+                "quantity": "230 g"
+              },
+              {
+                "name": "Polpo",
+                "quantity": "300 g"
+              },
+              {
+                "name": "Rana pescatrice",
+                "quantity": "300 g"
+              },
+              {
+                "name": "Sarago",
+                "quantity": "280 g"
+              },
+              {
+                "name": "Scorfano",
+                "quantity": "300 g"
+              },
+              {
+                "name": "Seppia",
+                "quantity": "250 g"
+              },
+              {
+                "name": "Sogliola",
+                "quantity": "300 g"
+              },
+              {
+                "name": "Sgombro o maccarello",
+                "quantity": "160 g"
+              },
+              {
+                "name": "Spigola",
+                "quantity": "300 g"
+              },
+              {
+                "name": "Petto di pollo",
+                "quantity": "200 g"
+              },
+              {
+                "name": "Tacchina petto",
+                "quantity": "170 g"
+              },
+              {
+                "name": "Fagiolini",
+                "quantity": "200 g"
+              },
+              {
+                "name": "Un Cucchiaio",
+                "quantity": "10 g"
+              }
+            ]
+          }
+        ],
+        "merenda": [
+          {
+            "name": "Cocomero verde o carosello salentino",
+            "quantity": "80 g",
+            "alternatives": []
+          },
+          {
+            "name": "Frutta fresca",
+            "quantity": "100 g",
+            "alternatives": [
+              {
+                "name": "Ciliegie",
+                "quantity": "100 g"
+              },
+              {
+                "name": "Fragole",
+                "quantity": "150 g"
+              },
+              {
+                "name": "Kiwi Un Frutto",
+                "quantity": "100 g"
+              },
+              {
+                "name": "Mela Mezzo Frutto",
+                "quantity": "100 g"
+              },
+              {
+                "name": "Melone Una Fetta e mezza",
+                "quantity": "150 g"
+              },
+              {
+                "name": "Mirtilli",
+                "quantity": "100 g"
+              },
+              {
+                "name": "Nespole Quattro Frutti",
+                "quantity": "150 g"
+              },
+              {
+                "name": "Pera Mezzo Frutto",
+                "quantity": "100 g"
+              },
+              {
+                "name": "Pesca Un Frutto e mezzo",
+                "quantity": "150 g"
+              },
+              {
+                "name": "Due Frutti",
+                "quantity": "100 g"
+              }
+            ]
+          }
+        ],
+        "cena": [
+          {
+            "name": "Pane di grano duro Una Fetta e mezza",
+            "quantity": "50 g",
+            "alternatives": []
+          },
+          {
+            "name": "Prosciutto crudo",
+            "quantity": "50 g",
+            "alternatives": [
+              {
+                "name": "Prosciutto cotto",
+                "quantity": "50 g"
+              },
+              {
+                "name": "Bresaola",
+                "quantity": "50 g"
+              },
+              {
+                "name": "Mozzarella",
+                "quantity": "80 g"
+              },
+              {
+                "name": "Un Cucchiaio",
+                "quantity": "10 g"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

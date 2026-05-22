@@ -18,6 +18,7 @@
     const weeksUnit = document.querySelector('.wel-modal__counter-unit');
 
     let currentWeeks = 1;
+    let isPlanUploaded = false;
 
     // Modal logic
     const openModal = () => {
@@ -26,6 +27,15 @@
 
     const closeModal = () => {
         modal.classList.remove('is-active');
+    };
+
+    const checkStartButtonVisibility = () => {
+        const hasName = userNameInput.value.trim() !== '';
+        if (hasName && isPlanUploaded) {
+            btnStart.classList.add('is-visible');
+        } else {
+            btnStart.classList.remove('is-visible');
+        }
     };
 
     const updateWeeksDisplay = () => {
@@ -51,9 +61,14 @@
 
     if (btnModalSave) {
         btnModalSave.addEventListener('click', () => {
-            // Qui si potrebbe aggiungere logica per validare se il file è stato effettivamente caricato
+            isPlanUploaded = true;
+            checkStartButtonVisibility();
             closeModal();
         });
+    }
+
+    if (userNameInput) {
+        userNameInput.addEventListener('input', checkStartButtonVisibility);
     }
 
     // Counter logic
