@@ -88,6 +88,12 @@
                 const fileName = e.target.files[0].name;
                 btnBrowse.textContent = 'Caricato';
                 btnBrowse.classList.add('is-uploaded');
+                
+                // Show the Save button
+                if (btnModalSave) {
+                    btnModalSave.classList.add('is-visible');
+                }
+                
                 console.log(`File selected: ${fileName}`);
             }
         });

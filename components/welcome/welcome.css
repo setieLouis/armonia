@@ -293,6 +293,14 @@
     margin-top: 2px;
 }
 
+#btn-modal-save {
+    display: none; /* Nascosto di default */
+}
+
+#btn-modal-save.is-visible {
+    display: flex;
+}
+
 /* Header & Logo Section */
 .wel__header {
     width: 100%;
