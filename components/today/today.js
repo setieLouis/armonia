@@ -6,6 +6,7 @@ async function initToday(navData = null) {
     // Caricamento dati tramite DataService
     let currentDayMeals;
     let todayData;
+    let userProfile;
     
     // Gestione della data: parametro o fallback odierno
     const dateId = (navData && typeof navData === 'object' && navData.dateId) 
@@ -16,15 +17,21 @@ async function initToday(navData = null) {
         // Carichiamo i pasti dal servizio centralizzato passando il dateId
         currentDayMeals = await window.dataService.loadData(dateId);
         
-        // Per oggi_data.json (info utente)
+        // Per oggi_data.json (altre info statiche)
         const dataRes = await fetch('components/today/today_data.json');
         todayData = await dataRes.json();
+
+        // Recupero profilo utente dal DB
+        if (window.localDB) {
+            userProfile = await window.localDB.getUserData('profile');
+        }
     } catch (error) {
         console.error("Errore nel caricamento dei dati:", error);
         return;
     }
 
-    const headerLeftValue = todayData.user.greeting;
+    const userName = (userProfile && userProfile.name) ? userProfile.name : "";
+    const headerLeftValue = userName ? `Ciao, ${userName}` : "Ciao";
     const headerRightValue = `<svg class="icon-leaf" width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M12 21V11M12 11C12 11 9 7 5 7C5 7 5 11 9 13C10.5 13.75 12 11 12 11ZM12 11C12 11 15 5 19 5C19 5 20 10 16 12C14.5 12.75 12 11 12 11Z" stroke="#719b6e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>`;
