@@ -1,17 +1,33 @@
 /* Scoped styles for Ingredient Alternatives - Branded Green Layout */
 .c-alt {
     background-color: #719b6e; /* Primary brand green */
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Override global scrollable-content behavior for this specific view */
+.c-alt .scrollable-content {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    overflow: hidden; /* Disable external scroll to favor internal list scroll */
+    padding-bottom: 0;
 }
 
 .c-alt-hero {
     background-color: transparent; /* Show the root green background */
     padding-bottom: 20px;
     color: #FFFFFF;
+    flex-shrink: 0; /* Header stays fixed size */
 }
 
 .c-alt-content {
     background-color: var(--white);
-    min-height: 100vh; /* Ensure white background extends to bottom */
+    flex: 1; /* Occupy remaining space */
+    display: flex;
+    flex-direction: column;
+    overflow: hidden; /* Contain the scrollable list */
     padding-top: 20px;
     border-radius: 32px 32px 0 0; /* Add back the rounded top for the white section */
 }
@@ -68,12 +84,13 @@
     align-items: center;
 }
 
+/* List section becomes the scrollable area */
 .c-alt-list {
+    flex: 1;
     display: flex;
     flex-direction: column;
     padding: 10px 24px;
     gap: 12px;
-    max-height: 380px; /* Set a fixed height for the list */
     overflow-y: auto;  /* Enable vertical scrolling */
     scrollbar-width: thin; /* For Firefox */
 }
@@ -101,9 +118,10 @@
 .c-alt-list .bg-alt-green { background-color: #E8F5E9; }
 .c-alt-list .bg-alt-yellow { background-color: #FFF9C4; }
 
-/* Info Banner Styling */
+/* Info Banner stays at the bottom of the white section */
 #alt-info-root {
-    padding: 24px;
+    padding: 16px 24px 24px;
+    flex-shrink: 0;
 }
 
 .c-alt-info {
