@@ -22,14 +22,13 @@
     let transformedPlan = [];
 
     /**
-     * Transforms generate.json data into the DB schema
+     * Transforms generate.json data into the DB schema for 2 weeks
      */
     function transformGenerateData(data) {
-        // Handle both object with weekPlan and direct array
-        const plan = (data && data.weekPlan) ? data.weekPlan : (Array.isArray(data) ? data : null);
+        const planTemplate = (data && data.weekPlan) ? data.weekPlan : (Array.isArray(data) ? data : null);
 
-        if (!plan) {
-            console.warn("Welcome: generate.json non ha la struttura attesa (weekPlan o array mancante).");
+        if (!planTemplate) {
+            console.warn("Welcome: generate.json non ha la struttura attesa.");
             return [];
         }
 
@@ -38,26 +37,40 @@
             "Venerdì": 4, "Sabato": 5, "Domenica": 6
         };
 
-        const baseDate = new Date("2026-05-18T08:00:00.000Z");
+        // Calcoliamo il lunedì della settimana corrente
+        const now = new Date();
+        const dayOfWeek = now.getDay(); // 0 (Dom) a 6 (Sab)
+        const diffToMonday = now.getDate() - dayOfWeek + (dayOfWeek === 0 ? -6 : 1);
+        const currentMonday = new Date(now.setDate(diffToMonday));
+        currentMonday.setHours(8, 0, 0, 0);
 
-        return plan.map(dayPlan => {
-            const dayOffset = daysMap[dayPlan.day] || 0;
-            const currentDay = new Date(baseDate);
-            currentDay.setDate(baseDate.getDate() + dayOffset);
+        const fullPlan = [];
 
-            return {
-                day: currentDay.toISOString().split('T')[0],
-                meals: dayPlan.meals.map((meal, index) => ({
-                    id: `${dayPlan.day.toLowerCase()}-${index}-${Date.now()}`,
-                    label: meal.label,
-                    dishes: meal.dishes.map(dish => ({
-                        ...dish,
-                        use: true,
-                        alternatives: dish.alternatives || []
+        // Generiamo i dati per 2 settimane (settimana corrente = 0, settimana prossima = 1)
+        [0, 1].forEach(weekOffset => {
+            planTemplate.forEach(dayPlan => {
+                const dayOffset = daysMap[dayPlan.day];
+                if (dayOffset === undefined) return;
+
+                const targetDay = new Date(currentMonday);
+                targetDay.setDate(currentMonday.getDate() + (weekOffset * 7) + dayOffset);
+
+                fullPlan.push({
+                    day: targetDay.toISOString().split('T')[0],
+                    meals: dayPlan.meals.map((meal, index) => ({
+                        id: `${dayPlan.day.toLowerCase()}-${weekOffset}-${index}-${Date.now()}`,
+                        label: meal.label,
+                        dishes: meal.dishes.map(dish => ({
+                            ...dish,
+                            use: true,
+                            alternatives: dish.alternatives || []
+                        }))
                     }))
-                }))
-            };
+                });
+            });
         });
+
+        return fullPlan;
     }
 
     /**
