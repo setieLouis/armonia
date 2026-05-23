@@ -71,8 +71,25 @@
 .c-alt-list {
     display: flex;
     flex-direction: column;
-    padding: 0 24px;
+    padding: 10px 24px;
     gap: 12px;
+    max-height: 380px; /* Set a fixed height for the list */
+    overflow-y: auto;  /* Enable vertical scrolling */
+    scrollbar-width: thin; /* For Firefox */
+}
+
+/* Custom scrollbar for webkit browsers */
+.c-alt-list::-webkit-scrollbar {
+    width: 4px;
+}
+
+.c-alt-list::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.c-alt-list::-webkit-scrollbar-thumb {
+    background: #8da67d;
+    border-radius: 10px;
 }
 
 /* Consistent ListTile cards */
