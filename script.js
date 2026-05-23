@@ -68,16 +68,36 @@ async function navigateTo(view, data = null) {
     }
 }
 
+/**
+ * Checks if a user profile exists to decide the initial view
+ */
+async function checkUserSession() {
+    try {
+        // Ensure database is available and open
+        if (window.db) {
+            await window.db.open();
+            if (window.localDB) {
+                const profile = await window.localDB.getUserData('profile');
+                if (profile && profile.name) {
+                    console.log(`Session: Welcome back, ${profile.name}!`);
+                    await navigateTo('today');
+                    return;
+                }
+            }
+        }
+    } catch (err) {
+        console.warn("Session: Database check skipped or failed", err);
+    }
+    
+    // Fallback to welcome if no profile or DB error
+    console.log("Session: No active profile found, starting with Welcome.");
+    await navigateTo('welcome');
+}
+
 window.loadComponent = loadComponent;
 window.loadScript = loadScript;
 window.navigateTo = navigateTo;
 
 document.addEventListener('DOMContentLoaded', () => {
-    navigateTo('welcome');
+    checkUserSession();
 });
-
-/*
-document.addEventListener('DOMContentLoaded', () => {
-    navigateTo('today',{dateId: "2026-05-18"});
-});
-*/
