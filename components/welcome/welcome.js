@@ -61,9 +61,9 @@
     }
 
     /**
-     * Reads generate.json and SAVES it to DB
+     * Reads generate.json and PREPARES it (but doesn't save to DB yet)
      */
-    async function readAndInitPlan() {
+    async function readAndPreparePlan() {
         try {
             console.log("Welcome: Tentativo di caricamento generate.json...");
             const response = await fetch('generate.json');
@@ -73,34 +73,27 @@
             console.log("Welcome: generate.json caricato, trasformazione in corso...");
             transformedPlan = transformGenerateData(data);
             
-            if (transformedPlan.length > 0 && window.localDB) {
-                console.log("Welcome: Inizio salvataggio piano nel DB...");
-                for (const dayData of transformedPlan) {
-                    await window.localDB.saveMeal(dayData);
-                }
-                console.log('Welcome: Fase 1 completata! Piano salvato nel DB locale.');
-                
+            if (transformedPlan.length > 0) {
+                console.log("Welcome: Piano pronto per essere salvato al click su Inizia.");
                 isPlanUploaded = true;
                 checkStartButtonVisibility();
                 
                 // Feedback UI
                 if (btnImport) {
-                    btnImport.innerHTML = '<span class="wel__icon wel__icon--pdf"></span> Piano pre-caricato';
+                    btnImport.innerHTML = '<span class="wel__icon wel__icon--pdf"></span> Piano pronto';
                     btnImport.classList.add('is-uploaded');
                 }
             } else {
-                console.warn("Welcome: Nessun piano trasformato o localDB non disponibile.");
+                console.warn("Welcome: Nessun piano trasformato.");
             }
         } catch (error) {
-            console.error('Welcome Error (Phase 1):', error);
+            console.error('Welcome Error (Preparation):', error);
         }
     }
 
     // Inizializzazione Componente
     const init = async () => {
-        // Aspettiamo un attimo che Dexie sia pronto se necessario
         if (!window.db) {
-            console.warn("Welcome: Database non trovato in window.db, riprovo tra 100ms...");
             setTimeout(init, 100);
             return;
         }
@@ -108,7 +101,7 @@
         try {
             await window.db.open();
             console.log("Welcome: Connessione DB stabilita.");
-            await readAndInitPlan();
+            await readAndPreparePlan();
         } catch (err) {
             console.error("Welcome: Errore durante l'apertura del DB nell'init:", err);
         }
@@ -175,14 +168,27 @@
 
     if (btnStart) {
         btnStart.addEventListener('click', async () => {
+            console.log('inizia');
             const name = userNameInput.value.trim();
             if (name && window.localDB) {
                 try {
+                    // 1. Salva Profilo Utente
                     await window.localDB.saveUserData('profile', { name });
                     console.log(`Profilo salvato per: ${name}`);
+
+                    // 2. Salva il piano nel DB (solo ora!)
+                    if (transformedPlan.length > 0) {
+                        console.log("Welcome: Salvataggio piano nel DB in corso...");
+                        for (const dayData of transformedPlan) {
+                            await window.localDB.saveMeal(dayData);
+                        }
+                        console.log("Welcome: Piano salvato nel DB locale.");
+                    }
+
+                    // 3. Navigazione
                     if (window.navigateTo) window.navigateTo('today');
                 } catch (err) {
-                    console.error("Errore salvataggio profilo:", err);
+                    console.error("Errore durante il salvataggio dei dati all'avvio:", err);
                 }
             }
         });
