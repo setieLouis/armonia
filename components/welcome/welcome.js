@@ -22,13 +22,13 @@
     let transformedPlan = [];
 
     /**
-     * Transforms generate.json data into the DB schema for 2 weeks
+     * Transforms imported JSON data into the DB schema for 2 weeks
      */
     function transformGenerateData(data) {
         const planTemplate = (data && data.weekPlan) ? data.weekPlan : (Array.isArray(data) ? data : null);
 
         if (!planTemplate) {
-            console.warn("Welcome: generate.json non ha la struttura attesa.");
+            console.warn("Welcome: Il JSON caricato non ha la struttura attesa.");
             return [];
         }
 
@@ -37,16 +37,14 @@
             "Venerdì": 4, "Sabato": 5, "Domenica": 6
         };
 
-        // Calcoliamo il lunedì della settimana corrente
         const now = new Date();
-        const dayOfWeek = now.getDay(); // 0 (Dom) a 6 (Sab)
+        const dayOfWeek = now.getDay(); 
         const diffToMonday = now.getDate() - dayOfWeek + (dayOfWeek === 0 ? -6 : 1);
         const currentMonday = new Date(now.setDate(diffToMonday));
         currentMonday.setHours(8, 0, 0, 0);
 
         const fullPlan = [];
 
-        // Generiamo i dati per 2 settimane (settimana corrente = 0, settimana prossima = 1)
         [0, 1].forEach(weekOffset => {
             planTemplate.forEach(dayPlan => {
                 const dayOffset = daysMap[dayPlan.day];
@@ -74,33 +72,21 @@
     }
 
     /**
-     * Reads generate.json and PREPARES it (but doesn't save to DB yet)
+     * Process the imported JSON data
      */
-    async function readAndPreparePlan() {
-        try {
-            console.log("Welcome: Tentativo di caricamento generate.json...");
-            const response = await fetch('generate.json');
-            if (!response.ok) throw new Error(`Impossibile trovare generate.json (Status: ${response.status})`);
+    function processImportedData(jsonData) {
+        console.log("Welcome: Elaborazione JSON importato...");
+        transformedPlan = transformGenerateData(jsonData);
+        
+        if (transformedPlan.length > 0) {
+            console.log("Welcome: Piano 14 giorni generato con successo dall'import.");
+            isPlanUploaded = true;
+            checkStartButtonVisibility();
             
-            const data = await response.json();
-            console.log("Welcome: generate.json caricato, trasformazione in corso...");
-            transformedPlan = transformGenerateData(data);
-            
-            if (transformedPlan.length > 0) {
-                console.log("Welcome: Piano pronto per essere salvato al click su Inizia.");
-                isPlanUploaded = true;
-                checkStartButtonVisibility();
-                
-                // Feedback UI
-                if (btnImport) {
-                    btnImport.innerHTML = '<span class="wel__icon wel__icon--pdf"></span> Piano pronto';
-                    btnImport.classList.add('is-uploaded');
-                }
-            } else {
-                console.warn("Welcome: Nessun piano trasformato.");
+            if (btnImport) {
+                btnImport.innerHTML = '<span class="wel__icon wel__icon--pdf"></span> Piano importato';
+                btnImport.classList.add('is-uploaded');
             }
-        } catch (error) {
-            console.error('Welcome Error (Preparation):', error);
         }
     }
 
@@ -114,13 +100,11 @@
         try {
             await window.db.open();
             console.log("Welcome: Connessione DB stabilita.");
-            await readAndPreparePlan();
         } catch (err) {
-            console.error("Welcome: Errore durante l'apertura del DB nell'init:", err);
+            console.error("Welcome: Errore apertura DB:", err);
         }
     };
 
-    // Modal logic functions
     const openModal = () => modal.classList.add('is-active');
     const closeModal = () => modal.classList.remove('is-active');
 
@@ -138,7 +122,6 @@
         if (weeksUnit) weeksUnit.textContent = currentWeeks === 1 ? 'settimana' : 'settimane';
     };
 
-    // Event Listeners
     if (btnImport) btnImport.addEventListener('click', openModal);
     if (modalClose) modalClose.addEventListener('click', closeModal);
     if (modalOverlay) modalOverlay.addEventListener('click', closeModal);
@@ -171,43 +154,47 @@
 
     if (fileInput) {
         fileInput.addEventListener('change', (e) => {
-            if (e.target.files.length > 0) {
-                btnBrowse.textContent = 'Caricato';
-                btnBrowse.classList.add('is-uploaded');
-                if (btnModalSave) btnModalSave.classList.add('is-visible');
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = (event) => {
+                    try {
+                        const jsonData = JSON.parse(event.target.result);
+                        processImportedData(jsonData);
+                        
+                        btnBrowse.textContent = 'Caricato';
+                        btnBrowse.classList.add('is-uploaded');
+                        if (btnModalSave) btnModalSave.classList.add('is-visible');
+                    } catch (err) {
+                        console.error("Errore nel parsing del file JSON:", err);
+                        alert("Il file caricato non è un JSON valido.");
+                    }
+                };
+                reader.readAsText(file);
             }
         });
     }
 
     if (btnStart) {
         btnStart.addEventListener('click', async () => {
-            console.log('inizia');
             const name = userNameInput.value.trim();
             if (name && window.localDB) {
                 try {
-                    // 1. Salva Profilo Utente
                     await window.localDB.saveUserData('profile', { name });
-                    console.log(`Profilo salvato per: ${name}`);
-
-                    // 2. Salva il piano nel DB (solo ora!)
                     if (transformedPlan.length > 0) {
-                        console.log("Welcome: Salvataggio piano nel DB in corso...");
                         for (const dayData of transformedPlan) {
                             await window.localDB.saveMeal(dayData);
                         }
                         console.log("Welcome: Piano salvato nel DB locale.");
                     }
-
-                    // 3. Navigazione
                     if (window.navigateTo) window.navigateTo('today');
                 } catch (err) {
-                    console.error("Errore durante il salvataggio dei dati all'avvio:", err);
+                    console.error("Errore durante il salvataggio dei dati:", err);
                 }
             }
         });
     }
 
-    // Start initialization
     init();
     console.log("Welcome component loaded.");
 })();
