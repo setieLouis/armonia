@@ -62,7 +62,7 @@
                         label: meal.label,
                         dishes: meal.dishes.map(dish => ({
                             ...dish,
-                            use: true,
+                            use: false,
                             alternatives: dish.alternatives || []
                         }))
                     }))
