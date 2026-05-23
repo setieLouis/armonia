@@ -25,19 +25,24 @@ class DataService {
                 const response = await fetch('tmp_meal.json');
                 const seedData = await response.json();
                 
-                for (const dayData of seedData) {
-                    // Normalize 'day' to YYYY-MM-DD format (remove timestamp)
-                    const normalizedDay = dayData.day.split('T')[0];
-                    await window.localDB.saveMeal({
-                        ...dayData,
-                        day: normalizedDay
-                    });
+                // tmp_meal.json is a single object, not an array
+                const dataArray = Array.isArray(seedData) ? seedData : [seedData];
+                
+                for (const dayData of dataArray) {
+                    if (dayData && dayData.day) {
+                        // Normalize 'day' to YYYY-MM-DD format
+                        const normalizedDay = dayData.day.split('T')[0];
+                        await window.localDB.saveMeal({
+                            ...dayData,
+                            day: normalizedDay
+                        });
+                    }
                 }
-                console.log("DataService: Database seeded successfully with normalized dates");
+                console.log("DataService: Database seeded successfully");
             }
             this.isSeeded = true;
         } catch (error) {
-            console.warn("DataService: Could not seed database (file might not exist)", error);
+            console.warn("DataService: Could not seed database", error);
         }
     }
 

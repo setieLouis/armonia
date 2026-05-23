@@ -20,39 +20,47 @@ console.log(JSON.stringify(structured, null, 2));
 
 function parseToJson(text) {
   const days = ["Lunedì","Martedì","Mercoledì","Giovedì","Venerdì","Sabato","Domenica"];
-  const meals = ["COLAZIONE","SPUNTINO MATT.","PRANZO","MERENDA","CENA"];
+
+  const mealMap = {
+    "COLAZIONE": "Colazione",
+    "SPUNTINO MATT.": "Spuntino",
+    "PRANZO": "Pranzo",
+    "MERENDA": "Merenda",
+    "CENA": "Cena"
+  };
 
   const result = {
     weekPlan: []
   };
 
   for (const day of days) {
-    const dayIndex = text.indexOf(day);
-    if (dayIndex === -1) continue;
+    const dayStart = text.indexOf(day);
+    if (dayStart === -1) continue;
 
-    const nextDayIndex = getNextDayIndex(text, day, days);
+    const dayEnd = getNextDayIndex(text, day, days);
+    const dayText = text.substring(dayStart, dayEnd);
 
-    const dayText = text.substring(dayIndex, nextDayIndex);
+    const meals = [];
 
-    const mealsObj = {};
+    for (const [mealKey, label] of Object.entries(mealMap)) {
+      const mealStart = dayText.indexOf(mealKey);
+      if (mealStart === -1) continue;
 
-    for (const meal of meals) {
-      const mealIndex = dayText.indexOf(meal);
-      if (mealIndex === -1) continue;
-
-      const nextMealIndex = getNextMealIndex(dayText, meal, meals);
-
+      const mealEnd = getNextMealIndex(dayText, mealKey);
       const mealText = dayText.substring(
-        mealIndex + meal.length,
-        nextMealIndex
+        mealStart + mealKey.length,
+        mealEnd
       );
 
-      mealsObj[meal.toLowerCase()] = parseItems(mealText);
+      meals.push({
+        label,
+        dishes: parseDishes(mealText)
+      });
     }
 
     result.weekPlan.push({
       day,
-      meals: mealsObj
+      meals
     });
   }
 
@@ -72,12 +80,14 @@ function getNextDayIndex(text, currentDay, days) {
   return end;
 }
 
-function getNextMealIndex(text, currentMeal, meals) {
-  const start = text.indexOf(currentMeal);
+function getNextMealIndex(text, meal) {
+  const meals = ["COLAZIONE","SPUNTINO MATT.","PRANZO","MERENDA","CENA"];
+
+  const start = text.indexOf(meal);
   let end = text.length;
 
   for (const m of meals) {
-    if (m === currentMeal) continue;
+    if (m === meal) continue;
     const idx = text.indexOf(m, start + 1);
     if (idx !== -1 && idx < end) end = idx;
   }
@@ -85,54 +95,55 @@ function getNextMealIndex(text, currentMeal, meals) {
   return end;
 }
 
-function parseItems(text) {
+function parseDishes(text) {
   const lines = text
     .split("\n")
     .map(l => cleanLine(l))
-    //.map(l => l.trim())
     .filter(Boolean);
 
-  const items = [];
+  const dishes = [];
 
   for (let i = 0; i < lines.length; i++) {
     const line = lines[i];
 
-    // prodotto + quantità
-    const match = line.match(/^(.+?)\s+(\d+\s*g|Quanto basta|A piacere|q\.b\.)$/i);
+    const match = line.match(
+      /^(.+?)\s+(Quanto basta|A piacere|q\.b\.|\d+\s*g)$/i
+    );
 
-    if (match) {
-      const name = match[1].trim();
-      const quantity = match[2].trim();
+    if (!match) continue;
 
-      const item = {
-        name,
-        quantity,
-        alternatives: []
-      };
+    const dish = {
+      name: cleanLine(match[1]),
+      quantity: match[2],
+      alternatives: []
+    };
 
-      // cerca "Alternative:" nelle righe successive
-      if (lines[i + 1] && lines[i + 1].includes("Alternative")) {
-        i++;
+    // 🔥 alternative
+    if (lines[i + 1]?.includes("Alternative")) {
+      i++;
 
-        while (i + 1 < lines.length && !lines[i + 1].match(/^\s*$/)) {
-          i++;
+      while (i + 1 < lines.length) {
+        const next = lines[i + 1];
 
-          const altMatch = lines[i].match(/^(.+?)\s+(\d+\s*g)$/i);
+        if (!next || next.includes("CENA") || next.includes("PRANZO")) break;
 
-          if (altMatch) {
-            item.alternatives.push({
-              name: altMatch[1].trim(),
-              quantity: altMatch[2].trim()
-            });
-          }
+        const alt = next.match(/^(.+?)\s+(\d+\s*g)$/i);
+
+        if (alt) {
+          dish.alternatives.push({
+            name: cleanLine(alt[1]),
+            quantity: alt[2]
+          });
         }
-      }
 
-      items.push(item);
+        i++;
+      }
     }
+
+    dishes.push(dish);
   }
 
-  return items;
+  return dishes;
 }
 
 function cleanLine(line) {
