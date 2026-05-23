@@ -20,11 +20,12 @@
     let currentWeeks = 1;
     let isPlanUploaded = false;
     let transformedPlan = [];
+    let rawImportedData = null; // Memorizziamo il JSON grezzo per poterlo ri-trasformare se cambiano le settimane
 
     /**
-     * Transforms imported JSON data into the DB schema for 2 weeks
+     * Transforms imported JSON data into the DB schema for N weeks
      */
-    function transformGenerateData(data) {
+    function transformGenerateData(data, numWeeks) {
         const planTemplate = (data && data.weekPlan) ? data.weekPlan : (Array.isArray(data) ? data : null);
 
         if (!planTemplate) {
@@ -45,7 +46,8 @@
 
         const fullPlan = [];
 
-        [0, 1].forEach(weekOffset => {
+        // Generiamo i dati per il numero di settimane richiesto
+        for (let weekOffset = 0; weekOffset < numWeeks; weekOffset++) {
             planTemplate.forEach(dayPlan => {
                 const dayOffset = daysMap[dayPlan.day];
                 if (dayOffset === undefined) return;
@@ -66,7 +68,7 @@
                     }))
                 });
             });
-        });
+        }
 
         return fullPlan;
     }
@@ -75,11 +77,12 @@
      * Process the imported JSON data
      */
     function processImportedData(jsonData) {
-        console.log("Welcome: Elaborazione JSON importato...");
-        transformedPlan = transformGenerateData(jsonData);
+        console.log(`Welcome: Elaborazione JSON importato per ${currentWeeks} settimane...`);
+        rawImportedData = jsonData;
+        transformedPlan = transformGenerateData(jsonData, currentWeeks);
         
         if (transformedPlan.length > 0) {
-            console.log("Welcome: Piano 14 giorni generato con successo dall'import.");
+            console.log(`Welcome: Piano ${currentWeeks} settimane generato con successo.`);
             isPlanUploaded = true;
             checkStartButtonVisibility();
             
@@ -128,6 +131,10 @@
 
     if (btnModalSave) {
         btnModalSave.addEventListener('click', () => {
+            // Se cambiano le settimane, rigeniamo il piano se abbiamo già caricato un file
+            if (rawImportedData) {
+                processImportedData(rawImportedData);
+            }
             isPlanUploaded = true;
             checkStartButtonVisibility();
             closeModal();
@@ -185,7 +192,7 @@
                         for (const dayData of transformedPlan) {
                             await window.localDB.saveMeal(dayData);
                         }
-                        console.log("Welcome: Piano salvato nel DB locale.");
+                        console.log(`Welcome: Piano di ${currentWeeks} settimane salvato nel DB locale.`);
                     }
                     if (window.navigateTo) window.navigateTo('today');
                 } catch (err) {
