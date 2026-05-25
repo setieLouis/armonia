@@ -1,0 +1,14 @@
+<svg width="512" height="512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="leafGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#8DA67D"/>
+      <stop offset="100%" stop-color="#5E7A4F"/>
+    </linearGradient>
+  </defs>
+  <rect width="512" height="512" rx="112" fill="#FFFFFF"/>
+  <g transform="translate(256, 256)">
+    <path d="M0,-160 C-90,-60 -100,40 -20,110 C0,130 0,130 0,130 C0,130 0,130 20,110 C100,40 90,-60 0,-160" fill="url(#leafGrad)"/>
+    <path d="M0,-140 C0,-140 10,-60 0,80" stroke="#FFFFFF" stroke-width="8" stroke-linecap="round" fill="none" opacity="0.4"/>
+    <circle cx="70" cy="-30" r="20" fill="#f08c00" opacity="0.9"/>
+  </g>
+</svg>

@@ -99,5 +99,22 @@ window.loadScript = loadScript;
 window.navigateTo = navigateTo;
 
 document.addEventListener('DOMContentLoaded', () => {
-    checkUserSession();
+    // Handle PWA shortcuts or deep links
+    const urlParams = new URLSearchParams(window.location.search);
+    const view = urlParams.get('view');
+    
+    if (view) {
+        navigateTo(view);
+    } else {
+        checkUserSession();
+    }
+
+    // Register Service Worker
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+            navigator.serviceWorker.register('/sw.js')
+                .then(reg => console.log('Service Worker registered', reg))
+                .catch(err => console.error('Service Worker registration failed', err));
+        });
+    }
 });

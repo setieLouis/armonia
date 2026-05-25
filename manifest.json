@@ -1,0 +1,64 @@
+{
+  "id": "/?source=pwa",
+  "name": "Armonia Flow",
+  "short_name": "Armonia",
+  "description": "Benessere e Armonia nella tua alimentazione quotidiana.",
+  "lang": "it",
+  "start_url": "https://setielouis.github.io/armonia/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#ffffff",
+  "theme_color": "#719b6e",
+  "icons": [
+    {
+      "src": "leaf192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "leaf192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "leaf.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "ui/prima.png",
+      "sizes": "1080x1920",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "Schermata di benvenuto"
+    },
+    {
+      "src": "ui/seconda.png",
+      "sizes": "1080x1920",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "I tuoi pasti del giorno"
+    },
+    {
+      "src": "ui/terza.png",
+      "sizes": "1080x1920",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "Dettaglio del pasto"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Oggi",
+      "url": "/?view=today",
+      "description": "Vedi i pasti di oggi",
+      "icons": [{ "src": "pwa/logo.png", "sizes": "192x192" }]
+    }
+  ]
+}
