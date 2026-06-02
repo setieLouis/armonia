@@ -1,25 +1,28 @@
-FROM debian:bookworm-slim
+FROM node:20-slim
 
-# Dipendenze base
+ENV DEBIAN_FRONTEND=noninteractive
+
+# Dipendenze base (solo quelle che ti servono davvero)
 RUN apt-get update && apt-get install -y \
+    git \
+    git-flow \
     curl \
     ca-certificates \
     unzip \
     bash \
     && rm -rf /var/lib/apt/lists/*
 
-# Installa fnm
-ENV FNM_DIR="/root/.fnm"
+# CA aziendale (McAfee proxy)
+COPY ./cert/mcafee.crt /usr/local/share/ca-certificates/mcafee.crt
+RUN update-ca-certificates
 
-RUN curl -fsSL https://fnm.vercel.app/install | bash
+# 🔐 Node/npm devono fidarsi della CA aziendale
+ENV NODE_EXTRA_CA_CERTS=/usr/local/share/ca-certificates/mcafee.crt
 
-# Aggiunge fnm al PATH
-ENV PATH="${FNM_DIR}:${FNM_DIR}/aliases/default/bin:${PATH}"
+# 🔐 npm (molto importante nel tuo ambiente)
+RUN npm config set cafile /usr/local/share/ca-certificates/mcafee.crt
 
-# Installa Node LTS
-#RUN bash -c "source /root/.bashrc && fnm install --lts && fnm default lts-latest"
-
-# Verifica
-#RUN node -v && npm -v && fnm --version
+# install globale
+RUN npm install -g @google/gemini-cli
 
 CMD ["/bin/bash"]
