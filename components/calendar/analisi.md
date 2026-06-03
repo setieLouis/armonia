@@ -4,7 +4,6 @@
 L'obiettivo è implementare un selettore di date settimanale interattivo, basato sul mockup `seconda.png`. Il componente deve permettere all'utente di visualizzare la data corrente e di navigare tra i diversi giorni della settimana per consultare i rispettivi piani alimentari.
 
 ### Componenti Logici
-- **Calendar Header**: Visualizza il nome del giorno (es. "Lunedì") e la data estesa (es. "12 Maggio"). Include un'icona calendario decorativa.
 - **Weekly Row**: Una riga orizzontale di 7 elementi (tessere del giorno).
 - **Day Tile**: Elemento atomico che mostra l'abbreviazione del giorno (Lun, Mar...) e il numero del mese.
 
@@ -27,7 +26,6 @@ Il componente `components/calendar/calendar.js` è attualmente limitato:
 ## 3. Architettura e Gestione Dati
 - **Prefisso Radice**: `.tod-cal`
 - **Dati Dinamici**: 
-    - `dateData`: Titolo e sottotitolo dell'header.
     - `days`: Array di oggetti `{ label, number, dateId, active }`.
 - **Eventi**: Click sulla tessera del giorno -> `navigateTo('today', { dateId })`.
 
