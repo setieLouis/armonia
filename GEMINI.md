@@ -1,3 +1,17 @@
+## Workflow di Sviluppo (Git Flow)
+
+Il progetto segue il modello **Git Flow** per la gestione dei rami e dei rilasci.
+
+- **main**: Ramo di produzione (stabile).
+- **develop**: Ramo principale per lo sviluppo.
+- **feature/**: Nuove funzionalità (partono da `develop`).
+- **hotfix/**: Correzioni urgenti in produzione (partono da `main`).
+- **release/**: Preparazione per il rilascio (partono da `develop`).
+
+È caldamente raccomandato l'uso dei comandi `git flow [feature|hotfix|release] start/finish` per garantire la coerenza del repository.
+
+---
+
 ## Processo di Pianificazione Nuove Viste (Mockup-to-Plan)
 
 Prima di iniziare l'implementazione di una nuova vista o pagina partendo da un mockup (es. un file immagine), è obbligatorio creare un file di pianificazione (es. `nome_vista.md`) seguendo questo schema standard:

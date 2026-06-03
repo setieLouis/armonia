@@ -4,24 +4,10 @@
  */
 
 async function initCalendar(container, targetDateInput = null) {
-    // 1. Assicuriamoci che ListTile sia caricato
-    if (typeof window.renderListTile !== 'function') {
-        await loadScript('components/list-tile/list-tile.js');
-    }
-    window.injectListTileStyles();
-
-    // 2. Elaborazione Date (Logica interna autonoma)
+    // 1. Elaborazione Date (Logica interna autonoma)
     const targetDate = targetDateInput ? new Date(targetDateInput) : new Date();
     
     const dayNames = ['Dom', 'Lun', 'Mar', 'Mer', 'Gio', 'Ven', 'Sab'];
-    const fullDayNames = ['Domenica', 'Lunedì', 'Martedì', 'Mercoledì', 'Giovedì', 'Venerdì', 'Sabato'];
-    const months = ['Gennaio', 'Febbraio', 'Marzo', 'Aprile', 'Maggio', 'Giugno', 'Luglio', 'Agosto', 'Settembre', 'Ottobre', 'Novembre', 'Dicembre'];
-
-    // Dati per l'Header
-    const dateData = {
-        dayName: fullDayNames[targetDate.getDay()],
-        dateFull: `${targetDate.getDate()} ${months[targetDate.getMonth()]}`
-    };
 
     // Generazione della riga settimanale
     const days = [];
@@ -44,7 +30,7 @@ async function initCalendar(container, targetDateInput = null) {
         });
     }
 
-    // 3. Helper per renderizzare il singolo giorno
+    // 2. Helper per renderizzare il singolo giorno
     function renderCalendarDay(day) {
         return `
             <div class="calendar-day ${day.active ? 'active' : ''}" 
@@ -56,17 +42,8 @@ async function initCalendar(container, targetDateInput = null) {
         `;
     }
 
-    // 4. Render principale
-    const headerRoot = container.querySelector('#calendar-header-root');
+    // 3. Render principale
     const daysRoot = container.querySelector('#calendar-days-root');
-
-    if (headerRoot) {
-        headerRoot.innerHTML = window.renderListTile({
-            title: dateData.dayName,
-            subtitle: dateData.dateFull,
-            variant: 'header'
-        });
-    }
 
     if (daysRoot) {
         daysRoot.innerHTML = days.map(day => renderCalendarDay(day)).join('');

@@ -61,12 +61,30 @@ async function navigateTo(view, data = null) {
         });
     }
     else if (view === 'ingredient') {
-        await loadComponent(appRoot, 'components/ingredient/ingredient.html', async () => {
+        await loadComponent(appRoot, 'components/ingredient/ingredient.html', async (element) => {
             await loadScript('components/ingredient/ingredient.js');
             if (window.initIngredientAlternatives) await window.initIngredientAlternatives(data);
         });
     }
-}
+    else if (view === 'diet-update') {
+        await loadComponent(appRoot, 'components/diet-update/diet-update.html', async (element) => {
+            await loadScript('components/diet-update/diet-update.js');
+            if (window.initDietUpdate) await window.initDietUpdate();
+        });
+    }
+    else if (view === 'features-info') {
+        await loadComponent(appRoot, 'components/features-info/features-info.html', async (element) => {
+            await loadScript('components/features-info/features-info.js');
+            if (window.initFeaturesInfo) await window.initFeaturesInfo();
+        });
+    }
+    else if (view === 'acqua') {
+        await loadComponent(appRoot, 'components/acqua/acqua.html', async (element) => {
+            await loadScript('components/acqua/acqua.js');
+            if (window.initAcqua) await window.initAcqua();
+        });
+    }
+    }
 
 /**
  * Checks if a user profile exists to decide the initial view
@@ -99,6 +117,11 @@ window.loadScript = loadScript;
 window.navigateTo = navigateTo;
 
 document.addEventListener('DOMContentLoaded', () => {
+    // Start notification service if available
+    if (window.notificationService) {
+        window.notificationService.startWaterReminder();
+    }
+
     // Handle PWA shortcuts or deep links
     const urlParams = new URLSearchParams(window.location.search);
     const view = urlParams.get('view');

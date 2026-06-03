@@ -1,0 +1,91 @@
+<div class="fei-container">
+    <!-- Header Integrato via JS -->
+    <div id="fei-header-root" style="width: 100%;"></div>
+
+    <div class="fei-content">
+        <div id="fei-list" class="fei-list">
+            <!-- Le card verranno inserite qui via JS -->
+            <div class="fei-loading">Caricamento novità...</div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .fei-container {
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+        background-color: var(--bg-color);
+        box-sizing: border-box;
+    }
+    .fei-content {
+        flex: 1;
+        padding: 20px 24px;
+        overflow-y: auto;
+    }
+    .fei-list {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+    }
+    .fei-card {
+        background: var(--white);
+        border-radius: 20px;
+        padding: 20px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+        display: flex;
+        gap: 16px;
+        position: relative;
+        overflow: hidden;
+    }
+    .fei-card__icon {
+        width: 48px;
+        height: 48px;
+        background: var(--primary-green-light);
+        border-radius: 14px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--primary-green);
+        flex-shrink: 0;
+    }
+    .fei-card__body {
+        flex: 1;
+    }
+    .fei-card__title {
+        font-size: 17px;
+        font-weight: 600;
+        color: var(--text-main);
+        margin-bottom: 4px;
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+    }
+    .fei-card__desc {
+        font-size: 14px;
+        color: var(--text-muted);
+        line-height: 1.5;
+    }
+    .fei-badge {
+        font-size: 10px;
+        font-weight: 700;
+        text-transform: uppercase;
+        padding: 4px 8px;
+        border-radius: 8px;
+        letter-spacing: 0.05em;
+    }
+    .fei-badge--available {
+        background-color: #E8F0E4;
+        color: #4A7856;
+    }
+    .fei-badge--upcoming {
+        background-color: #FFF4E5;
+        color: #B26B00;
+    }
+    .fei-loading {
+        text-align: center;
+        padding: 40px;
+        color: var(--text-muted);
+        font-style: italic;
+    }
+</style>

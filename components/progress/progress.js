@@ -38,7 +38,7 @@ function renderProgress(container, data) {
 
         <style>
             .tod-pro.progress-card {
-                margin: 24px;
+                margin: 10px 24px 24px;
                 border-radius: 20px;
                 padding: 20px;
                 transition: background 0.5s ease;

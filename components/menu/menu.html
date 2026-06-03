@@ -1,0 +1,63 @@
+<div id="menu-overlay" class="men-overlay hidden">
+    <div id="menu-drawer" class="men-drawer">
+        <div class="men-header">
+            <h3>Menu</h3>
+            <button id="menu-close" class="men-close-btn">&times;</button>
+        </div>
+        <nav class="men-nav">
+            <div id="menu-items-container">
+                <!-- I menu items verranno inseriti qui via JS -->
+            </div>
+        </nav>
+    </div>
+</div>
+
+<style>
+    .men-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0,0,0,0.5);
+        z-index: 1000;
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.3s ease;
+    }
+    .men-overlay.active {
+        opacity: 1;
+        visibility: visible;
+    }
+    .men-drawer {
+        position: absolute;
+        right: -280px;
+        top: 0;
+        width: 280px;
+        height: 100%;
+        background: var(--white);
+        transition: right 0.3s ease;
+        padding: 24px;
+        display: flex;
+        flex-direction: column;
+    }
+    .men-overlay.active .men-drawer {
+        right: 0;
+    }
+    .men-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 30px;
+    }
+    .men-close-btn {
+        background: none;
+        border: none;
+        font-size: 28px;
+        cursor: pointer;
+        color: var(--text-muted);
+    }
+    .hidden {
+        display: none;
+    }
+</style>
