@@ -1,0 +1,107 @@
+<div class="wel diu">
+    <!-- Header Integrato via JS -->
+    <div id="diu-header-root" style="width: 100%;"></div>
+
+    <!-- Sezione Branding / Titolo -->
+    <div class="wel__content" style="margin-top: 20px; margin-bottom: 30px;">
+        <h1 class="wel__title" style="font-size: 28px;">Aggiorna Dieta</h1>
+        <p class="wel__subtitle">Pianifica le prossime settimane</p>
+    </div>
+
+    <!-- Sezione Azioni -->
+    <div class="wel__actions">
+        <!-- Info Stato Corrente -->
+        <div id="diu-status" class="diu-status-card">
+            <span class="diu-status-label">Stato attuale</span>
+            <div id="diu-status-text" class="diu-status-value">Caricamento...</div>
+        </div>
+
+        <!-- Sfoglia File -->
+        <button id="diu-btn-browse" class="wel__btn-secondary">
+            <span class="wel__icon wel__icon--pdf"></span>
+            Sfoglia Piano (JSON)
+        </button>
+        <input type="file" id="diu-file-input" accept=".json" style="display: none;">
+
+        <!-- Selettore Settimane (Stile Welcome Modal) -->
+        <div class="diu-counter-container">
+            <label class="diu-label">Durata del piano</label>
+            <div class="wel-modal__counter" style="max-width: 100%; margin-top: 8px;">
+                <button type="button" id="diu-weeks-minus" class="wel-modal__counter-btn">−</button>
+                <div class="wel-modal__counter-value">
+                    <span id="diu-weeks-display">1</span>
+                    <span class="wel-modal__counter-unit">settimana</span>
+                </div>
+                <button type="button" id="diu-weeks-plus" class="wel-modal__counter-btn">+</button>
+            </div>
+        </div>
+
+        <!-- Pulsante Salva -->
+        <button id="diu-btn-save" class="wel__btn-primary" style="margin-top: 20px; opacity: 0.5; pointer-events: none;">
+            Aggiorna Piano
+            <span class="wel__icon wel__icon--arrow"></span>
+        </button>
+    </div>
+
+    <!-- Modal Conflitto (Overlay) -->
+    <div id="diu-modal-conflict" class="wel-modal">
+        <div class="wel-modal__overlay"></div>
+        <div class="wel-modal__content">
+            <div class="wel-modal__header">
+                <h2 class="wel-modal__title">Conflitto Date</h2>
+                <button id="diu-modal-close" class="wel-modal__close-btn">&times;</button>
+            </div>
+            <div class="wel-modal__body" style="text-align: center;">
+                <p id="diu-conflict-msg" style="color: #4A4A4A; margin-bottom: 24px; line-height: 1.5;">
+                    Alcune date del nuovo piano sono già presenti. Vuoi sovrascriverle?
+                </p>
+                <div style="display: flex; gap: 12px;">
+                    <button id="diu-btn-confirm-overwrite" class="wel__btn-primary" style="background-color: #d9534f; height: 50px;">Sovrascrivi</button>
+                    <button id="diu-btn-cancel" class="wel__btn-secondary" style="height: 50px; border: 1px solid #ccc;">Annulla</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .diu-status-card {
+        background: rgba(255, 255, 255, 0.7);
+        border: 1px solid #8DA67D;
+        border-radius: 20px;
+        padding: 15px 20px;
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+        margin-bottom: 10px;
+    }
+    .diu-status-label {
+        font-size: 11px;
+        text-transform: uppercase;
+        color: #8DA67D;
+        font-weight: 700;
+        letter-spacing: 0.05em;
+    }
+    .diu-status-value {
+        font-size: 14px;
+        color: #333;
+        font-weight: 500;
+    }
+    .diu-label {
+        font-size: 12px;
+        color: #4A7856;
+        font-weight: 600;
+        text-transform: uppercase;
+        margin-left: 10px;
+    }
+    .diu-counter-container {
+        margin-top: 10px;
+    }
+    
+    /* Animazione per il bottone caricato */
+    .wel__btn-secondary.is-uploaded {
+        background-color: #E8F0E4;
+        border: 1px solid #4A7856;
+        color: #4A7856;
+    }
+</style>

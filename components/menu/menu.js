@@ -9,6 +9,7 @@ function initMenu(container) {
 
     const menuItems = [
         { label: 'Home', action: () => window.navigateTo('today') },
+        { label: 'Aggiorna Dieta', action: () => window.navigateTo('diet-update') },
         { label: 'Profilo', action: () => console.log('Profilo click') },
         { label: 'Impostazioni', action: () => console.log('Impostazioni click') }
     ];
