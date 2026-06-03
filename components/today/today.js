@@ -54,16 +54,7 @@ await loadComponent('calendar-root', 'components/calendar/calendar.html', async 
     window.initCalendar(element, dateId);
 });
 
-    // Step 4: Caricamento Lista Pasti
-    await loadComponent('meals-root', 'components/meals/meals.html', async (element) => {
-        if (typeof window.initMeals !== 'function') {
-            await loadScript('components/meals/meals.js');
-        }
-        // Se non ci sono pasti, passiamo un array vuoto
-        window.initMeals(element, currentDayMeals ? currentDayMeals.meals : []);
-    });
-
-    // Step 5: Caricamento Progress bar
+    // Step 4: Caricamento Progress bar
     const progressRoot = document.getElementById('progress-root');
     if (progressRoot) {
         if (typeof window.initProgress !== 'function') {
@@ -104,6 +95,15 @@ await loadComponent('calendar-root', 'components/calendar/calendar.html', async 
             if (window.updateMeals) window.updateMeals(window.dataService.getMeals());
         });
     }
+
+    // Step 5: Caricamento Lista Pasti
+    await loadComponent('meals-root', 'components/meals/meals.html', async (element) => {
+        if (typeof window.initMeals !== 'function') {
+            await loadScript('components/meals/meals.js');
+        }
+        // Se non ci sono pasti, passiamo un array vuoto
+        window.initMeals(element, currentDayMeals ? currentDayMeals.meals : []);
+    });
 }
 
 // Orchestration is handled via navigateTo -> initToday

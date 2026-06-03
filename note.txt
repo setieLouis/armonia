@@ -11,3 +11,6 @@ docker build -t fnm-node .
 
   docker exec -it charming_shirley /bin/bash
   npm install pdf-parse@1.1.1
+
+  
+podman exec -it quizzical_heisenberg /bin/bash
