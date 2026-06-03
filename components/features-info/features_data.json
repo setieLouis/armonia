@@ -21,6 +21,13 @@
         "icon": "<svg width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><line x1='3' y1='12' x2='21' y2='12'></line><line x1='3' y1='6' x2='21' y2='6'></line><line x1='3' y1='18' x2='21' y2='18'></line></svg>"
     },
     {
+        "title": "Nuova Home & Pasti",
+        "description": "Suddivisione della pagina principale: una Home dedicata a progressi e calendario mensile, e una vista specifica per i pasti del giorno, più pulita e focalizzata.",
+        "status": "upcoming",
+        "statusLabel": "In arrivo",
+        "icon": "<svg width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><rect x='3' y='3' width='7' height='7'></rect><rect x='14' y='3' width='7' height='7'></rect><rect x='14' y='14' width='7' height='7'></rect><rect x='3' y='14' width='7' height='7'></rect></svg>"
+    },
+    {
         "title": "Lista della Spesa",
         "description": "Genera automaticamente la lista della spesa basata sul tuo piano alimentare settimanale.",
         "status": "upcoming",
