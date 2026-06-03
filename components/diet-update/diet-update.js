@@ -21,6 +21,10 @@ async function initDietUpdate() {
     const btnCancel = document.getElementById('diu-btn-cancel');
     const conflictMsg = document.getElementById('diu-conflict-msg');
 
+    // Modal Successo
+    const modalSuccess = document.getElementById('diu-modal-success');
+    const btnSuccessOk = document.getElementById('diu-btn-success-ok');
+
     let currentWeeks = 1;
     let rawImportedData = null;
     let transformedPlan = [];
@@ -144,11 +148,15 @@ async function initDietUpdate() {
         for (const day of transformedPlan) {
             await window.localDB.saveMeal(day);
         }
-        alert("Piano aggiornato con successo!");
-        window.navigateTo('today');
+        modalSuccess.classList.add('is-active');
     }
 
     // Modal Events
+    btnSuccessOk.onclick = () => {
+        modalSuccess.classList.remove('is-active');
+        window.navigateTo('today');
+    };
+
     btnConfirmOverwrite.onclick = async () => {
         modalConflict.classList.remove('is-active');
         await saveData();

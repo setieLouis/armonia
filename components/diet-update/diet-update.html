@@ -58,6 +58,28 @@
             </div>
         </div>
     </div>
+
+    <!-- Modal Successo (Overlay) -->
+    <div id="diu-modal-success" class="wel-modal">
+        <div class="wel-modal__overlay"></div>
+        <div class="wel-modal__content">
+            <div class="wel-modal__header">
+                <h2 class="wel-modal__title">Successo</h2>
+            </div>
+            <div class="wel-modal__body" style="text-align: center;">
+                <div style="margin-bottom: 20px;">
+                    <svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="#4A7856" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                        <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                    </svg>
+                </div>
+                <p style="color: #4A4A4A; margin-bottom: 24px; font-weight: 500;">
+                    Piano aggiornato con successo!
+                </p>
+                <button id="diu-btn-success-ok" class="wel__btn-primary">Ottimo</button>
+            </div>
+        </div>
+    </div>
 </div>
 
 <style>
@@ -74,8 +96,10 @@
         display: flex;
         flex-direction: column;
         align-items: center;
+        justify-content: center; /* Centra verticalmente */
+        flex: 1; /* Occupa tutto lo spazio rimanente */
         width: 100%;
-        padding: 20px;
+        padding: 20px 24px 80px; /* Padding extra in fondo per bilanciare l'header */
         box-sizing: border-box;
     }
     .diu-title-section {
