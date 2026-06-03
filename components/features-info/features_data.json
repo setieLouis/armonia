@@ -1,5 +1,12 @@
 [
     {
+        "title": "Idratazione & Acqua",
+        "description": "Monitora il tuo consumo d'acqua giornaliero con il nuovo tracker e ricevi promemoria smart con azioni rapide direttamente dalla notifica.",
+        "status": "available",
+        "statusLabel": "Novità",
+        "icon": "<svg width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z'></path></svg>"
+    },
+    {
         "title": "Aggiorna Dieta",
         "description": "Ora puoi caricare un nuovo piano alimentare JSON con rilevamento dei conflitti per non perdere i tuoi dati.",
         "status": "available",
@@ -12,13 +19,6 @@
         "status": "available",
         "statusLabel": "Nuovo",
         "icon": "<svg width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><line x1='3' y1='12' x2='21' y2='12'></line><line x1='3' y1='6' x2='21' y2='6'></line><line x1='3' y1='18' x2='21' y2='18'></line></svg>"
-    },
-    {
-        "title": "Promemoria Acqua",
-        "description": "Rimani idratata con notifiche personalizzate per ricordarti di bere durante la giornata.",
-        "status": "upcoming",
-        "statusLabel": "In Arrivo",
-        "icon": "<svg width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z'></path></svg>"
     },
     {
         "title": "Lista della Spesa",
