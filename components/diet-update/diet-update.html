@@ -1,46 +1,48 @@
-<div class="wel diu">
+<div class="diu-container">
     <!-- Header Integrato via JS -->
     <div id="diu-header-root" style="width: 100%;"></div>
 
-    <!-- Sezione Branding / Titolo -->
-    <div class="wel__content" style="margin-top: 20px; margin-bottom: 30px;">
-        <h1 class="wel__title" style="font-size: 28px;">Aggiorna Dieta</h1>
-        <p class="wel__subtitle">Pianifica le prossime settimane</p>
-    </div>
-
-    <!-- Sezione Azioni -->
-    <div class="wel__actions">
-        <!-- Info Stato Corrente -->
-        <div id="diu-status" class="diu-status-card">
-            <span class="diu-status-label">Stato attuale</span>
-            <div id="diu-status-text" class="diu-status-value">Caricamento...</div>
+    <div class="diu-content">
+        <!-- Sezione Branding / Titolo -->
+        <div class="diu-title-section">
+            <h1 class="diu-title">Aggiorna Dieta</h1>
+            <p class="diu-subtitle">Pianifica le prossime settimane</p>
         </div>
 
-        <!-- Sfoglia File -->
-        <button id="diu-btn-browse" class="wel__btn-secondary">
-            <span class="wel__icon wel__icon--pdf"></span>
-            Sfoglia Piano (JSON)
-        </button>
-        <input type="file" id="diu-file-input" accept=".json" style="display: none;">
-
-        <!-- Selettore Settimane (Stile Welcome Modal) -->
-        <div class="diu-counter-container">
-            <label class="diu-label">Durata del piano</label>
-            <div class="wel-modal__counter" style="max-width: 100%; margin-top: 8px;">
-                <button type="button" id="diu-weeks-minus" class="wel-modal__counter-btn">−</button>
-                <div class="wel-modal__counter-value">
-                    <span id="diu-weeks-display">1</span>
-                    <span class="wel-modal__counter-unit">settimana</span>
-                </div>
-                <button type="button" id="diu-weeks-plus" class="wel-modal__counter-btn">+</button>
+        <!-- Sezione Azioni -->
+        <div class="wel__actions">
+            <!-- Info Stato Corrente -->
+            <div id="diu-status" class="diu-status-card">
+                <span class="diu-status-label">Stato attuale</span>
+                <div id="diu-status-text" class="diu-status-value">Caricamento...</div>
             </div>
-        </div>
 
-        <!-- Pulsante Salva -->
-        <button id="diu-btn-save" class="wel__btn-primary" style="margin-top: 20px; opacity: 0.5; pointer-events: none;">
-            Aggiorna Piano
-            <span class="wel__icon wel__icon--arrow"></span>
-        </button>
+            <!-- Sfoglia File -->
+            <button id="diu-btn-browse" class="wel__btn-secondary">
+                <span class="wel__icon wel__icon--pdf"></span>
+                Sfoglia Piano (JSON)
+            </button>
+            <input type="file" id="diu-file-input" accept=".json" style="display: none;">
+
+            <!-- Selettore Settimane (Stile Welcome Modal) -->
+            <div class="diu-counter-container">
+                <label class="diu-label">Durata del piano</label>
+                <div class="wel-modal__counter" style="max-width: 100%; margin-top: 8px;">
+                    <button type="button" id="diu-weeks-minus" class="wel-modal__counter-btn">−</button>
+                    <div class="wel-modal__counter-value">
+                        <span id="diu-weeks-display">1</span>
+                        <span class="wel-modal__counter-unit">settimana</span>
+                    </div>
+                    <button type="button" id="diu-weeks-plus" class="wel-modal__counter-btn">+</button>
+                </div>
+            </div>
+
+            <!-- Pulsante Salva -->
+            <button id="diu-btn-save" class="wel__btn-primary" style="margin-top: 20px; opacity: 0.5; pointer-events: none;">
+                Aggiorna Piano
+                <span class="wel__icon wel__icon--arrow"></span>
+            </button>
+        </div>
     </div>
 
     <!-- Modal Conflitto (Overlay) -->
@@ -65,8 +67,45 @@
 </div>
 
 <style>
+    .diu-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        min-height: 100vh;
+        background-color: var(--white); /* Rimosso background-image, ora è bianco pulito */
+        padding: 0;
+        box-sizing: border-box;
+    }
+    .diu-content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+        padding: 20px;
+        box-sizing: border-box;
+    }
+    .diu-title-section {
+        margin-top: 20px;
+        margin-bottom: 30px;
+        text-align: center;
+    }
+    .diu-title {
+        font-family: "Cinzel", "Georgia", serif;
+        font-size: 28px;
+        font-weight: 400;
+        color: #4A7856;
+        letter-spacing: 0.25em;
+        text-transform: uppercase;
+        margin-bottom: 8px;
+    }
+    .diu-subtitle {
+        font-size: 16px;
+        color: #4A4A4A;
+        font-weight: 300;
+        letter-spacing: 0.01em;
+    }
     .diu-status-card {
-        background: rgba(255, 255, 255, 0.7);
+        background: #F8FAF7;
         border: 1px solid #8DA67D;
         border-radius: 20px;
         padding: 15px 20px;
@@ -98,7 +137,6 @@
         margin-top: 10px;
     }
     
-    /* Animazione per il bottone caricato */
     .wel__btn-secondary.is-uploaded {
         background-color: #E8F0E4;
         border: 1px solid #4A7856;
