@@ -3,7 +3,7 @@
         "title": "Idratazione & Acqua",
         "description": "Monitora il tuo consumo d'acqua giornaliero con il nuovo tracker e ricevi promemoria smart con azioni rapide direttamente dalla notifica.",
         "status": "available",
-        "statusLabel": "Novità",
+        "statusLabel": "Disponibile",
         "icon": "<svg width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z'></path></svg>"
     },
     {
@@ -17,14 +17,14 @@
         "title": "Menu di Navigazione",
         "description": "Un nuovo menu laterale (hamburger) per accedere rapidamente a tutte le sezioni dell'app.",
         "status": "available",
-        "statusLabel": "Nuovo",
+        "statusLabel": "Disponibile",
         "icon": "<svg width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><line x1='3' y1='12' x2='21' y2='12'></line><line x1='3' y1='6' x2='21' y2='6'></line><line x1='3' y1='18' x2='21' y2='18'></line></svg>"
     },
     {
         "title": "Lista della Spesa",
         "description": "Genera automaticamente la lista della spesa basata sul tuo piano alimentare settimanale.",
         "status": "upcoming",
-        "statusLabel": "In Arrivo",
+        "statusLabel": "In arrivo",
         "icon": "<svg width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><circle cx='9' cy='21' r='1'></circle><circle cx='20' cy='21' r='1'></circle><path d='M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6'></path></svg>"
     }
 ]
