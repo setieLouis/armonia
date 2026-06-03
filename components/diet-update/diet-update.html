@@ -1,0 +1,163 @@
+<div class="diu-container">
+    <!-- Header Integrato via JS -->
+    <div id="diu-header-root" style="width: 100%;"></div>
+
+    <div class="diu-content">
+        <!-- Sezione Azioni -->
+        <div class="wel__actions">
+            <!-- Info Stato Corrente -->
+            <div id="diu-status" class="diu-status-card">
+                <span class="diu-status-label">Stato attuale</span>
+                <div id="diu-status-text" class="diu-status-value">Caricamento...</div>
+            </div>
+
+            <!-- Sfoglia File -->
+            <button id="diu-btn-browse" class="wel__btn-secondary">
+                <span class="wel__icon wel__icon--pdf"></span>
+                Sfoglia Piano (JSON)
+            </button>
+            <input type="file" id="diu-file-input" accept=".json" style="display: none;">
+
+            <!-- Selettore Settimane (Stile Welcome Modal) -->
+            <div class="diu-counter-container">
+                <label class="diu-label">Durata del piano</label>
+                <div class="wel-modal__counter" style="max-width: 100%; margin-top: 8px;">
+                    <button type="button" id="diu-weeks-minus" class="wel-modal__counter-btn">−</button>
+                    <div class="wel-modal__counter-value">
+                        <span id="diu-weeks-display">1</span>
+                        <span class="wel-modal__counter-unit">settimana</span>
+                    </div>
+                    <button type="button" id="diu-weeks-plus" class="wel-modal__counter-btn">+</button>
+                </div>
+            </div>
+
+            <!-- Pulsante Salva -->
+            <button id="diu-btn-save" class="wel__btn-primary" style="margin-top: 20px; opacity: 0.5; pointer-events: none;">
+                Aggiorna Piano
+                <span class="wel__icon wel__icon--arrow"></span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Modal Conflitto (Overlay) -->
+    <div id="diu-modal-conflict" class="wel-modal">
+        <div class="wel-modal__overlay"></div>
+        <div class="wel-modal__content">
+            <div class="wel-modal__header">
+                <h2 class="wel-modal__title">Conflitto Date</h2>
+                <button id="diu-modal-close" class="wel-modal__close-btn">&times;</button>
+            </div>
+            <div class="wel-modal__body" style="text-align: center;">
+                <p id="diu-conflict-msg" style="color: #4A4A4A; margin-bottom: 24px; line-height: 1.5;">
+                    Alcune date del nuovo piano sono già presenti. Vuoi sovrascriverle?
+                </p>
+                <div style="display: flex; gap: 12px;">
+                    <button id="diu-btn-confirm-overwrite" class="wel__btn-primary" style="background-color: #d9534f; height: 50px;">Sovrascrivi</button>
+                    <button id="diu-btn-cancel" class="wel__btn-secondary" style="height: 50px; border: 1px solid #ccc;">Annulla</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Successo (Overlay) -->
+    <div id="diu-modal-success" class="wel-modal">
+        <div class="wel-modal__overlay"></div>
+        <div class="wel-modal__content">
+            <div class="wel-modal__header">
+                <h2 class="wel-modal__title">Successo</h2>
+            </div>
+            <div class="wel-modal__body" style="text-align: center;">
+                <div style="margin-bottom: 20px;">
+                    <svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="#4A7856" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                        <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                    </svg>
+                </div>
+                <p style="color: #4A4A4A; margin-bottom: 24px; font-weight: 500;">
+                    Piano aggiornato con successo!
+                </p>
+                <button id="diu-btn-success-ok" class="wel__btn-primary">Ottimo</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .diu-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        min-height: 100vh;
+        background-color: var(--white); /* Rimosso background-image, ora è bianco pulito */
+        padding: 0;
+        box-sizing: border-box;
+    }
+    .diu-content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center; /* Centra verticalmente */
+        flex: 1; /* Occupa tutto lo spazio rimanente */
+        width: 100%;
+        padding: 20px 24px 80px; /* Padding extra in fondo per bilanciare l'header */
+        box-sizing: border-box;
+    }
+    .diu-title-section {
+        margin-top: 20px;
+        margin-bottom: 30px;
+        text-align: center;
+    }
+    .diu-title {
+        font-family: "Cinzel", "Georgia", serif;
+        font-size: 28px;
+        font-weight: 400;
+        color: #4A7856;
+        letter-spacing: 0.25em;
+        text-transform: uppercase;
+        margin-bottom: 8px;
+    }
+    .diu-subtitle {
+        font-size: 16px;
+        color: #4A4A4A;
+        font-weight: 300;
+        letter-spacing: 0.01em;
+    }
+    .diu-status-card {
+        background: #F8FAF7;
+        border: 1px solid #8DA67D;
+        border-radius: 20px;
+        padding: 15px 20px;
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+        margin-bottom: 10px;
+    }
+    .diu-status-label {
+        font-size: 11px;
+        text-transform: uppercase;
+        color: #8DA67D;
+        font-weight: 700;
+        letter-spacing: 0.05em;
+    }
+    .diu-status-value {
+        font-size: 14px;
+        color: #333;
+        font-weight: 500;
+    }
+    .diu-label {
+        font-size: 12px;
+        color: #4A7856;
+        font-weight: 600;
+        text-transform: uppercase;
+        margin-left: 10px;
+    }
+    .diu-counter-container {
+        margin-top: 10px;
+    }
+    
+    .wel__btn-secondary.is-uploaded {
+        background-color: #E8F0E4;
+        border: 1px solid #4A7856;
+        color: #4A7856;
+    }
+</style>

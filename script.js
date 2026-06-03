@@ -61,12 +61,18 @@ async function navigateTo(view, data = null) {
         });
     }
     else if (view === 'ingredient') {
-        await loadComponent(appRoot, 'components/ingredient/ingredient.html', async () => {
+        await loadComponent(appRoot, 'components/ingredient/ingredient.html', async (element) => {
             await loadScript('components/ingredient/ingredient.js');
             if (window.initIngredientAlternatives) await window.initIngredientAlternatives(data);
         });
     }
-}
+    else if (view === 'diet-update') {
+        await loadComponent(appRoot, 'components/diet-update/diet-update.html', async (element) => {
+            await loadScript('components/diet-update/diet-update.js');
+            if (window.initDietUpdate) await window.initDietUpdate();
+        });
+    }
+    }
 
 /**
  * Checks if a user profile exists to decide the initial view
