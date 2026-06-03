@@ -10,6 +10,7 @@ function initMenu(container) {
     const menuItems = [
         // { label: 'Home', action: () => window.navigateTo('today') },
         { label: 'Aggiorna Dieta', action: () => window.navigateTo('diet-update') },
+        { label: 'Novità', action: () => window.navigateTo('features-info') },
         // { label: 'Profilo', action: () => console.log('Profilo click') },
         // { label: 'Impostazioni', action: () => console.log('Impostazioni click') }
     ];

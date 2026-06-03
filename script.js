@@ -72,6 +72,12 @@ async function navigateTo(view, data = null) {
             if (window.initDietUpdate) await window.initDietUpdate();
         });
     }
+    else if (view === 'features-info') {
+        await loadComponent(appRoot, 'components/features-info/features-info.html', async (element) => {
+            await loadScript('components/features-info/features-info.js');
+            if (window.initFeaturesInfo) await window.initFeaturesInfo();
+        });
+    }
     }
 
 /**
