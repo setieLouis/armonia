@@ -1,0 +1,117 @@
+.acq-container {
+    background-color: #FBFBFB;
+    min-height: 100vh;
+}
+.acq-content {
+    padding: 20px 16px 100px;
+}
+.acq-section {
+    margin-bottom: 24px;
+}
+.acq-section-title {
+    font-size: 14px;
+    text-transform: uppercase;
+    color: #8DA67D;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    margin-bottom: 12px;
+    margin-left: 4px;
+}
+.acq-card {
+    background: white;
+    border-radius: 20px;
+    padding: 16px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+}
+.acq-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 0;
+}
+.acq-row-info {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+.acq-row-label {
+    font-weight: 600;
+    color: #333;
+    font-size: 15px;
+}
+.acq-row-desc {
+    font-size: 12px;
+    color: #999;
+}
+.acq-divider {
+    height: 1px;
+    background: #F0F0F0;
+    margin: 16px 0;
+}
+.acq-input-group {
+    margin-bottom: 16px;
+}
+.acq-input-label {
+    display: block;
+    font-size: 12px;
+    color: #666;
+    margin-bottom: 6px;
+    font-weight: 600;
+}
+.acq-input, .acq-select {
+    width: 100%;
+    padding: 12px;
+    border-radius: 12px;
+    border: 1px solid #EEE;
+    background: #F9F9F9;
+    font-size: 14px;
+    color: #333;
+    outline: none;
+    box-sizing: border-box;
+}
+.acq-time-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+}
+
+/* Switch Style */
+.acq-switch {
+    position: relative;
+    display: inline-block;
+    width: 44px;
+    height: 24px;
+}
+.acq-switch input { 
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+.acq-slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    transition: .4s;
+    border-radius: 24px;
+}
+.acq-slider:before {
+    position: absolute;
+    content: "";
+    height: 18px;
+    width: 18px;
+    left: 3px;
+    bottom: 3px;
+    background-color: white;
+    transition: .4s;
+    border-radius: 50%;
+}
+input:checked + .acq-slider {
+    background-color: #4fc3f7;
+}
+input:checked + .acq-slider:before {
+    transform: translateX(20px);
+}

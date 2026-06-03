@@ -78,6 +78,12 @@ async function navigateTo(view, data = null) {
             if (window.initFeaturesInfo) await window.initFeaturesInfo();
         });
     }
+    else if (view === 'acqua') {
+        await loadComponent(appRoot, 'components/acqua/acqua.html', async (element) => {
+            await loadScript('components/acqua/acqua.js');
+            if (window.initAcqua) await window.initAcqua();
+        });
+    }
     }
 
 /**
@@ -111,6 +117,11 @@ window.loadScript = loadScript;
 window.navigateTo = navigateTo;
 
 document.addEventListener('DOMContentLoaded', () => {
+    // Start notification service if available
+    if (window.notificationService) {
+        window.notificationService.startWaterReminder();
+    }
+
     // Handle PWA shortcuts or deep links
     const urlParams = new URLSearchParams(window.location.search);
     const view = urlParams.get('view');

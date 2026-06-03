@@ -1,0 +1,71 @@
+<div class="acq-container mobile-container">
+    <!-- Header Placeholder -->
+    <div id="acq-header-root"></div>
+
+    <div class="acq-content scrollable-content">
+        <!-- Sezione Idratazione -->
+        <div class="acq-section">
+            <h3 class="acq-section-title">💧 Idratazione</h3>
+            
+            <div class="acq-card">
+                <div class="acq-row">
+                    <div class="acq-row-info">
+                        <span class="acq-row-label">Notifiche Attive</span>
+                        <span class="acq-row-desc">Ricevi promemoria durante il giorno</span>
+                    </div>
+                    <label class="acq-switch">
+                        <input type="checkbox" id="acq-water-enabled">
+                        <span class="acq-slider"></span>
+                    </label>
+                </div>
+
+                <div class="acq-divider"></div>
+
+                <div class="acq-input-group">
+                    <label class="acq-input-label">Obiettivo Giornaliero (ml)</label>
+                    <input type="number" id="acq-water-goal" class="acq-input" placeholder="es. 2000">
+                </div>
+
+                <div class="acq-input-group">
+                    <label class="acq-input-label">Frequenza Promemoria</label>
+                    <select id="acq-water-frequency" class="acq-select">
+                        <option value="30">Ogni 30 minuti</option>
+                        <option value="60">Ogni ora</option>
+                        <option value="90">Ogni 90 minuti</option>
+                        <option value="120">Ogni 2 ore</option>
+                        <option value="180">Ogni 3 ore</option>
+                    </select>
+                </div>
+
+                <div class="acq-time-grid">
+                    <div class="acq-input-group">
+                        <label class="acq-input-label">Dalle ore</label>
+                        <input type="time" id="acq-water-start" class="acq-input">
+                    </div>
+                    <div class="acq-input-group">
+                        <label class="acq-input-label">Alle ore</label>
+                        <input type="time" id="acq-water-end" class="acq-input">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sezione Info/Snooze (Futuro) -->
+        <div class="acq-section">
+            <h3 class="acq-section-title">ℹ️ Altro</h3>
+            <div class="acq-card">
+                 <div class="acq-row" style="opacity: 0.6;">
+                    <div class="acq-row-info">
+                        <span class="acq-row-label">Snooze Smart</span>
+                        <span class="acq-row-desc">Posticipa se sono in riunione (Presto)</span>
+                    </div>
+                    <span style="font-size: 12px; color: var(--brown);">Coming Soon</span>
+                </div>
+            </div>
+        </div>
+
+        <button id="acq-btn-save" class="wel__btn-primary" style="margin-top: 30px;">
+            Salva Impostazioni
+        </button>
+    </div>
+</div>
