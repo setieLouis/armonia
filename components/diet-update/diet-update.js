@@ -29,9 +29,10 @@ async function initDietUpdate() {
     const headerRoot = document.getElementById('diu-header-root');
     if (headerRoot && typeof window.initHeader === 'function') {
         window.initHeader(headerRoot, {
-            left: "Aggiorna Dieta",
-            right: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>`,
-            onRightClick: () => window.navigateTo('today')
+            left: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>`,
+            center: "Aggiorna Dieta",
+            right: "", // Vuoto a destra per focus sul centro
+            onLeftClick: () => window.navigateTo('today')
         });
     }
 
