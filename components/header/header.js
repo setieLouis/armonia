@@ -2,21 +2,17 @@
  * header.js: Componente Header con approccio "Render" (stile React)
  */
 
-const defaultImg = `<svg class="icon-leaf" width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M12 21V11M12 11C12 11 9 7 5 7C5 7 5 11 9 13C10.5 13.75 12 11 12 11ZM12 11C12 11 15 5 19 5C19 5 20 10 16 12C14.5 12.75 12 11 12 11Z" stroke="#719b6e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+const defaultImg = `<svg class="icon-menu" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M4 6H20M4 12H20M4 18H20" stroke="#719b6e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>`
 
-function initHeader(container,input = {left:undefined,right : defaultImg  }) {
+function initHeader(container,input = {left:undefined,right : defaultImg, onRightClick: null  }) {
     // 1. Lo "Stato" del componente
     let state = {
-        //left: ,
         left: input.left !== undefined ? input.left : "",
-        right: input.right !== undefined ? input.right : defaultImg ,  
+        right: input.right !== undefined ? input.right : defaultImg,
+        onRightClick: input.onRightClick || null
     };
-
-    /*
-
-    */
 
     // 2. La funzione Render (Template Literals)
     function render() {
@@ -25,7 +21,7 @@ function initHeader(container,input = {left:undefined,right : defaultImg  }) {
                 <div class="status-bar-spacer"></div>
                 <div class="greeting-row">
                     <span class="greeting-text">${state.left}</span>
-                    <div class="icon-container">
+                    <div class="icon-container" id="header-right-icon" style="cursor: pointer;">
                         ${state.right}
                     </div>
                 </div>
@@ -50,6 +46,18 @@ function initHeader(container,input = {left:undefined,right : defaultImg  }) {
                 }
             </style>
         `;
+
+        // Aggiunta listener per il click
+        const iconBtn = container.querySelector('#header-right-icon');
+        if (iconBtn) {
+            iconBtn.onclick = () => {
+                if (state.onRightClick) {
+                    state.onRightClick();
+                } else if (window.openMenu) {
+                    window.openMenu();
+                }
+            };
+        }
     }
 
     // 3. Funzione per aggiornare lo stato (simile a setState)
