@@ -121,6 +121,42 @@ class DataService {
     }
 
     /**
+     * Genera un ID unico (UUID v4) per l'utente.
+     */
+    generateUUID() {
+        if (typeof crypto !== 'undefined' && crypto.randomUUID) {
+            return crypto.randomUUID();
+        }
+        return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+            var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+            return v.toString(16);
+        });
+    }
+
+    /**
+     * Sincronizza il profilo utente con Firestore.
+     */
+    async syncUserProfile() {
+        if (!window.localDB || !window.firestore) return;
+
+        try {
+            const profile = await window.localDB.getUserData('profile');
+            if (profile && profile.uid) {
+                await window.firestore
+                    .collection('users')
+                    .doc(profile.uid)
+                    .set({
+                        ...profile,
+                        lastUpdate: new Date().toISOString()
+                    }, { merge: true });
+                console.log("DataService: Profilo utente sincronizzato con Firestore");
+            }
+        } catch (e) {
+            console.error("DataService: Errore sincronizzazione profilo", e);
+        }
+    }
+
+    /**
      * Persists the current state to the local database and syncs with Firestore.
      */
     async persist() {
@@ -131,10 +167,17 @@ class DataService {
             // Sincronizza con Firestore
             if (window.firestore) {
                 try {
+                    // Recuperiamo il profilo per associare l'utente se disponibile
+                    const profile = await window.localDB.getUserData('profile');
+                    const mealData = { ...this.data };
+                    if (profile && profile.uid) {
+                        mealData.ownerId = profile.uid;
+                    }
+
                     await window.firestore
                         .collection('meals')
                         .doc(this.data.day)
-                        .set(this.data, { merge: true });
+                        .set(mealData, { merge: true });
                     console.log("DataService: Sincronizzato con Firestore");
                 } catch (e) {
                     console.error("DataService: Errore sincronizzazione Firestore", e);

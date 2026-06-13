@@ -18,6 +18,9 @@ firebase.initializeApp(firebaseConfig);
 
 const messaging = firebase.messaging();
 const analytics = firebase.analytics();
+const dbFirestore = firebase.firestore();
 
+// Esponi le istanze globalmente
 window.fcmMessaging = messaging;
 window.firebaseAnalytics = analytics;
+window.firestore = dbFirestore;

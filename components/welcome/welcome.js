@@ -187,7 +187,25 @@
             const name = userNameInput.value.trim();
             if (name && window.localDB) {
                 try {
-                    await window.localDB.saveUserData('profile', { name });
+                    // Genera UID e data primo utilizzo se non esistono
+                    const uid = window.dataService.generateUUID();
+                    const firstUsageDate = new Date().toISOString();
+                    
+                    const profileData = { 
+                        uid, 
+                        name, 
+                        firstUsageDate,
+                        platform: 'web-pwa'
+                    };
+
+                    // Salva profilo in locale
+                    await window.localDB.saveUserData('profile', profileData);
+                    
+                    // Sincronizza subito con Firestore
+                    if (window.dataService) {
+                        await window.dataService.syncUserProfile();
+                    }
+
                     if (transformedPlan.length > 0) {
                         for (const dayData of transformedPlan) {
                             await window.localDB.saveMeal(dayData);

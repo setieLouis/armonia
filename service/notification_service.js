@@ -124,11 +124,27 @@ const NotificationService = {
 
             if (token) {
                 console.log("FCM Token ottenuto:", token);
+
+                // Salviamo il token nel profilo utente per la sincronizzazione
+                const profile = await window.localDB.getUserData('profile');
+                if (profile) {
+                    profile.fcmToken = token;
+                    profile.fcmUpdatedAt = new Date().toISOString();
+                    await window.localDB.saveUserData('profile', profile);
+
+                    // Sincronizza con Firestore
+                    if (window.dataService) {
+                        await window.dataService.syncUserProfile();
+                    }
+                }
+
+                // Mantieni anche il backup vecchio per compatibilità
                 await window.localDB.saveUserData('fcm_token', { 
                     token, 
                     updatedAt: Date.now() 
                 });
-            } else {
+            }
+ else {
                 console.warn("Nessun token FCM ricevuto. Controlla i permessi o la configurazione.");
             }
         } catch (error) {
