@@ -48,59 +48,72 @@ class DataService {
 
     /**
      * Loads the initial data for a specific day.
-     * Strategy: Exclusive usage of LocalDB.
+     * Strategy: Try LocalDB, then Firestore, then Seed.
      */
     async loadData(day) {
         if (!day) {
             throw new Error("DataService: day is required as a parameter");
         }
 
-        // Normalize requested day to YYYY-MM-DD
         const targetDay = day.split('T')[0];
 
-        // Ensure database is seeded before loading
-        await this.seedDatabase();
-
-        // Use a cache for the currently loaded data if it matches the requested day
         if (this.isLoaded && this.currentDay === targetDay) return this.data;
 
         try {
-            // Try to load from Local Database (Dexie) using normalized 'targetDay'
+            // 1. Prova Local Database (Dexie)
             let localData = await window.localDB.getMeal(targetDay);
 
             if (localData) {
                 console.log(`DataService: Loaded data for ${targetDay} from LocalDB`);
                 this.data = localData;
             } else {
-                console.log(`DataService: No data found for ${targetDay} in LocalDB`);
-                this.data = null;
+                // 2. Se non c'è in locale, prova Firestore
+                console.log(`DataService: No local data for ${targetDay}, checking Firestore...`);
+                const remoteData = await this.getFromFirestore(targetDay);
+                
+                if (remoteData) {
+                    this.data = remoteData;
+                    await window.localDB.saveMeal(remoteData); // Salva in locale per il futuro
+                } else {
+                    // 3. Se neanche Firestore ha dati, usa il seed
+                    await this.seedDatabase();
+                    this.data = await window.localDB.getMeal(targetDay);
+                }
             }
 
             this.currentDay = targetDay;
             this.isLoaded = true;
             return this.data;
         } catch (error) {
-            console.error(`DataService: Error loading data for ${targetDay} from DB`, error);
+            console.error(`DataService: Error loading data for ${targetDay}`, error);
             throw error;
         }
     }
 
     /**
-     * Returns the full data object.
+     * Recupera i dati di un giorno specifico da Firestore.
      */
-    getData() {
-        return this.data;
+    async getFromFirestore(day) {
+        if (!window.firestore) return null;
+        try {
+            // Nota: qui andrebbe usato un userId reale se l'auth è attiva
+            const doc = await window.firestore.collection('meals').doc(day).get();
+            return doc.exists ? doc.data() : null;
+        } catch (e) {
+            console.warn("DataService: Errore nel recupero da Firestore", e);
+            return null;
+        }
     }
 
     /**
-     * Returns all meals for the current loaded day.
+     * Returns all meals for the current day.
      */
     getMeals() {
         return (this.data && this.data.meals) ? this.data.meals : [];
     }
 
     /**
-     * Finds a meal by its ID within the current day.
+     * Helper to find a specific meal object by its ID within the current day.
      */
     getMealById(mealId) {
         if (!this.data || !this.data.meals) return null;
@@ -108,11 +121,26 @@ class DataService {
     }
 
     /**
-     * Persists the current state to the local database.
+     * Persists the current state to the local database and syncs with Firestore.
      */
     async persist() {
         if (this.data) {
+            // Salva in locale
             await window.localDB.saveMeal(this.data);
+            
+            // Sincronizza con Firestore
+            if (window.firestore) {
+                try {
+                    await window.firestore
+                        .collection('meals')
+                        .doc(this.data.day)
+                        .set(this.data, { merge: true });
+                    console.log("DataService: Sincronizzato con Firestore");
+                } catch (e) {
+                    console.error("DataService: Errore sincronizzazione Firestore", e);
+                }
+            }
+            
             this.notifyListeners();
         }
     }
@@ -150,15 +178,16 @@ class DataService {
     async replaceDish(mealId, dishIndex, newDishData) {
         const meal = this.getMealById(mealId);
         if (meal && meal.dishes[dishIndex]) {
-            const originalUseStatus = meal.dishes[dishIndex].use;
+            const originalDish = meal.dishes[dishIndex];
             
+            // Manteniamo lo stato di completamento e la lista delle alternative originali
+            // in modo che l'utente possa sempre scegliere un'altra opzione per quel "posto".
             meal.dishes[dishIndex] = {
                 ...newDishData,
-                use: originalUseStatus,
-                alternatives: meal.dishes[mealId === meal.id ? dishIndex : -1]?.alternatives || []
+                use: originalDish.use,
+                alternatives: originalDish.alternatives || []
             };
             
-            // Note: alternatives handling might need refinement depending on structure
             await this.persist();
             return true;
         }
