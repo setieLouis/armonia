@@ -39,6 +39,15 @@ function loadScript(src) {
 // Global navigation function
 async function navigateTo(view, data = null) {
     console.log(`Navigating to: ${view}`, data);
+    
+    // Log vista su Firebase Analytics
+    if (window.firebaseAnalytics) {
+        window.firebaseAnalytics.logEvent('screen_view', {
+            screen_name: view,
+            app_name: 'ArmoniaFlow'
+        });
+    }
+
     const appRoot = 'app-root';
 
      if (view === 'welcome') {

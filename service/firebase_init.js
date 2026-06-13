@@ -9,12 +9,15 @@ const firebaseConfig = {
   projectId: "armonia-47fa2",
   storageBucket: "armonia-47fa2.firebasestorage.app",
   messagingSenderId: "700215020857",
-  appId: "1:700215020857:web:75c2670006721a7e52ace8"
+  appId: "1:700215020857:web:75c2670006721a7e52ace8",
+  measurementId: "G-T2XFVK5GTM"
 };
 
 // Inizializza Firebase
 firebase.initializeApp(firebaseConfig);
 
 const messaging = firebase.messaging();
+const analytics = firebase.analytics();
 
 window.fcmMessaging = messaging;
+window.firebaseAnalytics = analytics;
