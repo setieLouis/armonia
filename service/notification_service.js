@@ -71,6 +71,9 @@ const NotificationService = {
     async startWaterReminder() {
         console.log("Servizio Water Reminder avviato...");
         
+        // Inizializza anche FCM se disponibile
+        this.initFCM();
+
         // Controlla ogni minuto
         setInterval(async () => {
             await this.checkAndNotifyWater();
@@ -78,6 +81,59 @@ const NotificationService = {
 
         // Primo controllo immediato
         this.checkAndNotifyWater();
+    },
+
+    /**
+     * Inizializza FCM: richiede permesso se necessario e ottiene il token
+     */
+    async initFCM() {
+        try {
+            if (!window.fcmMessaging) {
+                console.warn("FCM Messaging non inizializzato.");
+                return;
+            }
+
+            // Verifica se abbiamo già un token nel DB locale
+            const currentData = await window.localDB.getUserData('fcm_token');
+            if (currentData && currentData.token) {
+                console.log("FCM Token già presente nel database locale.");
+                return;
+            }
+
+            // Se il permesso è 'default', lo chiediamo
+            const permission = await this.checkPermission();
+            if (permission === 'default') {
+                console.log("Richiesta permesso notifiche al primo avvio...");
+                const newPermission = await this.requestPermission();
+                if (newPermission !== 'granted') return;
+            } else if (permission !== 'granted') {
+                return;
+            }
+
+            // Otteniamo il token
+            // Attendiamo che il Service Worker sia pronto e attivo
+            let registration;
+            if ('serviceWorker' in navigator) {
+                registration = await navigator.serviceWorker.ready;
+            }
+
+            // Otteniamo il token specificando la registrazione del SW
+            const token = await window.fcmMessaging.getToken({
+                serviceWorkerRegistration: registration
+            });
+
+            if (token) {
+                console.log("FCM Token ottenuto:", token);
+                await window.localDB.saveUserData('fcm_token', { 
+                    token, 
+                    updatedAt: Date.now() 
+                });
+            } else {
+                console.warn("Nessun token FCM ricevuto. Controlla i permessi o la configurazione.");
+            }
+        } catch (error) {
+            console.error("Errore durante l'ottenimento del token FCM:", error);
+        }
     },
 
     /**
