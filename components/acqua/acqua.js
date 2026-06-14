@@ -54,6 +54,11 @@ async function initAcqua() {
         try {
             await window.localDB.saveWaterSettings(newSettings);
             
+            // Sincronizza con Firestore se disponibile
+            if (window.dataService && typeof window.dataService.syncUserProfile === 'function') {
+                await window.dataService.syncUserProfile();
+            }
+            
             // Feedback visivo immediato
             btnSave.innerText = "Salvataggio...";
             btnSave.style.opacity = "0.7";

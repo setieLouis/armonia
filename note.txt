@@ -14,3 +14,37 @@ docker build -t fnm-node .
 
   
 podman exec -it quizzical_heisenberg /bin/bash
+
+
+Attualmente, il sistema gestisce questi parametri:
+   1. Stato (On/Off): Abilita o disabilita i promemoria.
+   2. Obiettivo (ml): Quanta acqua bere in un giorno.
+   3. Frequenza (minuti): Ogni quanto ricevere la notifica (30, 60, 90, 120, 180 min).
+   4. Finestra Temporale (Dalle/Alle): Per non ricevere notifiche di notte.
+   5. Snooze (15 min): Implementato come "pausa" temporanea.
+
+  Ecco alcuni punti su cui potremmo lavorare per rendere i settings ancora più intelligenti:
+
+  1. Centralizzazione dei Default
+  Al momento, se il database è vuoto, sia acqua.js che notification_service.js hanno dei valori "hardcoded" (es. 2000ml, 120min). Sarebbe meglio spostare questi default nel DataService.
+   * Vantaggio: Se domani decidiamo che il default è 1500ml, lo cambiamo in un solo posto.
+
+  2. Sincronizzazione dello "Snooze"
+  Nella vista today.js, se clicchi su "Snooze", salviamo snoozeUntil dentro le water_settings. 
+   * Curiosità: Grazie alla modifica di prima, lo snooze ora viene sincronizzato su Firestore. Se hai l'app aperta su due dispositivi e fai "Snooze" su uno, anche l'altro smetterà di notificarti. Ti piace questo
+     comportamento o lo snooze dovrebbe essere solo locale?
+
+  3. Calcolo Obiettivo Intelligente
+  Potremmo aggiungere un piccolo pulsante "Calcola per me" che imposta l'obiettivo in base al profilo (se avessimo dati come peso o attività fisica, che però al momento non chiediamo nel welcome).
+
+  4. Notifiche Personalizzate
+  Potremmo salvare nei settings anche il messaggio della notifica, o permettere di scegliere tra vari "toni" (es: Gentile, Motivante, Imperativo).
+
+  ---
+
+  Cosa ti preme di più rifinire in questa sezione? 
+   - Vuoi aggiungere nuovi campi (tipo il peso per calcolare l'acqua)? 
+   - Vuoi migliorare l'interfaccia della pagina acqua.html?
+   - O vogliamo rendere lo snooze più flessibile (magari permettendo di scegliere tra 15, 30 o 60 minuti)?
+
+

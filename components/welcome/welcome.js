@@ -191,19 +191,39 @@
                     const uid = window.dataService.generateUUID();
                     const firstUsageDate = new Date().toISOString();
                     
-                    const profileData = { 
-                        uid, 
-                        name, 
+                    const profileData = {
+                        uid,
+                        name,
                         firstUsageDate,
                         platform: 'web-pwa'
                     };
 
+                    // Controllo se abbiamo già un token FCM salvato (ottenuto all'avvio)
+                    const storedToken = await window.localDB.getUserData('fcm_token');
+                    if (storedToken && storedToken.token) {
+                        profileData.fcmToken = storedToken.token;
+                        profileData.fcmUpdatedAt = storedToken.updatedAt;
+                    }
+
                     // Salva profilo in locale
                     await window.localDB.saveUserData('profile', profileData);
+
+                    // Inizializziamo anche i default dell'acqua se non esistono
+                    const defaultWaterSettings = {
+                        enabled: true,
+                        goal: 2000,
+                        frequency: 120,
+                        startTime: "08:00",
+                        endTime: "22:00"
+                    };
+                    await window.localDB.saveWaterSettings(defaultWaterSettings);
                     
-                    // Sincronizza subito con Firestore
+                    // Sincronizza subito con Firestore (ora includerà anche l'acqua)
                     if (window.dataService) {
                         await window.dataService.syncUserProfile();
+                        // Inizializziamo anche lo stato idratativo (0ml) per oggi
+                        const todayStr = new Date().toISOString().split('T')[0];
+                        await window.dataService.syncWaterStatus(todayStr);
                     }
 
                     if (transformedPlan.length > 0) {

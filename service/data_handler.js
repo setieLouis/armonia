@@ -141,18 +141,64 @@ class DataService {
 
         try {
             const profile = await window.localDB.getUserData('profile');
+            const waterSettings = await window.localDB.getUserData('water_settings');
+            
             if (profile && profile.uid) {
+                // Rimuoviamo la chiave 'key' di Dexie per pulire il dato su Firestore
+                const { key, ...cleanProfile } = profile;
+                
+                const syncData = {
+                    ...cleanProfile,
+                    lastUpdate: new Date().toISOString()
+                };
+
+                if (waterSettings) {
+                    const { key: wKey, ...cleanWaterSettings } = waterSettings;
+                    syncData.water_settings = cleanWaterSettings;
+                }
+
+                console.log("DataService: Tentativo sincronizzazione Firestore con dati:", syncData);
+
+                await window.firestore
+                    .collection('users')
+                    .doc(profile.uid)
+                    .set(syncData, { merge: true });
+                console.log("DataService: Profilo utente e impostazioni acqua sincronizzati con Firestore");
+            } else {
+                console.warn("DataService: Impossibile sincronizzare, profilo mancante o senza UID");
+            }
+        } catch (e) {
+            console.error("DataService: Errore sincronizzazione profilo", e);
+        }
+    }
+
+    /**
+     * Sincronizza lo stato idratativo corrente con Firestore per le push notification.
+     */
+    async syncWaterStatus(day) {
+        if (!window.localDB || !window.firestore) return;
+
+        try {
+            const profile = await window.localDB.getUserData('profile');
+            const waterIntake = await window.localDB.getWaterIntake(day);
+            
+            if (profile && profile.uid && waterIntake) {
                 await window.firestore
                     .collection('users')
                     .doc(profile.uid)
                     .set({
-                        ...profile,
+                        water_status: {
+                            lastDrink: waterIntake.lastUpdated ? new Date(waterIntake.lastUpdated).toISOString() : null,
+                            todayTotal: waterIntake.amount,
+                            goal: waterIntake.goal,
+                            day: day
+                        },
                         lastUpdate: new Date().toISOString()
                     }, { merge: true });
-                console.log("DataService: Profilo utente sincronizzato con Firestore");
+                console.log("DataService: Stato acqua sincronizzato con Firestore");
             }
         } catch (e) {
-            console.error("DataService: Errore sincronizzazione profilo", e);
+            console.error("DataService: Errore sincronizzazione stato acqua", e);
         }
     }
 

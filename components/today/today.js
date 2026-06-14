@@ -119,6 +119,7 @@ await loadComponent('calendar-root', 'components/calendar/calendar.html', async 
         
         if (action === 'add-water') {
             await window.localDB.addWater(dateId);
+            if (window.dataService) await window.dataService.syncWaterStatus(dateId);
             // Pulisci l'URL per evitare ripetizioni al refresh
             window.history.replaceState({}, document.title, window.location.pathname + window.location.search.replace(/[&?]action=add-water/, ''));
         } else if (action === 'snooze-water') {
@@ -155,6 +156,7 @@ await loadComponent('calendar-root', 'components/calendar/calendar.html', async 
 
             document.getElementById('add-water-btn').onclick = async () => {
                 await window.localDB.addWater(dateId);
+                if (window.dataService) await window.dataService.syncWaterStatus(dateId);
                 updateWaterUI();
                 
                 // Chiediamo il permesso per le notifiche se non l'abbiamo ancora

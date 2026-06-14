@@ -42,7 +42,9 @@ const LocalDB = {
 
     // Acqua (Water Tracking)
     async getWaterIntake(day) {
-        return await db.water_log.get(day) || { day, amount: 0, goal: 2000, glasses: 0 };
+        const settings = await this.getUserData('water_settings');
+        const defaultGoal = (settings && settings.goal) ? settings.goal : 2000;
+        return await db.water_log.get(day) || { day, amount: 0, goal: defaultGoal, glasses: 0 };
     },
     async addWater(day, ml = 250) {
         const current = await this.getWaterIntake(day);
