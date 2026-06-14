@@ -12,3 +12,48 @@
 .today-content {
     padding-bottom: 20px;
 }
+
+/* Notification Banner */
+.tod__notif-banner {
+    background-color: #FDF6EC;
+    margin: 0 16px 20px;
+    padding: 16px;
+    border-radius: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 1px solid #F3E5D5;
+}
+.tod__notif-content {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+.tod__notif-icon {
+    font-size: 24px;
+}
+.tod__notif-text strong {
+    display: block;
+    font-size: 14px;
+    color: #9C744D;
+    margin-bottom: 2px;
+}
+.tod__notif-text p {
+    font-size: 12px;
+    color: #B5A18C;
+    margin: 0;
+}
+.tod__notif-btn {
+    background: #9C744D;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 12px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 0 4px 8px rgba(156, 116, 77, 0.2);
+}
+.tod__notif-btn:active {
+    transform: scale(0.95);
+}
