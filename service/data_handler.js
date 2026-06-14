@@ -181,21 +181,54 @@ class DataService {
         try {
             const profile = await window.localDB.getUserData('profile');
             const waterIntake = await window.localDB.getWaterIntake(day);
+            const settings = await window.localDB.getUserData('water_settings') || {
+                enabled: true,
+                frequency: 120,
+                startTime: "08:00",
+                goal: 2000
+            };
             
             if (profile && profile.uid && waterIntake) {
+                let nextDrinkDate = null;
+
+                // Calcolo intelligente del prossimo orario per bere
+                if (settings.enabled && waterIntake.amount < waterIntake.goal) {
+                    const now = new Date();
+                    const frequencyMs = (settings.frequency || 120) * 60000;
+                    
+                    if (waterIntake.lastUpdated) {
+                        // Caso Standard: Ultimo sorso + frequenza
+                        nextDrinkDate = new Date(waterIntake.lastUpdated + frequencyMs);
+                    } else {
+                        // Caso Inizio Giornata: Usiamo lo startTime dei settings
+                        const [hours, minutes] = (settings.startTime || "08:00").split(':');
+                        nextDrinkDate = new Date(now);
+                        nextDrinkDate.setHours(parseInt(hours), parseInt(minutes), 0, 0);
+                        
+                        // Se l'orario di inizio è già passato e non ha ancora bevuto, 
+                        // lasciamo l'orario di inizio (risulterà "scaduto" e la notifica partirà subito)
+                    }
+
+                    // Gestione Snooze: se lo snooze è attivo e più lontano del prossimo orario calcolato
+                    if (settings.snoozeUntil && settings.snoozeUntil > nextDrinkDate.getTime()) {
+                        nextDrinkDate = new Date(settings.snoozeUntil);
+                    }
+                }
+
                 await window.firestore
                     .collection('users')
                     .doc(profile.uid)
                     .set({
                         water_status: {
                             lastDrink: waterIntake.lastUpdated ? new Date(waterIntake.lastUpdated).toISOString() : null,
+                            nextDrink: nextDrinkDate ? nextDrinkDate.toISOString() : null,
                             todayTotal: waterIntake.amount,
                             goal: waterIntake.goal,
                             day: day
                         },
                         lastUpdate: new Date().toISOString()
                     }, { merge: true });
-                console.log("DataService: Stato acqua sincronizzato con Firestore");
+                console.log("DataService: Stato acqua (con nextDrink) sincronizzato con Firestore");
             }
         } catch (e) {
             console.error("DataService: Errore sincronizzazione stato acqua", e);
