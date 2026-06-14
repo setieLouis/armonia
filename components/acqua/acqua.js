@@ -41,6 +41,37 @@ async function initAcqua() {
     startInput.value = settings.startTime;
     endInput.value = settings.endTime;
 
+    // 2.5 Gestione Banner Notifiche
+    const notifRoot = document.getElementById('acq-notification-banner-root');
+    if (notifRoot && window.notificationService) {
+        const permission = await window.notificationService.checkPermission();
+        if (permission === 'default') {
+            notifRoot.innerHTML = `
+                <div class="tod__notif-banner" style="margin: 0 0 20px 0;">
+                    <div class="tod__notif-content">
+                        <span class="tod__notif-icon">🔔</span>
+                        <div class="tod__notif-text">
+                            <strong>Notifiche Disattivate</strong>
+                            <p>Autorizza il browser per ricevere i promemoria.</p>
+                        </div>
+                    </div>
+                    <button id="acq-btn-activate-notif" class="tod__notif-btn">Attiva</button>
+                </div>
+            `;
+
+            document.getElementById('acq-btn-activate-notif').onclick = async () => {
+                const status = await window.notificationService.requestPermission();
+                if (status !== 'default') {
+                    notifRoot.style.display = 'none';
+                    // Se l'utente ha attivato le notifiche di sistema, attiviamo anche il toggle
+                    if (status === 'granted') {
+                        enabledInput.checked = true;
+                    }
+                }
+            };
+        }
+    }
+
     // 3. Save Logic
     btnSave.onclick = async () => {
         const newSettings = {
