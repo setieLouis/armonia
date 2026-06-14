@@ -58,6 +58,33 @@ async function initToday(navData = null) {
             }
         });
     }
+
+    // Step 3.5: Gestione Banner Notifiche
+    const notifRoot = document.getElementById('notification-banner-root');
+    if (notifRoot && window.notificationService) {
+        const permission = await window.notificationService.checkPermission();
+        if (permission === 'default') {
+            notifRoot.innerHTML = `
+                <div class="tod__notif-banner">
+                    <div class="tod__notif-content">
+                        <span class="tod__notif-icon">🔔</span>
+                        <div class="tod__notif-text">
+                            <strong>Promemoria Idratazione</strong>
+                            <p>Attiva le notifiche per non dimenticare di bere.</p>
+                        </div>
+                    </div>
+                    <button id="btn-activate-notif" class="tod__notif-btn">Attiva</button>
+                </div>
+            `;
+
+            document.getElementById('btn-activate-notif').onclick = async () => {
+                const status = await window.notificationService.requestPermission();
+                if (status !== 'default') {
+                    notifRoot.style.display = 'none';
+                }
+            };
+        }
+    }
 // Step 4: Caricamento Calendario
 await loadComponent('calendar-root', 'components/calendar/calendar.html', async (element) => {
     if (typeof window.initCalendar !== 'function') {
