@@ -45,6 +45,7 @@ async function initAcqua() {
     const notifRoot = document.getElementById('acq-notification-banner-root');
     if (notifRoot && window.notificationService) {
         const permission = await window.notificationService.checkPermission();
+        const storedToken = await window.localDB.getUserData('fcm_token');
         
         if (permission === 'unsupported') {
             notifRoot.innerHTML = `
@@ -53,7 +54,19 @@ async function initAcqua() {
                         <span class="tod__notif-icon">⚠️</span>
                         <div class="tod__notif-text">
                             <strong>Notifiche non supportate</strong>
-                            <p>Il tuo browser non supporta le notifiche push. Prova a installare l'app o cambiare browser.</p>
+                            <p>Il tuo browser non supporta le notifiche push.</p>
+                        </div>
+                    </div>
+                </div>
+            `;
+        } else if (permission === 'denied') {
+            notifRoot.innerHTML = `
+                <div class="tod__notif-banner" style="margin: 0 0 20px 0; background: #ffebee; border-left: 4px solid #ef5350;">
+                    <div class="tod__notif-content">
+                        <span class="tod__notif-icon">🚫</span>
+                        <div class="tod__notif-text">
+                            <strong>Notifiche Bloccate</strong>
+                            <p>Sblocca le notifiche nelle impostazioni del browser per ricevere i promemoria.</p>
                         </div>
                     </div>
                 </div>
@@ -74,14 +87,17 @@ async function initAcqua() {
 
             document.getElementById('acq-btn-activate-notif').onclick = async () => {
                 const status = await window.notificationService.requestPermission();
-                if (status !== 'default') {
+                if (status === 'granted') {
                     notifRoot.style.display = 'none';
-                    // Se l'utente ha attivato le notifiche di sistema, attiviamo anche il toggle
-                    if (status === 'granted') {
-                        enabledInput.checked = true;
-                    }
+                    enabledInput.checked = true;
                 }
             };
+        } else if (permission === 'granted' && !storedToken) {
+            // Permesso già presente ma token mancante: ottenimento automatico
+            console.log("Acqua: Permesso già concesso, avvio generazione token automatica...");
+            window.notificationService.initFCM().then(() => {
+                console.log("Acqua: Token generato e sincronizzato automaticamente.");
+            });
         }
     }
 
