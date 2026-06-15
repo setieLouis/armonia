@@ -120,16 +120,24 @@ const NotificationService = {
             // Attendiamo che il Service Worker sia pronto e attivo
             let registration;
             if ('serviceWorker' in navigator) {
+                console.log("[FCM] Attesa Service Worker ready...");
                 registration = await navigator.serviceWorker.ready;
             }
 
-            // Otteniamo il token specificando la registrazione del SW
+            if (!registration) {
+                console.error("[FCM] Service Worker non trovato o non pronto.");
+                return;
+            }
+
+            console.log("[FCM] Richiesta token con VAPID Key...");
+            // Otteniamo il token specificando la registrazione del SW e la VAPID Key
             const token = await window.fcmMessaging.getToken({
-                serviceWorkerRegistration: registration
+                serviceWorkerRegistration: registration,
+                vapidKey: "BAG2jbrQz8Qj8GiDPGg5CGcLGZDf2K1xEqq6nOY-uOrpirsI8v8WNoZVG_qHh9tKW33M_myPjEZWY2tBsROXLHU"
             });
 
             if (token) {
-                console.log("FCM Token ottenuto:", token);
+                console.log("[FCM] Token ottenuto:", token);
 
                 // 1. Salviamo il token in una entry dedicata per sicurezza
                 await window.localDB.saveUserData('fcm_token', { 
