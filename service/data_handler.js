@@ -67,18 +67,8 @@ class DataService {
                 console.log(`DataService: Loaded data for ${targetDay} from LocalDB`);
                 this.data = localData;
             } else {
-                // 2. Se non c'è in locale, prova Firestore
-                console.log(`DataService: No local data for ${targetDay}, checking Firestore...`);
-                const remoteData = await this.getFromFirestore(targetDay);
-                
-                if (remoteData) {
-                    this.data = remoteData;
-                    await window.localDB.saveMeal(remoteData); // Salva in locale per il futuro
-                } else {
-                    // 3. Se neanche Firestore ha dati, usa il seed
-                    await this.seedDatabase();
-                    this.data = await window.localDB.getMeal(targetDay);
-                }
+                console.warn(`DataService: No local data found for ${targetDay}`);
+                this.data = null;
             }
 
             this.currentDay = targetDay;
@@ -87,21 +77,6 @@ class DataService {
         } catch (error) {
             console.error(`DataService: Error loading data for ${targetDay}`, error);
             throw error;
-        }
-    }
-
-    /**
-     * Recupera i dati di un giorno specifico da Firestore.
-     */
-    async getFromFirestore(day) {
-        if (!window.firestore) return null;
-        try {
-            // Nota: qui andrebbe usato un userId reale se l'auth è attiva
-            const doc = await window.firestore.collection('meals').doc(day).get();
-            return doc.exists ? doc.data() : null;
-        } catch (e) {
-            console.warn("DataService: Errore nel recupero da Firestore", e);
-            return null;
         }
     }
 
@@ -242,27 +217,6 @@ class DataService {
         if (this.data) {
             // Salva in locale
             await window.localDB.saveMeal(this.data);
-            
-            // Sincronizza con Firestore
-            if (window.firestore) {
-                try {
-                    // Recuperiamo il profilo per associare l'utente se disponibile
-                    const profile = await window.localDB.getUserData('profile');
-                    const mealData = { ...this.data };
-                    if (profile && profile.uid) {
-                        mealData.ownerId = profile.uid;
-                    }
-
-                    await window.firestore
-                        .collection('meals')
-                        .doc(this.data.day)
-                        .set(mealData, { merge: true });
-                    console.log("DataService: Sincronizzato con Firestore");
-                } catch (e) {
-                    console.error("DataService: Errore sincronizzazione Firestore", e);
-                }
-            }
-            
             this.notifyListeners();
         }
     }
