@@ -198,13 +198,6 @@
                         platform: 'web-pwa'
                     };
 
-                    // Controllo se abbiamo già un token FCM salvato (ottenuto all'avvio)
-                    const storedToken = await window.localDB.getUserData('fcm_token');
-                    if (storedToken && storedToken.token) {
-                        profileData.fcmToken = storedToken.token;
-                        profileData.fcmUpdatedAt = storedToken.updatedAt;
-                    }
-
                     // Salva profilo in locale
                     await window.localDB.saveUserData('profile', profileData);
 
