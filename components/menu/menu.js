@@ -12,6 +12,7 @@ function initMenu(container) {
         { label: 'Aggiorna Dieta', action: () => window.navigateTo('diet-update') },
         { label: 'Acqua', action: () => window.navigateTo('acqua') },
         { label: 'Novità', action: () => window.navigateTo('features-info') },
+        { label: 'Account', action: () => window.navigateTo('account') },
         // { label: 'Profilo', action: () => console.log('Profilo click') },
     ];
 

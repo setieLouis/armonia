@@ -9,10 +9,13 @@ async function loadComponent(id, path, initFunc = null) {
         const html = await response.text();
         const element = document.getElementById(id);
         if (element) {
+            console.log(`loadComponent: found element #${id}, injecting HTML`);
             element.innerHTML = html;
             if (initFunc && typeof initFunc === 'function') {
                 await initFunc(element);
             }
+        } else {
+            console.error(`loadComponent: element #${id} NOT found!`);
         }
     } catch (error) {
         console.error(`Errore nel caricamento del componente ${id}:`, error);
@@ -38,9 +41,8 @@ function loadScript(src) {
 
 // Global navigation function
 async function navigateTo(view, data = null) {
-    console.log(`Navigating to: ${view}`, data);
+    console.log(`[Router] Navigating to: ${view}`, data);
     
-    // Log vista su Firebase Analytics
     if (window.firebaseAnalytics) {
         window.firebaseAnalytics.logEvent('screen_view', {
             screen_name: view,
@@ -49,51 +51,71 @@ async function navigateTo(view, data = null) {
     }
 
     const appRoot = 'app-root';
-
-     if (view === 'welcome') {
-        await loadComponent(appRoot, 'components/welcome/welcome.html', async () => {
-            await loadScript('components/welcome/welcome.js');
-        });
-    } 
     
-   else if (view === 'today') {
-        await loadComponent(appRoot, 'components/today/today.html', async () => {
-            await loadScript('components/today/today.js');
-            const navData = data || { dateId: new Date().toISOString().split('T')[0] };
-            if (window.initToday) await window.initToday(navData);
-        });
-    } 
-    else if (view === 'current-meal') {
-        await loadComponent(appRoot, 'components/current-meal/current-meal.html', async () => {
-            await loadScript('components/current-meal/current-meal.js');
-            if (window.initCurrentMeal) await window.initCurrentMeal(data);
-        });
+    try {
+        switch (view) {
+            case 'welcome':
+                await loadComponent(appRoot, 'components/welcome/welcome.html', async () => {
+                    await loadScript('components/welcome/welcome.js');
+                });
+                break;
+            case 'today':
+                await loadComponent(appRoot, 'components/today/today.html', async () => {
+                    await loadScript('components/today/today.js');
+                    const navData = data || { dateId: new Date().toISOString().split('T')[0] };
+                    if (window.initToday) await window.initToday(navData);
+                });
+                break;
+            case 'current-meal':
+                await loadComponent(appRoot, 'components/current-meal/current-meal.html', async () => {
+                    await loadScript('components/current-meal/current-meal.js');
+                    if (window.initCurrentMeal) await window.initCurrentMeal(data);
+                });
+                break;
+            case 'ingredient':
+                await loadComponent(appRoot, 'components/ingredient/ingredient.html', async (element) => {
+                    await loadScript('components/ingredient/ingredient.js');
+                    if (window.initIngredientAlternatives) await window.initIngredientAlternatives(data);
+                });
+                break;
+            case 'diet-update':
+                await loadComponent(appRoot, 'components/diet-update/diet-update.html', async (element) => {
+                    await loadScript('components/diet-update/diet-update.js');
+                    if (window.initDietUpdate) await window.initDietUpdate();
+                });
+                break;
+            case 'features-info':
+                await loadComponent(appRoot, 'components/features-info/features-info.html', async (element) => {
+                    await loadScript('components/features-info/features-info.js');
+                    if (window.initFeaturesInfo) await window.initFeaturesInfo();
+                });
+                break;
+            case 'acqua':
+                await loadComponent(appRoot, 'components/acqua/acqua.html', async (element) => {
+                    await loadScript('components/acqua/acqua.js');
+                    if (window.initAcqua) await window.initAcqua();
+                });
+                break;
+            case 'account':
+                console.log("[Router] Case account detected");
+                await loadComponent(appRoot, 'components/account/account.html', async (element) => {
+                    console.log("[Router] Account HTML loaded");
+                    await loadScript('components/account/account.js');
+                    console.log("[Router] Account script loaded");
+                    if (window.initAccount) {
+                        await window.initAccount();
+                    } else {
+                        console.error("[Router] initAccount not found!");
+                    }
+                });
+                break;
+            default:
+                console.warn(`[Router] View not found: ${view}`);
+        }
+    } catch (err) {
+        console.error(`[Router] Error navigating to ${view}:`, err);
     }
-    else if (view === 'ingredient') {
-        await loadComponent(appRoot, 'components/ingredient/ingredient.html', async (element) => {
-            await loadScript('components/ingredient/ingredient.js');
-            if (window.initIngredientAlternatives) await window.initIngredientAlternatives(data);
-        });
-    }
-    else if (view === 'diet-update') {
-        await loadComponent(appRoot, 'components/diet-update/diet-update.html', async (element) => {
-            await loadScript('components/diet-update/diet-update.js');
-            if (window.initDietUpdate) await window.initDietUpdate();
-        });
-    }
-    else if (view === 'features-info') {
-        await loadComponent(appRoot, 'components/features-info/features-info.html', async (element) => {
-            await loadScript('components/features-info/features-info.js');
-            if (window.initFeaturesInfo) await window.initFeaturesInfo();
-        });
-    }
-    else if (view === 'acqua') {
-        await loadComponent(appRoot, 'components/acqua/acqua.html', async (element) => {
-            await loadScript('components/acqua/acqua.js');
-            if (window.initAcqua) await window.initAcqua();
-        });
-    }
-    }
+}
 
 /**
  * Checks if a user profile exists to decide the initial view
