@@ -45,7 +45,20 @@ async function initAcqua() {
     const notifRoot = document.getElementById('acq-notification-banner-root');
     if (notifRoot && window.notificationService) {
         const permission = await window.notificationService.checkPermission();
-        if (permission === 'default') {
+        
+        if (permission === 'unsupported') {
+            notifRoot.innerHTML = `
+                <div class="tod__notif-banner tod__notif-banner--warning" style="margin: 0 0 20px 0; background: #fff3e0; border-left: 4px solid #ffb74d;">
+                    <div class="tod__notif-content">
+                        <span class="tod__notif-icon">⚠️</span>
+                        <div class="tod__notif-text">
+                            <strong>Notifiche non supportate</strong>
+                            <p>Il tuo browser non supporta le notifiche push. Prova a installare l'app o cambiare browser.</p>
+                        </div>
+                    </div>
+                </div>
+            `;
+        } else if (permission === 'default') {
             notifRoot.innerHTML = `
                 <div class="tod__notif-banner" style="margin: 0 0 20px 0;">
                     <div class="tod__notif-content">
