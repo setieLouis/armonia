@@ -23,6 +23,12 @@ const NotificationService = {
         
         const permission = await Notification.requestPermission();
         console.log("Stato permesso notifiche:", permission);
+        
+        if (permission === 'granted') {
+            // Se il permesso è stato appena concesso, proviamo a recuperare subito il token
+            await this.initFCM();
+        }
+        
         return permission;
     },
 
