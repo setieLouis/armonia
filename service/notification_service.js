@@ -66,23 +66,7 @@ const NotificationService = {
         return true;
     },
 
-    /**
-     * Avvia il monitoraggio per l'acqua
-     */
-    async startWaterReminder() {
-        console.log("Servizio Water Reminder avviato...");
-        
-        // Inizializza anche FCM se disponibile
-        this.initFCM();
 
-        // Controlla ogni minuto
-        setInterval(async () => {
-            await this.checkAndNotifyWater();
-        }, 60000);
-
-        // Primo controllo immediato
-        this.checkAndNotifyWater();
-    },
 
     /**
      * Inizializza FCM: richiede permesso se necessario e ottiene il token
@@ -163,51 +147,7 @@ const NotificationService = {
         }
     },
 
-    /**
-     * Controlla se è ora di bere
-     */
-    async checkAndNotifyWater() {
-        if (!window.localDB) return;
 
-        const settings = await window.localDB.getUserData('water_settings') || { 
-            enabled: true, 
-            frequency: 120, // minuti (2 ore)
-            startTime: "08:00",
-            endTime: "22:00"
-        };
-
-        if (!settings.enabled) return;
-
-        // Controlla se c'è uno snooze attivo
-        if (settings.snoozeUntil && Date.now() < settings.snoozeUntil) {
-            return;
-        }
-
-        // Controlla la finestra temporale
-        const now = new Date();
-        const currentTime = `${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}`;
-        
-        if (currentTime < settings.startTime || currentTime > settings.endTime) {
-            return;
-        }
-
-        const today = now.toISOString().split('T')[0];
-        const data = await window.localDB.getWaterIntake(today);
-
-        // Se ha già raggiunto l'obiettivo, non disturbare più
-        if (data.amount >= data.goal) return;
-
-        // Se non ha mai bevuto oggi, o l'ultima volta era più di 'frequency' minuti fa
-        const lastTime = data.lastUpdated || 0;
-        const diffMinutes = Math.floor((Date.now() - lastTime) / 60000);
-
-        if (diffMinutes >= settings.frequency) {
-            this.sendNotification(
-                "Promemoria Acqua 💧",
-                "È ora di bere un sorso d'acqua per restare idratata!"
-            );
-        }
-    }
 };
 
 // Esponiamo il servizio globalmente
