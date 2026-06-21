@@ -22,12 +22,7 @@ const NotificationService = {
         if (!("Notification" in window)) return 'unsupported';
         
         const permission = await Notification.requestPermission();
-        console.log("Stato permesso notifiche:", permission);
-        
-        if (permission === 'granted') {
-            // Se il permesso è stato appena concesso, proviamo a recuperare subito il token
-            await this.initFCM();
-        }
+        console.log("Stato permesso notifiche richiesto:", permission);
         
         return permission;
     },
@@ -106,13 +101,15 @@ const NotificationService = {
                 return;
             }
 
-            // Se il permesso è 'default', lo chiediamo
-            const permission = await this.checkPermission();
+            // Controlla e gestisce lo stato dei permessi
+            let permission = await this.checkPermission();
             if (permission === 'default') {
                 console.log("Richiesta permesso notifiche al primo avvio...");
-                const newPermission = await this.requestPermission();
-                if (newPermission !== 'granted') return;
-            } else if (permission !== 'granted') {
+                permission = await this.requestPermission();
+            }
+
+            if (permission !== 'granted') {
+                console.warn("Permesso notifiche non concesso. Stato:", permission);
                 return;
             }
 

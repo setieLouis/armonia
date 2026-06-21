@@ -90,6 +90,8 @@ async function initAcqua() {
                 if (status === 'granted') {
                     notifRoot.style.display = 'none';
                     enabledInput.checked = true;
+                    // Inizializza FCM per generare e sincronizzare il token
+                    await window.notificationService.initFCM();
                 }
             };
         } else if (permission === 'granted' && !storedToken) {
@@ -134,11 +136,14 @@ async function initAcqua() {
                 }, 2000);
             }, 500);
 
-            // Se l'utente ha attivato le notifiche, chiediamo il permesso se non c'è
+            // Se l'utente ha attivato le notifiche, chiediamo il permesso se non c'è ed inizializziamo FCM
             if (newSettings.enabled && window.notificationService) {
                 const status = await window.notificationService.checkPermission();
                 if (status === 'default') {
-                    await window.notificationService.requestPermission();
+                    const newStatus = await window.notificationService.requestPermission();
+                    if (newStatus === 'granted') {
+                        await window.notificationService.initFCM();
+                    }
                 }
             }
 
