@@ -4,12 +4,6 @@
   "description": "App per il benessere e il tracking alimentare",
   "main": "script.js",
   "scripts": {
-    "dev": "vite --host",
-    "build": "vite build",
-    "preview": "vite preview"
-  },
-  "devDependencies": {
-    "@vitejs/plugin-basic-ssl": "^1.1.0",
-    "vite": "^5.0.0"
+    "start": "echo \"Gestisci l'avvio esternamente o tramite hosting statico.\""
   }
 }
