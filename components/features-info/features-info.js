@@ -40,6 +40,12 @@ async function initFeaturesInfo(data) {
         }
     }
 
+    // Inserisci informazioni versione e rilascio
+    const versionInfoEl = document.getElementById('fei-version-info');
+    if (versionInfoEl && typeof APP_VERSION !== 'undefined' && typeof RELEASE_DATE !== 'undefined') {
+        versionInfoEl.innerText = `Versione ${APP_VERSION} • Rilasciato il ${RELEASE_DATE}`;
+    }
+
     // 2. Carica dati e gestisci i Tab
     try {
         const response = await fetch('components/features-info/features_data.json');

@@ -62,3 +62,19 @@ Questo documento descrive i passaggi per implementare la presentazione automatic
   * Aggiornare `initFeaturesInfo()` in [features-info.js](file:///workspace/components/features-info/features-info.js) per suddividere l'array di feature in due liste filtrate (`available` e `upcoming`).
   * Aggiungere gestori di eventi per i pulsanti del tab che filtrano le card renderizzate e aggiornano lo stato visivo della pillola attiva.
   * Assicurarsi che la logica di avvio startup (`isStartup`) funzioni correttamente mostrando solo le funzioni disponibili o consentendo lo switch ma mantenendo il pulsante "Continua" visibile in fondo.
+
+---
+
+## 4. Aggiornamento: Visualizzazione della Versione e Data di Rilascio
+
+### Obiettivo Grafico e Funzionale
+* Mostrare la versione corrente del software e la data del rilascio in modo discreto sotto i tab di selezione.
+
+### Step di Sviluppo
+* **Step A (HTML & CSS)**:
+  * Inserire `<div id="fei-version-info" class="fei-version-info"></div>` sotto il contenitore dei tab in [features-info.html](file:///workspace/components/features-info/features-info.html).
+  * Aggiungere le regole CSS in `.fei-version-info` (testo centrato, grigio chiaro, spaziatura corretta).
+* **Step B (JS Logic)**:
+  * Definire la costante `RELEASE_DATE` in [script.js](file:///workspace/script.js).
+  * Valorizzare dinamicamente il testo di `#fei-version-info` all'avvio del componente in [features-info.js](file:///workspace/components/features-info/features-info.js).
+
