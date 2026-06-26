@@ -201,6 +201,11 @@
                     // Salva profilo in locale
                     await window.localDB.saveUserData('profile', profileData);
 
+                    // Salva la versione corrente come vista
+                    if (typeof APP_VERSION !== 'undefined') {
+                        await window.localDB.saveUserData('last_seen_version', { version: APP_VERSION });
+                    }
+
                     // Inizializziamo anche i default dell'acqua se non esistono
                     const defaultWaterSettings = {
                         enabled: true,

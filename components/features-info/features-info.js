@@ -2,20 +2,42 @@
  * features-info.js: Logic for the Features Info (What's New) component
  */
 
-async function initFeaturesInfo() {
+async function initFeaturesInfo(data) {
     console.log("Inizializzazione Features Info...");
 
     const listContainer = document.getElementById('fei-list');
+    const isStartup = data && data.isStartup;
 
-    // 1. Inizializza Header
+    // 1. Inizializza Header o Azione Continua
     const headerRoot = document.getElementById('fei-header-root');
-    if (headerRoot && typeof window.initHeader === 'function') {
-        window.initHeader(headerRoot, {
-            left: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>`,
-            center: "Novità",
-            right: "",
-            onLeftClick: () => window.navigateTo('today')
-        });
+    if (isStartup) {
+        if (headerRoot) headerRoot.style.display = 'none';
+        
+        const actionContainer = document.getElementById('fei-action-container');
+        const btnContinue = document.getElementById('fei-btn-continue');
+        if (actionContainer) actionContainer.style.display = 'block';
+        if (btnContinue) {
+            btnContinue.onclick = async () => {
+                if (window.localDB) {
+                    try {
+                        // Salva la versione vista nel database
+                        await window.localDB.saveUserData('last_seen_version', { version: APP_VERSION });
+                    } catch (e) {
+                        console.error("Errore salvataggio versione vista:", e);
+                    }
+                }
+                window.navigateTo('today');
+            };
+        }
+    } else {
+        if (headerRoot && typeof window.initHeader === 'function') {
+            window.initHeader(headerRoot, {
+                left: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>`,
+                center: "Novità",
+                right: "",
+                onLeftClick: () => window.navigateTo('today')
+            });
+        }
     }
 
     // 2. Carica dati

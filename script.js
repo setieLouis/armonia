@@ -2,6 +2,8 @@
  * Core script for loading components and managing navigation
  */
 
+const APP_VERSION = "1.2.1";
+
 async function loadComponent(id, path, initFunc = null) {
     try {
         const response = await fetch(path);
@@ -87,7 +89,7 @@ async function navigateTo(view, data = null) {
             case 'features-info':
                 await loadComponent(appRoot, 'components/features-info/features-info.html', async (element) => {
                     await loadScript('components/features-info/features-info.js');
-                    if (window.initFeaturesInfo) await window.initFeaturesInfo();
+                    if (window.initFeaturesInfo) await window.initFeaturesInfo(data);
                 });
                 break;
             case 'acqua':
@@ -129,6 +131,17 @@ async function checkUserSession() {
                 const profile = await window.localDB.getUserData('profile');
                 if (profile && profile.name) {
                     console.log(`Session: Welcome back, ${profile.name}!`);
+                    
+                    // Controlla se l'utente ha già visto le novità di questa versione
+                    const lastSeenRecord = await window.localDB.getUserData('last_seen_version');
+                    const lastSeenVersion = lastSeenRecord ? lastSeenRecord.version : null;
+
+                    if (!lastSeenVersion || lastSeenVersion !== APP_VERSION) {
+                        console.log(`Session: Rilevata nuova versione (${APP_VERSION}). Navigazione a novità.`);
+                        await navigateTo('features-info', { isStartup: true });
+                        return;
+                    }
+
                     await navigateTo('today');
                     return;
                 }
