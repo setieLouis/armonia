@@ -45,3 +45,20 @@ Questo documento descrive i passaggi per implementare la presentazione automatic
 * **Compito**:
   * Verificare il corretto caricamento delle card delle novità all'avvio incrementando la versione.
   * Assicurarsi che l'app non mostri la schermata agli avvii successivi.
+
+---
+
+## 3. Aggiornamento: Sotto-pagine (Tabbed Layout) per "Disponibili" vs "In Arrivo"
+
+### Obiettivo Grafico e Funzionale
+* Separare le novità in due sotto-pagine ("Disponibili" e "In Arrivo") all'interno dello stesso componente, gestite tramite un controllo a segmenti (Pill Segmented Control) posizionato sotto l'header.
+* Mantenere un'esperienza utente pulita, fluida e con transizioni piacevoli al cambio scheda.
+
+### Step di Sviluppo dell'Estensione
+* **Step A (HTML & CSS)**:
+  * Aggiungere il markup per il controllo tab pillola (`.fei-tabs` e `.fei-tab-btn`) sopra `#fei-list` in [features-info.html](file:///workspace/components/features-info/features-info.html).
+  * Definire gli stili per il selettore a pillola (stile iOS, angoli arrotondati, pulsante attivo con sfondo bianco/primario ed effetto scorrimento).
+* **Step B (JS Logic)**:
+  * Aggiornare `initFeaturesInfo()` in [features-info.js](file:///workspace/components/features-info/features-info.js) per suddividere l'array di feature in due liste filtrate (`available` e `upcoming`).
+  * Aggiungere gestori di eventi per i pulsanti del tab che filtrano le card renderizzate e aggiornano lo stato visivo della pillola attiva.
+  * Assicurarsi che la logica di avvio startup (`isStartup`) funzioni correttamente mostrando solo le funzioni disponibili o consentendo lo switch ma mantenendo il pulsante "Continua" visibile in fondo.

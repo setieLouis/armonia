@@ -40,12 +40,31 @@ async function initFeaturesInfo(data) {
         }
     }
 
-    // 2. Carica dati
+    // 2. Carica dati e gestisci i Tab
     try {
         const response = await fetch('components/features-info/features_data.json');
         if (!response.ok) throw new Error('Errore caricamento dati');
         const features = await response.json();
-        renderFeatures(features);
+
+        let activeTab = 'available';
+
+        const updateView = () => {
+            const filteredFeatures = features.filter(feat => feat.status === activeTab);
+            renderFeatures(filteredFeatures);
+        };
+
+        const tabBtns = document.querySelectorAll('.fei-tab-btn');
+        tabBtns.forEach(btn => {
+            btn.onclick = () => {
+                tabBtns.forEach(b => b.classList.remove('is-active'));
+                btn.classList.add('is-active');
+                activeTab = btn.getAttribute('data-tab');
+                updateView();
+            };
+        });
+
+        // Caricamento iniziale
+        updateView();
     } catch (err) {
         console.error(err);
         if (listContainer) listContainer.innerHTML = '<div class="fei-loading">Impossibile caricare le novità al momento.</div>';
@@ -55,7 +74,7 @@ async function initFeaturesInfo(data) {
         if (!listContainer) return;
         
         if (features.length === 0) {
-            listContainer.innerHTML = '<div class="fei-loading">Nessuna novità da mostrare.</div>';
+            listContainer.innerHTML = '<div class="fei-loading">Nessuna novità da mostrare in questa categoria.</div>';
             return;
         }
 
