@@ -146,41 +146,11 @@ async function openCalendarSwapModal(sourceDateId, sourceLabel, allDays) {
         optionCard.innerHTML = `
             <div class="cal-swap-option-content">
                 <span class="cal-swap-option-name">${day.label} ${day.number}</span>
-                <span class="cal-swap-option-preview" id="swap-preview-${day.dateId}">Caricamento pasti...</span>
             </div>
             <span class="cal-swap-option-icon">🔄</span>
         `;
 
         optionsList.appendChild(optionCard);
-
-        // Caricamento asincrono dell'anteprima dei pasti dal DB locale
-        if (window.localDB) {
-            window.localDB.getMeal(day.dateId).then(mealData => {
-                const previewEl = document.getElementById(`swap-preview-${day.dateId}`);
-                if (previewEl) {
-                    if (mealData && mealData.meals && mealData.meals.length > 0) {
-                        const summary = mealData.meals
-                            .map(m => {
-                                const dishesNames = m.dishes.map(d => d.name).join(', ');
-                                return `${m.label}: ${dishesNames}`;
-                            })
-                            .filter(Boolean)
-                            .join(' • ');
-
-                        const maxLength = 60;
-                        previewEl.innerText = summary.length > maxLength 
-                            ? summary.substring(0, maxLength) + '...'
-                            : summary;
-                    } else {
-                        previewEl.innerText = "Nessun pasto pianificato";
-                    }
-                }
-            }).catch(err => {
-                console.warn(`Errore nel caricamento anteprima pasto per ${day.dateId}`, err);
-                const previewEl = document.getElementById(`swap-preview-${day.dateId}`);
-                if (previewEl) previewEl.innerText = "Nessun pasto pianificato";
-            });
-        }
 
         // Click handler su ciascuna card opzione
         optionCard.addEventListener('click', async () => {
