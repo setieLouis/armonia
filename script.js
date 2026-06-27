@@ -1,10 +1,6 @@
 /**
  * Core script for loading components and managing navigation
  */
-
-const APP_VERSION = "1.2.1";
-const RELEASE_DATE = "26 Giugno 2026";
-
 async function loadComponent(id, path, initFunc = null) {
     try {
         const response = await fetch(path);

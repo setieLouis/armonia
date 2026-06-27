@@ -1,5 +1,6 @@
 importScripts('https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js');
 importScripts('https://www.gstatic.com/firebasejs/10.7.1/firebase-messaging-compat.js');
+importScripts('version.js');
 
 const firebaseConfig = {
   apiKey: "AIzaSyAgHLVg4TdaF7xoaItXIxj2p1CdNuFunEE",
@@ -27,12 +28,13 @@ messaging.onBackgroundMessage((payload) => {
   self.registration.showNotification(notificationTitle, notificationOptions);
 });
 
-const CACHE_NAME = 'armonia-flow-v1';
+const CACHE_NAME = `armonia-flow-v${APP_VERSION}.${CACHE_VERSION}`;
 const ASSETS_TO_CACHE = [
   '/',
   '/index.html',
   '/style.css',
   '/script.js',
+  '/version.js',
   '/manifest.json',
   '/pwa/logo.png',
   '/service/local_db.js',
