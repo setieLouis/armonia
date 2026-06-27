@@ -95,7 +95,7 @@ async function initFeaturesInfo(data) {
         if (!listContainer) return;
         
         if (features.length === 0) {
-            listContainer.innerHTML = '<div class="fei-loading">Nessuna novità da mostrare in questa categoria.</div>';
+            listContainer.innerHTML = '<div class="fei-loading">Miglioramenti tecnici e ottimizzazioni di sistema.</div>';
             return;
         }
 
