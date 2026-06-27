@@ -64,7 +64,7 @@ async function initFeaturesInfo(data) {
             renderFeatures(newFeatures);
         } else {
             if (versionInfoEl) versionInfoEl.style.display = 'block';
-            if (tabsContainer) tabsContainer.style.display = 'block';
+            if (tabsContainer) tabsContainer.style.display = 'flex';
 
             let activeTab = 'available';
 
