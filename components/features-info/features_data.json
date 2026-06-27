@@ -1,5 +1,13 @@
 [
     {
+        "title": "Scambia Giornate (Switch Day)",
+        "description": "Riorganizza con la massima flessibilità la tua settimana alimentare scambiando facilmente i pasti di un giorno con un altro tramite pressione prolungata (long press) sul calendario.",
+        "status": "available",
+        "statusLabel": "Disponibile",
+        "version": "1.2.3",
+        "icon": "<svg width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M17 1l4 4-4 4M21 5H9a5 5 0 0 0-5 5v3M7 23l-4-4 4-4M3 19h12a5 5 0 0 0 5-5v-3'/></svg>"
+    },
+    {
         "title": "Notifiche di Aggiornamento",
         "description": "Ricevi un avviso discreto all'interno dell'app quando viene rilasciata una nuova versione per aggiornare all'istante senza perdere i tuoi dati.",
         "status": "available",
