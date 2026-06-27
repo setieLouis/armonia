@@ -46,31 +46,46 @@ async function initFeaturesInfo(data) {
         versionInfoEl.innerText = `Versione ${APP_VERSION} • Rilasciato il ${RELEASE_DATE}`;
     }
 
-    // 2. Carica dati e gestisci i Tab
+    // 2. Carica dati e gestisci i Tab/Filtri
     try {
         const response = await fetch('components/features-info/features_data.json');
         if (!response.ok) throw new Error('Errore caricamento dati');
         const features = await response.json();
 
-        let activeTab = 'available';
+        const tabsContainer = document.querySelector('.fei-tabs-container');
 
-        const updateView = () => {
-            const filteredFeatures = features.filter(feat => feat.status === activeTab);
-            renderFeatures(filteredFeatures);
-        };
+        if (isStartup) {
+            if (versionInfoEl) versionInfoEl.style.display = 'block';
+            if (tabsContainer) tabsContainer.style.display = 'none';
 
-        const tabBtns = document.querySelectorAll('.fei-tab-btn');
-        tabBtns.forEach(btn => {
-            btn.onclick = () => {
-                tabBtns.forEach(b => b.classList.remove('is-active'));
-                btn.classList.add('is-active');
-                activeTab = btn.getAttribute('data-tab');
-                updateView();
+            // All'avvio mostra solo la nuova feature del rilascio corrente
+            const currentVersion = typeof APP_VERSION !== 'undefined' ? APP_VERSION : '1.2.2';
+            const newFeatures = features.filter(feat => feat.version === currentVersion);
+            renderFeatures(newFeatures);
+        } else {
+            if (versionInfoEl) versionInfoEl.style.display = 'block';
+            if (tabsContainer) tabsContainer.style.display = 'block';
+
+            let activeTab = 'available';
+
+            const updateView = () => {
+                const filteredFeatures = features.filter(feat => feat.status === activeTab);
+                renderFeatures(filteredFeatures);
             };
-        });
 
-        // Caricamento iniziale
-        updateView();
+            const tabBtns = document.querySelectorAll('.fei-tab-btn');
+            tabBtns.forEach(btn => {
+                btn.onclick = () => {
+                    tabBtns.forEach(b => b.classList.remove('is-active'));
+                    btn.classList.add('is-active');
+                    activeTab = btn.getAttribute('data-tab');
+                    updateView();
+                };
+            });
+
+            // Caricamento iniziale
+            updateView();
+        }
     } catch (err) {
         console.error(err);
         if (listContainer) listContainer.innerHTML = '<div class="fei-loading">Impossibile caricare le novità al momento.</div>';
