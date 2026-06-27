@@ -14,3 +14,5 @@ docker build -t fnm-node .
 
   
 podman exec -it quizzical_heisenberg /bin/bash
+
+podman start quizzical_heisenberg

@@ -1,20 +1,54 @@
-const CACHE_NAME = 'armonia-flow-v1';
+importScripts('https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js');
+importScripts('https://www.gstatic.com/firebasejs/10.7.1/firebase-messaging-compat.js');
+importScripts('version.js');
+
+const firebaseConfig = {
+  apiKey: "AIzaSyAgHLVg4TdaF7xoaItXIxj2p1CdNuFunEE",
+  authDomain: "armonia-47fa2.firebaseapp.com",
+  projectId: "armonia-47fa2",
+  storageBucket: "armonia-47fa2.firebasestorage.app",
+  messagingSenderId: "700215020857",
+  appId: "1:700215020857:web:75c2670006721a7e52ace8"
+};
+
+firebase.initializeApp(firebaseConfig);
+const messaging = firebase.messaging();
+
+// Gestione messaggi in background FCM
+messaging.onBackgroundMessage((payload) => {
+  console.log('[sw.js] Messaggio ricevuto in background:', payload);
+  
+  const notificationTitle = payload.notification.title;
+  const notificationOptions = {
+    body: payload.notification.body,
+    icon: payload.notification.icon || '/leaf.png',
+    data: payload.data
+  };
+
+  self.registration.showNotification(notificationTitle, notificationOptions);
+});
+
+const CACHE_NAME = `armonia-flow-v${APP_VERSION}.${CACHE_VERSION}`;
 const ASSETS_TO_CACHE = [
   '/',
   '/index.html',
   '/style.css',
   '/script.js',
+  '/version.js',
   '/manifest.json',
   '/pwa/logo.png',
   '/service/local_db.js',
   '/service/data_handler.js',
   '/service/notification_service.js',
+  '/service/firebase_init.js',
   '/components/welcome/welcome.html',
   '/components/welcome/welcome.js',
   '/components/welcome/welcome.css',
   '/components/today/today.html',
   '/components/today/today.js',
   '/components/today/today.css',
+  '/components/calendar/calendar.html',
+  '/components/calendar/calendar.js',
   '/components/current-meal/current-meal.html',
   '/components/current-meal/current-meal.js',
   '/components/current-meal/current-meal.css',
@@ -42,7 +76,6 @@ self.addEventListener('install', (event) => {
   );
 });
 
-// Activate Event: Cleanup old caches
 self.addEventListener('activate', (event) => {
   event.waitUntil(
     caches.keys().then((cacheNames) => {
@@ -54,7 +87,7 @@ self.addEventListener('activate', (event) => {
           }
         })
       );
-    })
+    }).then(() => self.clients.claim())
   );
 });
 
@@ -80,6 +113,7 @@ self.addEventListener('fetch', (event) => {
     })
   );
 });
+
 self.addEventListener('notificationclick', (event) => {
   event.notification.close();
   
@@ -108,4 +142,11 @@ self.addEventListener('notificationclick', (event) => {
       }
     })
   );
+});
+
+// Gestione messaggi dal main thread (es. SKIP_WAITING)
+self.addEventListener('message', (event) => {
+  if (event.data && event.data.type === 'SKIP_WAITING') {
+    self.skipWaiting();
+  }
 });

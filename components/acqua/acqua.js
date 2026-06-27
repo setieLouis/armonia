@@ -41,6 +41,68 @@ async function initAcqua() {
     startInput.value = settings.startTime;
     endInput.value = settings.endTime;
 
+    // 2.5 Gestione Banner Notifiche
+    const notifRoot = document.getElementById('acq-notification-banner-root');
+    if (notifRoot && window.notificationService) {
+        const permission = await window.notificationService.checkPermission();
+        const storedToken = await window.localDB.getUserData('fcm_token');
+        
+        if (permission === 'unsupported') {
+            notifRoot.innerHTML = `
+                <div class="tod__notif-banner tod__notif-banner--warning" style="margin: 0 0 20px 0; background: #fff3e0; border-left: 4px solid #ffb74d;">
+                    <div class="tod__notif-content">
+                        <span class="tod__notif-icon">⚠️</span>
+                        <div class="tod__notif-text">
+                            <strong>Notifiche non supportate</strong>
+                            <p>Il tuo browser non supporta le notifiche push.</p>
+                        </div>
+                    </div>
+                </div>
+            `;
+        } else if (permission === 'denied') {
+            notifRoot.innerHTML = `
+                <div class="tod__notif-banner" style="margin: 0 0 20px 0; background: #ffebee; border-left: 4px solid #ef5350;">
+                    <div class="tod__notif-content">
+                        <span class="tod__notif-icon">🚫</span>
+                        <div class="tod__notif-text">
+                            <strong>Notifiche Bloccate</strong>
+                            <p>Sblocca le notifiche nelle impostazioni del browser per ricevere i promemoria.</p>
+                        </div>
+                    </div>
+                </div>
+            `;
+        } else if (permission === 'default') {
+            notifRoot.innerHTML = `
+                <div class="tod__notif-banner" style="margin: 0 0 20px 0;">
+                    <div class="tod__notif-content">
+                        <span class="tod__notif-icon">🔔</span>
+                        <div class="tod__notif-text">
+                            <strong>Notifiche Disattivate</strong>
+                            <p>Autorizza il browser per ricevere i promemoria.</p>
+                        </div>
+                    </div>
+                    <button id="acq-btn-activate-notif" class="tod__notif-btn">Attiva</button>
+                </div>
+            `;
+
+            document.getElementById('acq-btn-activate-notif').onclick = async () => {
+                const status = await window.notificationService.requestPermission();
+                if (status === 'granted') {
+                    notifRoot.style.display = 'none';
+                    enabledInput.checked = true;
+                    // Inizializza FCM per generare e sincronizzare il token
+                    await window.notificationService.initFCM();
+                }
+            };
+        } else if (permission === 'granted' && !storedToken) {
+            // Permesso già presente ma token mancante: ottenimento automatico
+            console.log("Acqua: Permesso già concesso, avvio generazione token automatica...");
+            window.notificationService.initFCM().then(() => {
+                console.log("Acqua: Token generato e sincronizzato automaticamente.");
+            });
+        }
+    }
+
     // 3. Save Logic
     btnSave.onclick = async () => {
         const newSettings = {
@@ -53,6 +115,11 @@ async function initAcqua() {
 
         try {
             await window.localDB.saveWaterSettings(newSettings);
+            
+            // Sincronizza con Firestore se disponibile
+            if (window.dataService && typeof window.dataService.syncUserProfile === 'function') {
+                await window.dataService.syncUserProfile();
+            }
             
             // Feedback visivo immediato
             btnSave.innerText = "Salvataggio...";
@@ -69,11 +136,14 @@ async function initAcqua() {
                 }, 2000);
             }, 500);
 
-            // Se l'utente ha attivato le notifiche, chiediamo il permesso se non c'è
+            // Se l'utente ha attivato le notifiche, chiediamo il permesso se non c'è ed inizializziamo FCM
             if (newSettings.enabled && window.notificationService) {
                 const status = await window.notificationService.checkPermission();
                 if (status === 'default') {
-                    await window.notificationService.requestPermission();
+                    const newStatus = await window.notificationService.requestPermission();
+                    if (newStatus === 'granted') {
+                        await window.notificationService.initFCM();
+                    }
                 }
             }
 

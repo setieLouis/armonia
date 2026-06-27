@@ -58,24 +58,22 @@ async function initToday(navData = null) {
             }
         });
     }
-// Step 4: Caricamento Calendario
-await loadComponent('calendar-root', 'components/calendar/calendar.html', async (element) => {
-    if (typeof window.initCalendar !== 'function') {
-        await loadScript('components/calendar/calendar.js');
-    }
 
-    // Il componente calendario è ora autonomo: gli passiamo solo la data target
-    window.initCalendar(element, dateId);
-});
+    // Step 4: Caricamento Calendario
+    await loadComponent('calendar-root', 'components/calendar/calendar.html', async (element) => {
+        if (typeof window.initCalendar !== 'function') {
+            await loadScript('components/calendar/calendar.js');
+        }
+        window.initCalendar(element, dateId);
+    });
 
-    // Step 4: Caricamento Progress bar
+    // Step 4.1: Caricamento Progress bar
     const progressRoot = document.getElementById('progress-root');
     if (progressRoot) {
         if (typeof window.initProgress !== 'function') {
             await loadScript('components/progress/progress.js');
         }
 
-        // Funzione per aggiornare la progress bar
         const updateProgressBar = () => {
             const percentage = window.dataService.calculateProgress();
             
@@ -99,13 +97,9 @@ await loadComponent('calendar-root', 'components/calendar/calendar.html', async 
             });
         };
 
-        // Inizializzazione
         updateProgressBar();
-
-        // Iscrizione ai cambiamenti per aggiornare in tempo reale
         window.dataService.subscribe(() => {
             updateProgressBar();
-            // Aggiorniamo anche la lista pasti se visibile
             if (window.updateMeals) window.updateMeals(window.dataService.getMeals());
         });
     }
@@ -113,17 +107,16 @@ await loadComponent('calendar-root', 'components/calendar/calendar.html', async 
     // Step 4.5: Caricamento Water Tracker
     const waterRoot = document.getElementById('water-root');
     if (waterRoot && window.localDB) {
-        // Controllo azioni da URL (es. da notifica)
         const urlParams = new URLSearchParams(window.location.search);
         const action = urlParams.get('action');
         
         if (action === 'add-water') {
             await window.localDB.addWater(dateId);
-            // Pulisci l'URL per evitare ripetizioni al refresh
+            if (window.dataService) await window.dataService.syncWaterStatus(dateId);
             window.history.replaceState({}, document.title, window.location.pathname + window.location.search.replace(/[&?]action=add-water/, ''));
         } else if (action === 'snooze-water') {
             const settings = await window.localDB.getUserData('water_settings') || {};
-            settings.snoozeUntil = Date.now() + (15 * 60000); // 15 minuti
+            settings.snoozeUntil = Date.now() + (15 * 60000);
             await window.localDB.saveWaterSettings(settings);
             window.history.replaceState({}, document.title, window.location.pathname + window.location.search.replace(/[&?]action=snooze-water/, ''));
         }
@@ -155,15 +148,8 @@ await loadComponent('calendar-root', 'components/calendar/calendar.html', async 
 
             document.getElementById('add-water-btn').onclick = async () => {
                 await window.localDB.addWater(dateId);
+                if (window.dataService) await window.dataService.syncWaterStatus(dateId);
                 updateWaterUI();
-                
-                // Chiediamo il permesso per le notifiche se non l'abbiamo ancora
-                if (window.notificationService) {
-                    const status = await window.notificationService.checkPermission();
-                    if (status === 'default') {
-                        await window.notificationService.requestPermission();
-                    }
-                }
             };
         };
         await updateWaterUI();
@@ -174,10 +160,8 @@ await loadComponent('calendar-root', 'components/calendar/calendar.html', async 
         if (typeof window.initMeals !== 'function') {
             await loadScript('components/meals/meals.js');
         }
-        // Se non ci sono pasti, passiamo un array vuoto
         window.initMeals(element, currentDayMeals ? currentDayMeals.meals : []);
     });
 }
 
-// Orchestration is handled via navigateTo -> initToday
 window.initToday = initToday;

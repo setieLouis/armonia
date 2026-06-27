@@ -48,31 +48,26 @@ class DataService {
 
     /**
      * Loads the initial data for a specific day.
-     * Strategy: Exclusive usage of LocalDB.
+     * Strategy: Try LocalDB, then Firestore, then Seed.
      */
     async loadData(day) {
         if (!day) {
             throw new Error("DataService: day is required as a parameter");
         }
 
-        // Normalize requested day to YYYY-MM-DD
         const targetDay = day.split('T')[0];
 
-        // Ensure database is seeded before loading
-        await this.seedDatabase();
-
-        // Use a cache for the currently loaded data if it matches the requested day
         if (this.isLoaded && this.currentDay === targetDay) return this.data;
 
         try {
-            // Try to load from Local Database (Dexie) using normalized 'targetDay'
+            // 1. Prova Local Database (Dexie)
             let localData = await window.localDB.getMeal(targetDay);
 
             if (localData) {
                 console.log(`DataService: Loaded data for ${targetDay} from LocalDB`);
                 this.data = localData;
             } else {
-                console.log(`DataService: No data found for ${targetDay} in LocalDB`);
+                console.warn(`DataService: No local data found for ${targetDay}`);
                 this.data = null;
             }
 
@@ -80,27 +75,20 @@ class DataService {
             this.isLoaded = true;
             return this.data;
         } catch (error) {
-            console.error(`DataService: Error loading data for ${targetDay} from DB`, error);
+            console.error(`DataService: Error loading data for ${targetDay}`, error);
             throw error;
         }
     }
 
     /**
-     * Returns the full data object.
-     */
-    getData() {
-        return this.data;
-    }
-
-    /**
-     * Returns all meals for the current loaded day.
+     * Returns all meals for the current day.
      */
     getMeals() {
         return (this.data && this.data.meals) ? this.data.meals : [];
     }
 
     /**
-     * Finds a meal by its ID within the current day.
+     * Helper to find a specific meal object by its ID within the current day.
      */
     getMealById(mealId) {
         if (!this.data || !this.data.meals) return null;
@@ -108,10 +96,126 @@ class DataService {
     }
 
     /**
-     * Persists the current state to the local database.
+     * Genera un ID unico (UUID v4) per l'utente.
+     */
+    generateUUID() {
+        if (typeof crypto !== 'undefined' && crypto.randomUUID) {
+            return crypto.randomUUID();
+        }
+        return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+            var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+            return v.toString(16);
+        });
+    }
+
+    /**
+     * Sincronizza il profilo utente con Firestore.
+     */
+    async syncUserProfile() {
+        if (!window.localDB || !window.firestore) return;
+
+        try {
+            const profile = await window.localDB.getUserData('profile');
+            const waterSettings = await window.localDB.getUserData('water_settings');
+            
+            if (profile && profile.uid) {
+                // Rimuoviamo la chiave 'key' di Dexie per pulire il dato su Firestore
+                const { key, ...cleanProfile } = profile;
+                
+                const syncData = {
+                    ...cleanProfile,
+                    lastUpdate: new Date().toISOString()
+                };
+
+                if (waterSettings) {
+                    const { key: wKey, ...cleanWaterSettings } = waterSettings;
+                    syncData.water_settings = cleanWaterSettings;
+                }
+
+                console.log("DataService: Tentativo sincronizzazione Firestore con dati:", syncData);
+
+                await window.firestore
+                    .collection('users')
+                    .doc(profile.uid)
+                    .set(syncData, { merge: true });
+                console.log("DataService: Profilo utente e impostazioni acqua sincronizzati con Firestore");
+            } else {
+                console.warn("DataService: Impossibile sincronizzare, profilo mancante o senza UID");
+            }
+        } catch (e) {
+            console.error("DataService: Errore sincronizzazione profilo", e);
+        }
+    }
+
+    /**
+     * Sincronizza lo stato idratativo corrente con Firestore per le push notification.
+     */
+    async syncWaterStatus(day) {
+        if (!window.localDB || !window.firestore) return;
+
+        try {
+            const profile = await window.localDB.getUserData('profile');
+            const waterIntake = await window.localDB.getWaterIntake(day);
+            const settings = await window.localDB.getUserData('water_settings') || {
+                enabled: true,
+                frequency: 120,
+                startTime: "08:00",
+                goal: 2000
+            };
+            
+            if (profile && profile.uid && waterIntake) {
+                let nextDrinkDate = null;
+
+                // Calcolo intelligente del prossimo orario per bere
+                if (settings.enabled && waterIntake.amount < waterIntake.goal) {
+                    const now = new Date();
+                    const frequencyMs = (settings.frequency || 120) * 60000;
+                    
+                    if (waterIntake.lastUpdated) {
+                        // Caso Standard: Ultimo sorso + frequenza
+                        nextDrinkDate = new Date(waterIntake.lastUpdated + frequencyMs);
+                    } else {
+                        // Caso Inizio Giornata: Usiamo lo startTime dei settings
+                        const [hours, minutes] = (settings.startTime || "08:00").split(':');
+                        nextDrinkDate = new Date(now);
+                        nextDrinkDate.setHours(parseInt(hours), parseInt(minutes), 0, 0);
+                        
+                        // Se l'orario di inizio è già passato e non ha ancora bevuto, 
+                        // lasciamo l'orario di inizio (risulterà "scaduto" e la notifica partirà subito)
+                    }
+
+                    // Gestione Snooze: se lo snooze è attivo e più lontano del prossimo orario calcolato
+                    if (settings.snoozeUntil && settings.snoozeUntil > nextDrinkDate.getTime()) {
+                        nextDrinkDate = new Date(settings.snoozeUntil);
+                    }
+                }
+
+                await window.firestore
+                    .collection('users')
+                    .doc(profile.uid)
+                    .set({
+                        water_status: {
+                            lastDrink: waterIntake.lastUpdated ? new Date(waterIntake.lastUpdated).toISOString() : null,
+                            nextDrink: nextDrinkDate ? nextDrinkDate.toISOString() : null,
+                            todayTotal: waterIntake.amount,
+                            goal: waterIntake.goal,
+                            day: day
+                        },
+                        lastUpdate: new Date().toISOString()
+                    }, { merge: true });
+                console.log("DataService: Stato acqua (con nextDrink) sincronizzato con Firestore");
+            }
+        } catch (e) {
+            console.error("DataService: Errore sincronizzazione stato acqua", e);
+        }
+    }
+
+    /**
+     * Persists the current state to the local database and syncs with Firestore.
      */
     async persist() {
         if (this.data) {
+            // Salva in locale
             await window.localDB.saveMeal(this.data);
             this.notifyListeners();
         }
@@ -150,15 +254,16 @@ class DataService {
     async replaceDish(mealId, dishIndex, newDishData) {
         const meal = this.getMealById(mealId);
         if (meal && meal.dishes[dishIndex]) {
-            const originalUseStatus = meal.dishes[dishIndex].use;
+            const originalDish = meal.dishes[dishIndex];
             
+            // Manteniamo lo stato di completamento e la lista delle alternative originali
+            // in modo che l'utente possa sempre scegliere un'altra opzione per quel "posto".
             meal.dishes[dishIndex] = {
                 ...newDishData,
-                use: originalUseStatus,
-                alternatives: meal.dishes[mealId === meal.id ? dishIndex : -1]?.alternatives || []
+                use: originalDish.use,
+                alternatives: originalDish.alternatives || []
             };
             
-            // Note: alternatives handling might need refinement depending on structure
             await this.persist();
             return true;
         }

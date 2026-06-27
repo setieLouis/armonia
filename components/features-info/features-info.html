@@ -3,9 +3,27 @@
     <div id="fei-header-root" style="width: 100%;"></div>
 
     <div class="fei-content">
+        <!-- Selettore Tab a Pillola (Segmented Control) -->
+        <div class="fei-tabs-container">
+            <div class="fei-tabs">
+                <button class="fei-tab-btn is-active" data-tab="available">Disponibili</button>
+                <button class="fei-tab-btn" data-tab="upcoming">In Arrivo</button>
+            </div>
+        </div>
+
+        <!-- Info Versione e Rilascio -->
+        <div id="fei-version-info" class="fei-version-info"></div>
+
         <div id="fei-list" class="fei-list">
             <!-- Le card verranno inserite qui via JS -->
             <div class="fei-loading">Caricamento novità...</div>
+        </div>
+        
+        <!-- Pulsante Continua (visibile all'avvio) -->
+        <div id="fei-action-container" style="display: none; margin-top: 32px; margin-bottom: 16px; text-align: center;">
+            <button id="fei-btn-continue" style="background: #719b6e; color: white; border: none; padding: 14px 32px; border-radius: 30px; font-weight: 600; cursor: pointer; font-size: 16px; width: 100%; max-width: 300px; box-shadow: 0 4px 12px rgba(113,155,110,0.3); transition: transform 0.1s;">
+                Continua
+            </button>
         </div>
     </div>
 </div>
@@ -87,5 +105,47 @@
         padding: 40px;
         color: var(--text-muted);
         font-style: italic;
+    }
+
+    /* Stili per il Segmented Control (Pill Tabs) */
+    .fei-tabs-container {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 20px;
+    }
+    .fei-tabs {
+        display: flex;
+        background: #F0F0F0;
+        padding: 4px;
+        border-radius: 16px;
+        width: 100%;
+        max-width: 320px;
+        position: relative;
+    }
+    .fei-tab-btn {
+        flex: 1;
+        border: none;
+        background: transparent;
+        padding: 8px 16px;
+        font-size: 14px;
+        font-weight: 600;
+        color: #666;
+        border-radius: 12px;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        text-align: center;
+        outline: none;
+    }
+    .fei-tab-btn.is-active {
+        background: white;
+        color: #719b6e;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    }
+    .fei-version-info {
+        text-align: center;
+        font-size: 13px;
+        color: #999;
+        margin-bottom: 20px;
+        font-weight: 500;
     }
 </style>
