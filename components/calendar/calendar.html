@@ -78,13 +78,13 @@
     }
     .cal-swap-sheet {
         position: relative;
-        width: 100%;
-        max-width: 500px;
-        margin: 0 auto;
+        width: calc(100% - 32px);
+        max-width: 460px;
+        margin: 0 auto 20px auto;
         background-color: var(--white);
-        border-radius: 24px 24px 0 0;
-        box-shadow: 0 -8px 24px rgba(0,0,0,0.1);
-        transform: translateY(100%);
+        border-radius: 24px;
+        box-shadow: 0 -8px 24px rgba(0,0,0,0.08), 0 8px 16px rgba(0,0,0,0.06);
+        transform: translateY(calc(100% + 20px));
         transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
         padding: 24px;
         box-sizing: border-box;
@@ -118,9 +118,9 @@
         margin-bottom: 20px;
     }
     .cal-swap-options-list {
-        display: flex;
-        flex-direction: column;
-        gap: 12px;
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
         max-height: 320px;
         overflow-y: auto;
         padding-bottom: 8px;
@@ -129,9 +129,9 @@
         display: flex;
         align-items: center;
         justify-content: space-between;
-        padding: 14px 18px;
+        padding: 12px 14px;
         background-color: var(--gray-light);
-        border-radius: 16px;
+        border-radius: 14px;
         cursor: pointer;
         transition: background-color 0.2s ease, transform 0.1s ease;
         border: 1px solid transparent;
@@ -141,7 +141,7 @@
         border-color: rgba(113, 155, 110, 0.2);
     }
     .cal-swap-option-card:active {
-        transform: scale(0.98);
+        transform: scale(0.97);
     }
     .cal-swap-option-content {
         display: flex;
