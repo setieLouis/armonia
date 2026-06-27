@@ -168,12 +168,96 @@ document.addEventListener('DOMContentLoaded', () => {
         checkUserSession();
     }
 
-    // Register Service Worker
+    // Register Service Worker & Handle Updates
     if ('serviceWorker' in navigator) {
         window.addEventListener('load', () => {
             navigator.serviceWorker.register('/sw.js')
-                .then(reg => console.log('Service Worker registered', reg))
+                .then(reg => {
+                    console.log('Service Worker registered', reg);
+                    
+                    // Controlla se c'è già un service worker in attesa
+                    if (reg.waiting) {
+                        showUpdateBanner(reg.waiting);
+                    }
+
+                    // Ascolta aggiornamenti rilevati mentre l'app è aperta
+                    reg.addEventListener('updatefound', () => {
+                        const newWorker = reg.installing;
+                        newWorker.addEventListener('statechange', () => {
+                            if (newWorker.state === 'installed') {
+                                if (navigator.serviceWorker.controller) {
+                                    showUpdateBanner(newWorker);
+                                }
+                            }
+                        });
+                    });
+                })
                 .catch(err => console.error('Service Worker registration failed', err));
+        });
+
+        // Quando il Service Worker attivo cambia (dopo skipWaiting), ricarica la pagina
+        let refreshing = false;
+        navigator.serviceWorker.addEventListener('controllerchange', () => {
+            if (!refreshing) {
+                refreshing = true;
+                window.location.reload();
+            }
         });
     }
 });
+
+/**
+ * Mostra un banner di aggiornamento fluttuante
+ */
+function showUpdateBanner(worker) {
+    const existingToast = document.getElementById('pwa-update-toast');
+    if (existingToast) existingToast.remove();
+
+    const toast = document.createElement('div');
+    toast.id = 'pwa-update-toast';
+    
+    // Stile in linea per mantenere il banner isolato ed elegante
+    toast.style.position = 'fixed';
+    toast.style.bottom = '24px';
+    toast.style.left = '50%';
+    toast.style.transform = 'translateX(-50%) translateY(100px)';
+    toast.style.backgroundColor = '#FBF3E9';
+    toast.style.border = '1px solid #EAD8C3';
+    toast.style.color = '#9C744D';
+    toast.style.padding = '14px 20px';
+    toast.style.borderRadius = '20px';
+    toast.style.boxShadow = '0 10px 30px rgba(0,0,0,0.15)';
+    toast.style.display = 'flex';
+    toast.style.alignItems = 'center';
+    toast.style.gap = '16px';
+    toast.style.zIndex = '99999';
+    toast.style.transition = 'transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
+    toast.style.width = 'calc(100% - 32px)';
+    toast.style.maxWidth = '400px';
+    toast.style.boxSizing = 'border-box';
+
+    toast.innerHTML = `
+        <div style="display:flex; align-items:center; gap:10px; flex:1;">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:#9C744D; flex-shrink:0;"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/></svg>
+            <span style="font-size: 13.5px; font-weight: 600; font-family: 'Cinzel', serif; line-height: 1.3;">Nuova versione disponibile!</span>
+        </div>
+        <button id="pwa-update-btn" style="background: #719b6e; color: white; border: none; padding: 8px 16px; border-radius: 12px; font-weight: 600; cursor: pointer; font-size: 12.5px; box-shadow: 0 4px 10px rgba(113,155,110,0.25); transition: background 0.2s, transform 0.1s; font-family: inherit;">
+            Aggiorna
+        </button>
+    `;
+
+    document.body.appendChild(toast);
+
+    // Animazione di ingresso
+    setTimeout(() => {
+        toast.style.transform = 'translateX(-50%) translateY(0)';
+    }, 100);
+
+    // Esegui skipWaiting al click
+    const btn = document.getElementById('pwa-update-btn');
+    btn.onclick = () => {
+        btn.disabled = true;
+        btn.innerText = 'Aggiornamento...';
+        worker.postMessage({ type: 'SKIP_WAITING' });
+    };
+}

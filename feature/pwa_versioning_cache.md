@@ -59,3 +59,19 @@ Quando viene rilasciato un nuovo aggiornamento dell'applicazione:
 2. **Rilevamento del Browser**: Al successivo caricamento dell'app, il browser controlla se il Service Worker (`sw.js`) o i suoi script importati (`version.js`) sono cambiati sul server.
 3. **Installazione**: Rilevato il cambiamento in `version.js`, il browser installa il nuovo Service Worker. Durante la fase di installazione (`install` event), il nuovo SW scarica le ultime versioni degli asset e le salva nella nuova cache `armonia-flow-v1.2.2.1`.
 4. **Attivazione & Cleanup**: Durante la fase di attivazione (`activate` event), il Service Worker confronta i nomi delle cache sul browser, rileva che la vecchia cache (es. `armonia-flow-v1.2.1.1`) non corrisponde al nuovo `CACHE_NAME` e la elimina definitivamente, liberando spazio ed evitando conflitti di cache obsoleta.
+
+---
+
+## Notifica di Aggiornamento Interattiva (UX Trasparente)
+Per evitare che l'aggiornamento della cache causi ricaricamenti improvvisi della pagina durante l'utilizzo dell'app (con conseguente perdita dello stato/dati dell'utente), è stato implementato un flusso di aggiornamento controllato ed elegante (Opzione B):
+
+1. **Rilevamento del Service Worker in Attesa (`waiting`)**:
+   Quando viene rilevata una nuova versione sul server, il Service Worker la scarica in background e va nello stato `waiting` (non si attiva automaticamente per non disturbare la sessione utente attiva).
+2. **Visualizzazione del Banner**:
+   In `script.js`, se c'è un worker nello stato `waiting`, viene mostrato un banner toast fluttuante elegante con il messaggio *"Nuova versione disponibile!"* e un pulsante *"Aggiorna"*.
+3. **Trigger di Attivazione**:
+   Quando l'utente preme il pulsante *"Aggiorna"*:
+   - Viene inviato un messaggio `{ type: 'SKIP_WAITING' }` al Service Worker.
+   - Il Service Worker riceve il messaggio ed esegue `self.skipWaiting()`, attivandosi immediatamente e prendendo il controllo dei client tramite `self.clients.claim()`.
+4. **Reload della Pagina**:
+   Il thread principale rileva il cambio di controllo del Service Worker tramite l'evento `controllerchange` e ricarica automaticamente la pagina `window.location.reload()`, presentando all'utente la nuova versione dell'applicazione e indirizzandolo automaticamente sulla pagina **"Novità"**.

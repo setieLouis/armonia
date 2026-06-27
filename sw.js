@@ -74,7 +74,6 @@ self.addEventListener('install', (event) => {
   );
 });
 
-// Activate Event: Cleanup old caches
 self.addEventListener('activate', (event) => {
   event.waitUntil(
     caches.keys().then((cacheNames) => {
@@ -86,7 +85,7 @@ self.addEventListener('activate', (event) => {
           }
         })
       );
-    })
+    }).then(() => self.clients.claim())
   );
 });
 
@@ -141,4 +140,11 @@ self.addEventListener('notificationclick', (event) => {
       }
     })
   );
+});
+
+// Gestione messaggi dal main thread (es. SKIP_WAITING)
+self.addEventListener('message', (event) => {
+  if (event.data && event.data.type === 'SKIP_WAITING') {
+    self.skipWaiting();
+  }
 });
