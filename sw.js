@@ -47,6 +47,8 @@ const ASSETS_TO_CACHE = [
   '/components/today/today.html',
   '/components/today/today.js',
   '/components/today/today.css',
+  '/components/calendar/calendar.html',
+  '/components/calendar/calendar.js',
   '/components/current-meal/current-meal.html',
   '/components/current-meal/current-meal.js',
   '/components/current-meal/current-meal.css',
