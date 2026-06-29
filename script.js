@@ -124,6 +124,15 @@ async function checkUserSession() {
         // Ensure database is available and open
         if (window.db) {
             await window.db.open();
+
+            // Se le notifiche sono già concesse, verifica/aggiorna il token FCM in background
+            if (window.notificationService && Notification.permission === 'granted') {
+                console.log("Session: Notifiche già concesse. Avvio verifica/aggiornamento token FCM in background...");
+                window.notificationService.initFCM().catch(err => {
+                    console.error("Errore in initFCM in background all'avvio:", err);
+                });
+            }
+
             if (window.localDB) {
                 const profile = await window.localDB.getUserData('profile');
                 if (profile && profile.name) {

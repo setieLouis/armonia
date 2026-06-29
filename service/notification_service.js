@@ -69,19 +69,12 @@ const NotificationService = {
 
 
     /**
-     * Inizializza FCM: richiede permesso se necessario e ottiene il token
+     * Inizializza FCM: richiede permesso se necessario, ottiene il token corrente e lo aggiorna se variato.
      */
     async initFCM() {
         try {
             if (!window.fcmMessaging) {
                 console.warn("FCM Messaging non inizializzato.");
-                return;
-            }
-
-            // Verifica se abbiamo già un token nel DB locale
-            const currentData = await window.localDB.getUserData('fcm_token');
-            if (currentData && currentData.token) {
-                console.log("FCM Token già presente nel database locale.");
                 return;
             }
 
@@ -120,26 +113,36 @@ const NotificationService = {
             if (token) {
                 console.log("[FCM] Token ottenuto:", token);
 
-                // 1. Salviamo il token in una entry dedicata per sicurezza
-                await window.localDB.saveUserData('fcm_token', { 
-                    token, 
-                    updatedAt: new Date().toISOString() 
-                });
-
-                // 2. Proviamo ad aggiornare il profilo se esiste già
+                const currentData = await window.localDB.getUserData('fcm_token');
                 const profile = await window.localDB.getUserData('profile');
-                if (profile) {
-                    profile.fcmToken = token;
-                    profile.fcmUpdatedAt = new Date().toISOString();
-                    await window.localDB.saveUserData('profile', profile);
 
-                    // Sincronizza con Firestore
-                    if (window.dataService) {
-                        await window.dataService.syncUserProfile();
+                const tokenChanged = !currentData || currentData.token !== token;
+                const profileMissingOrChanged = !profile || profile.fcmToken !== token;
+
+                if (tokenChanged || profileMissingOrChanged) {
+                    console.log("[FCM] Rilevato token FCM nuovo o modificato. Aggiornamento DB locale, profilo e Firestore...");
+
+                    // 1. Salviamo il token in una entry dedicata per sicurezza
+                    await window.localDB.saveUserData('fcm_token', { 
+                        token, 
+                        updatedAt: new Date().toISOString() 
+                    });
+
+                    // 2. Proviamo ad aggiornare il profilo se esiste già
+                    if (profile) {
+                        profile.fcmToken = token;
+                        profile.fcmUpdatedAt = new Date().toISOString();
+                        await window.localDB.saveUserData('profile', profile);
+
+                        // Sincronizza con Firestore
+                        if (window.dataService) {
+                            await window.dataService.syncUserProfile();
+                        }
                     }
+                } else {
+                    console.log("[FCM] Il token FCM è già allineato nel database locale e nel profilo.");
                 }
-            }
- else {
+            } else {
                 console.warn("Nessun token FCM ricevuto. Controlla i permessi o la configurazione.");
             }
         } catch (error) {

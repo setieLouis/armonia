@@ -198,6 +198,17 @@
                         platform: 'web-pwa'
                     };
 
+                    // Se è già presente un token FCM nel database locale, lo copiamo nel profilo
+                    try {
+                        const storedFcm = await window.localDB.getUserData('fcm_token');
+                        if (storedFcm && storedFcm.token) {
+                            profileData.fcmToken = storedFcm.token;
+                            profileData.fcmUpdatedAt = storedFcm.updatedAt || new Date().toISOString();
+                        }
+                    } catch (fcmErr) {
+                        console.warn("Welcome: Errore nel recupero del token FCM pre-esistente:", fcmErr);
+                    }
+
                     // Salva profilo in locale
                     await window.localDB.saveUserData('profile', profileData);
 

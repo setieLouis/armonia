@@ -94,11 +94,11 @@ async function initAcqua() {
                     await window.notificationService.initFCM();
                 }
             };
-        } else if (permission === 'granted' && !storedToken) {
-            // Permesso già presente ma token mancante: ottenimento automatico
-            console.log("Acqua: Permesso già concesso, avvio generazione token automatica...");
+        } else if (permission === 'granted') {
+            // Permesso già presente: avvio verifica o aggiornamento automatico del token
+            console.log("Acqua: Permesso già concesso, avvio verifica/aggiornamento token FCM...");
             window.notificationService.initFCM().then(() => {
-                console.log("Acqua: Token generato e sincronizzato automaticamente.");
+                console.log("Acqua: Verifica/aggiornamento token completato.");
             });
         }
     }
