@@ -1,5 +1,6 @@
-## Workflow di Sviluppo (Git Flow)
+## 1. Regole di Processo (Come Lavoriamo)
 
+### Git Flow
 Il progetto segue il modello **Git Flow** per la gestione dei rami e dei rilasci.
 
 - **main**: Ramo di produzione (stabile).
@@ -8,57 +9,139 @@ Il progetto segue il modello **Git Flow** per la gestione dei rami e dei rilasci
 - **hotfix/**: Correzioni urgenti in produzione (partono da `main`).
 - **release/**: Preparazione per il rilascio (partono da `develop`).
 
-È caldamente raccomandato l'uso dei comandi `git flow [feature|hotfix|release] start/finish` per garantire la coerenza del repository.
+> Usare sempre i comandi `git flow [feature|hotfix|release] start/finish` per garantire la coerenza del repository.
 
 ---
 
-## Processo di Pianificazione Nuove Viste (Mockup-to-Plan)
+### Fase di Analisi (Prima di Implementare)
+Prima di scrivere qualsiasi codice, è **obbligatorio** fare una fase di analisi conversazionale con il modello.
 
-Prima di iniziare l'implementazione di una nuova vista o pagina partendo da un mockup (es. un file immagine), è obbligatorio creare un file di pianificazione (es. `nome_vista.md`) seguendo questo schema standard:
+**Come funziona:**
+- Il modello fa domande mirate per capire la vista/funzionalità richiesta.
+- L'utente risponde e chiarisce i dettagli.
+- Solo quando il quadro è completo e condiviso, si passa all'implementazione.
 
-### Struttura del Piano Tecnico
-1.  **Obiettivo & Analisi Visiva**: 
-    - Identificazione del file di riferimento (es. `quarta.png`).
-    - Elenco dei componenti logici (Header, List, Card, ecc.).
-    - Estrazione dei Design Tokens (Colori, Spaziature, Border-radius).
-2.  **Architettura dei Componenti (Regola 3+3)**:
-    - Definizione del prefisso radice e della mappa dei sotto-componenti.
-3.  **Logica e Gestione Dati**:
-    - Distinzione tra elementi statici e dinamici (che richiedono file `.js`).
-4.  **Roadmap di Implementazione**:
-    - **Step 1 (Scaffolding & Root)**: 
-        - Creazione immediata della cartella e dei file core: `[nome].html`, `[nome].js`, e `analisi.md`.
-        - Definizione del container radice nel file HTML con la classe del prefisso (es. `.mea`).
-        - Registrazione dello script orchestratore.
-    - **Step 2...N**: Implementazione dei sotto-componenti (HTML + CSS isolato + JS).
-    - **Step Finale**: Inserire una checklist di riepilogo per monitorare l'avanzamento di tutti gli step definiti nella Roadmap.
+**Il modello NON deve iniziare a scrivere codice finché non ha capito:**
+- Cosa deve fare la vista (obiettivo)
+- Quali dati mostra e da dove vengono
+- Quali componenti esistenti può riusare
+- Quali interazioni utente sono previste
 
 ---
 
-## Componenti Plug-and-Play (Reusable Components)
+## 2. Architettura del Progetto (Com'è Fatto)
 
-Per garantire coerenza visiva e velocità di sviluppo, è obbligatorio verificare e utilizzare i componenti "pluggable" prima di creare nuovo codice UI ridondante.
+### Stack Tecnologico
+- **Frontend**: Vanilla HTML5, Vanilla CSS, Vanilla JavaScript (ES6+) — **nessun framework**.
+- **Database locale**: Dexie.js (wrapper IndexedDB) per persistenza offline.
+- **PWA**: Service Workers + Web App Manifest per funzionamento offline e installazione.
+
+---
+
+### Struttura delle Cartelle
+
+```
+armonia-flow/
+├── index.html               → SPA entry point
+├── script.js                → orchestratore principale (routing tra viste)
+├── style.css                → stili globali
+├── sw.js                    → service worker (PWA / cache offline)
+│
+├── components/              → componenti UI riusabili (ognuno ha HTML + CSS + JS)
+│   ├── header/              → barra di navigazione superiore
+│   ├── list-tile/           → componente atomico per liste e intestazioni
+│   ├── info-banner/         → banner messaggi informativi e alert
+│   ├── today/               → vista principale giornaliera
+│   ├── meals/               → gestione lista pasti
+│   ├── current-meal/        → dettaglio pasto corrente
+│   ├── calendar/            → vista calendario
+│   ├── progress/            → andamento e progressi dieta
+│   ├── diet-update/         → aggiornamento piano alimentare
+│   ├── welcome/             → onboarding utente
+│   ├── account/             → profilo utente
+│   ├── acqua/               → reminder idratazione
+│   ├── ingredient/          → dettaglio ingredienti
+│   ├── menu/                → menu di navigazione
+│   └── features-info/       → pagina informativa sulle funzionalità
+│
+├── service/                 → layer dati e logica di business
+│   ├── data_handler.js      → orchestratore dati (punto di accesso principale)
+│   ├── local_db.js          → interfaccia IndexedDB via Dexie.js
+│   ├── emoji_service.js     → gestione emoji per i piatti
+│   └── notification_service.js → notifiche push e reminder
+│
+└── ui/                      → mockup, risorse grafiche ed Excalidraw
+```
+
+---
+
+## 3. Vincoli Tecnici (Cosa Rispettare Sempre)
+
+### Stack
+- ❌ Nessun framework JS (no React, Vue, Angular)
+- ❌ Nessun CSS framework (no Tailwind, Bootstrap)
+- ✅ Solo Vanilla JS / CSS / HTML
+
+### UI e Componenti
+- ❌ Non scrivere HTML/CSS custom se esiste già un componente riusabile
+- ✅ Controllare sempre `components/` prima di creare nuovo codice UI
+- ✅ Il CSS di un componente deve stare **dentro la sua cartella**, non in `style.css`
+- ✅ Ogni componente è autonomo: HTML + CSS + JS nella stessa cartella
+
+### Dati e Database
+- ✅ Tutti gli accessi al DB passano per `service/data_handler.js`
+- ❌ Non accedere direttamente a `local_db.js` dalle viste
+- ✅ Usare sempre gli helper `window.localDB.*` per operazioni sul database
+
+### Architettura
+- ❌ Non mescolare logica di business nei file HTML
+- ✅ La logica di routing e orchestrazione sta in `script.js`
+
+---
+
+## 4. Contesto dell'App (Di Cosa Parla)
+
+**Armonia Flow** è una PWA per la gestione della **dieta alimentare quotidiana**.
+
+### Obiettivo
+Aiutare l'utente a seguire il proprio piano alimentare in modo semplice, con supporto offline e un'interfaccia curata ispirata al benessere.
+
+### Funzionalità principali
+- Visualizzazione e gestione dei **pasti giornalieri** (colazione, pranzo, cena, spuntini)
+- **Sostituzione ingredienti** con alternative equivalenti
+- **Progressi dieta** — storico dei giorni rispettati
+- **Reminder idratazione** — notifiche per bere acqua
+- **Aggiornamento piano** — modifica della dieta dall'app
+- **Calendario** — panoramica settimanale/mensile
+
+### Terminologia del dominio
+- **Pasto** (`meal`): un'unità del piano giornaliero (es. "Colazione")
+- **Piatto** (`dish`): un singolo alimento o preparazione dentro un pasto
+- **Piano giornaliero** (`day`): insieme dei pasti di una data specifica
+- **Profilo utente** (`user_profile`): dati e preferenze dell'utente
+
+---
+
+## 5. Componenti Plug-and-Play (Riusabili)
+
+Prima di creare nuovo codice UI, **verificare e usare** questi componenti esistenti.
 
 ### 1. ListTile (`components/list-tile/list-tile.js`)
 Il componente atomico più importante per liste e intestazioni.
-- **Varianti**:
-    - `default`: Card bianca con ombra, usata per elementi di liste cliccabili.
-    - `header`: Trasparente, font grandi, usata per titoli di sezione.
-- **Proprietà principali**: `leading` (icona/immagine), `title`, `subtitle`, `trailing` (azione/status), `bgClass`.
+- **Varianti**: `default` (card bianca con ombra), `header` (trasparente, font grandi)
+- **Proprietà**: `leading` (icona/immagine), `title`, `subtitle`, `trailing`, `bgClass`
 
 ### 2. Header (`components/header/header.js`)
 Gestore della barra di navigazione superiore.
-- **Funzione**: `initHeader(container, {left, rigth})`.
-- **Utilizzo**: Gestione di titoli dinamici, pulsanti "back" e menu opzioni.
-- **Stato**: Supporta `updateHeader` per aggiornamenti in tempo reale senza re-rendering dell'intera pagina.
+- **Funzione**: `initHeader(container, {left, right})`
+- **Supporta**: titoli dinamici, pulsante back, menu opzioni, `updateHeader` per aggiornamenti senza re-render
 
 ### 3. InfoBanner (`components/info-banner/info-banner.js`)
 Componente per messaggi informativi, alert o note.
-- **Funzione**: `renderInfoBanner({icon, message, variant})`.
-- **Utilizzo**: Banner a piè di pagina o messaggi di sistema.
-- **Varianti**: `info` (default beige/marrone).
+- **Funzione**: `renderInfoBanner({icon, message, variant})`
+- **Varianti**: `info` (default beige/marrone)
 
-### Regola d'Oro del Riuso
-Se un elemento del mockup somiglia a una riga di lista o a una barra superiore, **NON** scrivere HTML/CSS custom nella nuova vista. "Plugga" i componenti sopra citati e configurali via JavaScript nell'orchestratore della vista.
+### Regola d'Oro
+> Se un elemento somiglia a una riga di lista o a una barra superiore, **NON** scrivere HTML/CSS custom. Usa i componenti sopra e configurali via JS nell'orchestratore della vista.
 
 ---
