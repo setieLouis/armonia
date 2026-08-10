@@ -139,6 +139,13 @@ class DataService {
                     .doc(profile.uid)
                     .set(syncData, { merge: true });
                 console.log("DataService: Profilo utente sincronizzato con Firestore");
+            } else {
+                console.warn("DataService: Impossibile sincronizzare, profilo mancante o senza UID");
+            }
+        } catch (e) {
+            console.error("DataService: Errore sincronizzazione profilo", e);
+        }
+    }
 
     /**
      * Persists the current state to the local database and syncs with Firestore.
