@@ -116,8 +116,6 @@ class DataService {
 
         try {
             const profile = await window.localDB.getUserData('profile');
-            const waterSettings = await window.localDB.getUserData('water_settings');
-            
             if (profile && profile.uid) {
                 // Rimuoviamo la chiave 'key' di Dexie per pulire il dato su Firestore
                 const { key, ...cleanProfile } = profile;
@@ -126,11 +124,6 @@ class DataService {
                     ...cleanProfile,
                     lastUpdate: new Date().toISOString()
                 };
-
-                if (waterSettings) {
-                    const { key: wKey, ...cleanWaterSettings } = waterSettings;
-                    syncData.water_settings = cleanWaterSettings;
-                }
 
                 console.log("DataService: Tentativo sincronizzazione Firestore con dati:", syncData);
 
