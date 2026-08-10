@@ -6,7 +6,7 @@ docker build -t fnm-node .
  docker run -d \
   -v $(pwd):/workspace \
   -w /workspace \
-  fnm-node \
+  agy_sandbox:1.0 \
   tail -f /dev/null
 
   docker exec -it charming_shirley /bin/bash

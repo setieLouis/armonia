@@ -13,16 +13,19 @@ RUN apt-get update && apt-get install -y \
     && rm -rf /var/lib/apt/lists/*
 
 # CA aziendale (McAfee proxy)
-COPY ./cert/mcafee.crt /usr/local/share/ca-certificates/mcafee.crt
-RUN update-ca-certificates
+#COPY ./cert/mcafee.crt /usr/local/share/ca-certificates/mcafee.crt
+#RUN update-ca-certificates
 
 # 🔐 Node/npm devono fidarsi della CA aziendale
-ENV NODE_EXTRA_CA_CERTS=/usr/local/share/ca-certificates/mcafee.crt
+#ENV NODE_EXTRA_CA_CERTS=/usr/local/share/ca-certificates/mcafee.crt
 
 # 🔐 npm (molto importante nel tuo ambiente)
-RUN npm config set cafile /usr/local/share/ca-certificates/mcafee.crt
+#RUN npm config set cafile /usr/local/share/ca-certificates/mcafee.crt
 
-# install globale
-RUN npm install -g @google/gemini-cli
+# install global
+
+RUN curl -fsSL https://antigravity.google/cli/install.sh | bash
+RUN echo 'export PATH="/root/.local/bin:$PATH"' >> ~/.bashrc && source ~/.bashrc
+
 
 CMD ["/bin/bash"]
