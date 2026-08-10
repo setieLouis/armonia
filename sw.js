@@ -55,8 +55,6 @@ const ASSETS_TO_CACHE = [
   '/components/ingredient/ingredient.html',
   '/components/ingredient/ingredient.js',
   '/components/ingredient/ingredient.css',
-  '/components/acqua/acqua.html',
-  '/components/acqua/acqua.js',
   '/leaf.png',
   '/components/welcome/sfondo.jpg',
   '/components/welcome/other_sfondo.jpg',

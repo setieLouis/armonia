@@ -89,12 +89,6 @@ async function navigateTo(view, data = null) {
                     if (window.initFeaturesInfo) await window.initFeaturesInfo(data);
                 });
                 break;
-            case 'acqua':
-                await loadComponent(appRoot, 'components/acqua/acqua.html', async (element) => {
-                    await loadScript('components/acqua/acqua.js');
-                    if (window.initAcqua) await window.initAcqua();
-                });
-                break;
             case 'account':
                 console.log("[Router] Case account detected");
                 await loadComponent(appRoot, 'components/account/account.html', async (element) => {

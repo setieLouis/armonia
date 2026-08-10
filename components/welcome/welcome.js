@@ -206,22 +206,9 @@
                         await window.localDB.saveUserData('last_seen_version', { version: APP_VERSION });
                     }
 
-                    // Inizializziamo anche i default dell'acqua se non esistono
-                    const defaultWaterSettings = {
-                        enabled: true,
-                        goal: 2000,
-                        frequency: 120,
-                        startTime: "08:00",
-                        endTime: "22:00"
-                    };
-                    await window.localDB.saveWaterSettings(defaultWaterSettings);
-                    
-                    // Sincronizza subito con Firestore (ora includerà anche l'acqua)
+                    // Sincronizza subito con Firestore
                     if (window.dataService) {
                         await window.dataService.syncUserProfile();
-                        // Inizializziamo anche lo stato idratativo (0ml) per oggi
-                        const todayStr = new Date().toISOString().split('T')[0];
-                        await window.dataService.syncWaterStatus(todayStr);
                     }
 
                     if (transformedPlan.length > 0) {
