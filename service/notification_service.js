@@ -47,12 +47,7 @@ const NotificationService = {
                     icon: icon,
                     badge: icon,
                     vibrate: [200, 100, 200],
-                    tag: 'water-reminder', // Previene duplicati
                     renotify: true,
-                    actions: [
-                        { action: 'drink', title: 'Ho bevuto 💧' },
-                        { action: 'snooze', title: 'Tra 15 min ⏳' }
-                    ],
                     data: {
                         url: window.location.origin + '?view=today'
                     }

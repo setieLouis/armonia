@@ -117,12 +117,7 @@ self.addEventListener('notificationclick', (event) => {
   
   let urlToOpen = event.notification.data ? event.notification.data.url : '/';
 
-  // Gestione azioni specifiche
-  if (event.action === 'drink') {
-      urlToOpen += (urlToOpen.includes('?') ? '&' : '?') + 'action=add-water';
-  } else if (event.action === 'snooze') {
-      urlToOpen += (urlToOpen.includes('?') ? '&' : '?') + 'action=snooze-water';
-  }
+
 
   event.waitUntil(
     clients.matchAll({ type: 'window', includeUncontrolled: true }).then((windowClients) => {
