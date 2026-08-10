@@ -5,11 +5,20 @@
 // Step 2: Definizione dello Schema
 const db = new Dexie("ArmoniaFlowDB");
 
-// Definizione dello schema
+// Versione precedente mantenuta per compatibilità migrazione
 db.version(3).stores({
-    meals: 'day', 
+    meals: 'day',
     user_profile: 'key',
-    alternatives_cache: 'dishName'
+    alternatives_cache: 'dishName',
+    water_log: 'day'
+});
+
+// Versione 4: rimozione tabella water_log
+db.version(4).stores({
+    meals: 'day',
+    user_profile: 'key',
+    alternatives_cache: 'dishName',
+    water_log: null // null = elimina la tabella
 });
 
 // Funzioni helper per semplificare l'uso del DB nel DataService
