@@ -73,10 +73,10 @@ class IngredientAlternatives {
             const backIcon = `<div onclick="navigateTo('current-meal', ${JSON.stringify(params).replace(/"/g, "'")})" style="cursor: pointer; display: flex; align-items: center;">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
             </div>`;
-
+ 
             window.initHeader(headerRoot, {
                 left: backIcon,
-                center: this.data.title,
+                center: '',
                 right: ''
             });
         }

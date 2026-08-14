@@ -46,6 +46,11 @@
     color: #FFFFFF !important;
 }
 
+/* Riduzione font-size per il titolo dell'ingrediente */
+.c-alt-hero .list-tile-title {
+    font-size: 20px !important;
+}
+
 /* Header Centering - Symmetrical and Robust */
 #alt-header-root .header-container {
     background: transparent !important;
