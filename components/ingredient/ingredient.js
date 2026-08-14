@@ -71,7 +71,7 @@ class IngredientAlternatives {
         if (headerRoot) {
             const params = { mealId: this.data.mealId, dateId: this.data.dateId };
             const backIcon = `<div onclick="navigateTo('current-meal', ${JSON.stringify(params).replace(/"/g, "'")})" style="cursor: pointer; display: flex; align-items: center;">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
             </div>`;
 
             window.initHeader(headerRoot, {

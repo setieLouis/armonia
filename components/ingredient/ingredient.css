@@ -48,40 +48,11 @@
 
 /* Header Centering - Symmetrical and Robust */
 #alt-header-root .header-container {
-    padding: 10px 0;
     background: transparent !important;
 }
 
-#alt-header-root .greeting-row {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: relative;
-    width: 100%;
-    min-height: 48px;
-}
-
-#alt-header-root .greeting-text {
-    width: 100%;
-    text-align: center;
-    display: block;
-    padding: 0 56px;
-    box-sizing: border-box;
-    font-size: 19px;
-    font-weight: 700;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+#alt-header-root .header-title {
     color: #FFFFFF !important;
-}
-
-#alt-header-root .icon-container {
-    position: absolute;
-    right: 16px;
-    top: 50%;
-    transform: translateY(-50%);
-    display: flex;
-    align-items: center;
 }
 
 /* List section becomes the scrollable area */
