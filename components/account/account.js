@@ -9,7 +9,6 @@ async function initAccount() {
     const headerRoot = document.getElementById('acc-header-root');
     const nameEl = document.getElementById('acc-name-value');
     const uidEl = document.getElementById('acc-uid-value');
-    const fcmEl = document.getElementById('acc-fcm-value');
     const copyBtns = document.querySelectorAll('.acc-copy-btn');
 
     // 1. Initialize Header
@@ -33,7 +32,6 @@ async function initAccount() {
             if (profile) {
                 nameEl.innerText = profile.name || "N/A";
                 uidEl.innerText = profile.uid || "N/A";
-                fcmEl.innerText = profile.fcmToken || "Token non disponibile";
             } else {
                 console.warn("Account: Profilo non trovato nel database.");
             }

@@ -1,32 +1,4 @@
-importScripts('https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js');
-importScripts('https://www.gstatic.com/firebasejs/10.7.1/firebase-messaging-compat.js');
 importScripts('version.js');
-
-const firebaseConfig = {
-  apiKey: "AIzaSyAgHLVg4TdaF7xoaItXIxj2p1CdNuFunEE",
-  authDomain: "armonia-47fa2.firebaseapp.com",
-  projectId: "armonia-47fa2",
-  storageBucket: "armonia-47fa2.firebasestorage.app",
-  messagingSenderId: "700215020857",
-  appId: "1:700215020857:web:75c2670006721a7e52ace8"
-};
-
-firebase.initializeApp(firebaseConfig);
-const messaging = firebase.messaging();
-
-// Gestione messaggi in background FCM
-messaging.onBackgroundMessage((payload) => {
-  console.log('[sw.js] Messaggio ricevuto in background:', payload);
-  
-  const notificationTitle = payload.notification.title;
-  const notificationOptions = {
-    body: payload.notification.body,
-    icon: payload.notification.icon || '/leaf.png',
-    data: payload.data
-  };
-
-  self.registration.showNotification(notificationTitle, notificationOptions);
-});
 
 const CACHE_NAME = `armonia-flow-v${APP_VERSION}.${CACHE_VERSION}`;
 const ASSETS_TO_CACHE = [
@@ -40,7 +12,6 @@ const ASSETS_TO_CACHE = [
   '/service/local_db.js',
   '/service/data_handler.js',
   '/service/notification_service.js',
-  '/service/firebase_init.js',
   '/components/welcome/welcome.html',
   '/components/welcome/welcome.js',
   '/components/welcome/welcome.css',

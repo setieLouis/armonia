@@ -48,7 +48,7 @@ class DataService {
 
     /**
      * Loads the initial data for a specific day.
-     * Strategy: Try LocalDB, then Firestore, then Seed.
+     * Strategy: Try LocalDB, then Seed.
      */
     async loadData(day) {
         if (!day) {
@@ -108,40 +108,9 @@ class DataService {
         });
     }
 
-    /**
-     * Sincronizza il profilo utente con Firestore.
-     */
-    async syncUserProfile() {
-        if (!window.localDB || !window.firestore) return;
-
-        try {
-            const profile = await window.localDB.getUserData('profile');
-            if (profile && profile.uid) {
-                // Rimuoviamo la chiave 'key' di Dexie per pulire il dato su Firestore
-                const { key, ...cleanProfile } = profile;
-                
-                const syncData = {
-                    ...cleanProfile,
-                    lastUpdate: new Date().toISOString()
-                };
-
-                console.log("DataService: Tentativo sincronizzazione Firestore con dati:", syncData);
-
-                await window.firestore
-                    .collection('users')
-                    .doc(profile.uid)
-                    .set(syncData, { merge: true });
-                console.log("DataService: Profilo utente sincronizzato con Firestore");
-            } else {
-                console.warn("DataService: Impossibile sincronizzare, profilo mancante o senza UID");
-            }
-        } catch (e) {
-            console.error("DataService: Errore sincronizzazione profilo", e);
-        }
-    }
 
     /**
-     * Persists the current state to the local database and syncs with Firestore.
+     * Persists the current state to the local database.
      */
     async persist() {
         if (this.data) {

@@ -42,12 +42,6 @@ function loadScript(src) {
 async function navigateTo(view, data = null) {
     console.log(`[Router] Navigating to: ${view}`, data);
     
-    if (window.firebaseAnalytics) {
-        window.firebaseAnalytics.logEvent('screen_view', {
-            screen_name: view,
-            app_name: 'ArmoniaFlow'
-        });
-    }
 
     const appRoot = 'app-root';
     

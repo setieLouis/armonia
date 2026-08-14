@@ -1,13 +1,14 @@
 # Contesto di Lavoro Corrente
 
 ## Feature in sviluppo
-<!-- Scrivi qui su cosa stai lavorando in questo momento -->
+Nessuna feature attiva al momento.
 
 ## Stato attuale
-<!-- Cosa hai già fatto e dove sei arrivato -->
+- ✅ Feature acqua rimossa dal prodotto
+- ✅ App stabile su branch develop
 
 ## Prossimi step
-<!-- Cosa manca ancora da fare -->
+<!-- Scrivi qui la prossima feature da sviluppare -->
 
-## Note / Blocchi
-<!-- Problemi aperti, dubbi, decisioni da prendere -->
+## Note
+<!-- Decisioni di prodotto, dubbi aperti -->

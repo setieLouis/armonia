@@ -206,10 +206,6 @@
                         await window.localDB.saveUserData('last_seen_version', { version: APP_VERSION });
                     }
 
-                    // Sincronizza subito con Firestore
-                    if (window.dataService) {
-                        await window.dataService.syncUserProfile();
-                    }
 
                     if (transformedPlan.length > 0) {
                         for (const dayData of transformedPlan) {
