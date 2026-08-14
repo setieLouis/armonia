@@ -70,13 +70,14 @@ class IngredientAlternatives {
         const headerRoot = document.getElementById('alt-header-root');
         if (headerRoot) {
             const params = { mealId: this.data.mealId, dateId: this.data.dateId };
-            const closeIcon = `<div onclick="navigateTo('current-meal', ${JSON.stringify(params).replace(/"/g, "'")})" style="cursor: pointer; padding: 10px;">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+            const backIcon = `<div onclick="navigateTo('current-meal', ${JSON.stringify(params).replace(/"/g, "'")})" style="cursor: pointer; display: flex; align-items: center;">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
             </div>`;
-            
+ 
             window.initHeader(headerRoot, {
-                left: this.data.title,
-                right: closeIcon
+                left: backIcon,
+                center: '',
+                right: ''
             });
         }
     }
